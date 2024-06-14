@@ -1,0 +1,31 @@
+:root {
+  --c-bg: #F2EEE5;
+  --c-bg-secondary: #C8D7DE;
+  --c-text: #1C1B1B;
+  --c-accent-primary: #8E5572;
+  --c-accent-secondary: #35605A;
+}
+
+@font-face { 
+  font-family: Dongle; 
+  src: local('Dongle'), url('../assets/fonts/Dongle/Dongle-Regular.ttf') format('ttf');
+  font-weight: normal;
+}
+
+@font-face { 
+  font-family: Dongle; 
+  src: local('Dongle'), url('../assets/fonts/Dongle/Dongle-Bold.ttf') format('ttf');
+  font-weight: bold;
+}
+
+@font-face { 
+  font-family: Dongle; 
+  src: local('Dongle'), url('../assets/fonts/Dongle/Dongle-Light.ttf') format('ttf');
+  font-weight: 300;
+}
+
+
+h1 {
+  font-size: 70px;
+}
+
