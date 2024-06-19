@@ -1,0 +1,23 @@
+header {
+  text-align: center;
+  padding: 50px;
+
+  &> nav > ol {
+    padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+
+header 
+.menu-item > a {
+  text-decoration: none;
+  color: var(--c-text);
+
+  &:hover {
+    opacity: .7;
+    border-bottom: solid 2px var(--c-text);
+  }
+}

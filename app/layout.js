@@ -1,6 +1,7 @@
 // These styles apply to every route in the application
-import './reset.css'
-import './styles.css'
+import './styles/reset.css'
+import './styles/styles.css'
+import MainMenu from './components/MainMenu.jsx'
 
 export const metadata = {
   title: 'A Pinch of 한미',
@@ -10,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <MainMenu /> 
+        {children}
+      </body>
     </html>
   )
 }
