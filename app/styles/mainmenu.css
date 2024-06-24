@@ -21,3 +21,10 @@ header
     border-bottom: solid 2px var(--c-text);
   }
 }
+
+.eyes {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
