@@ -11,20 +11,48 @@ header {
 }
 
 
-header 
-.menu-item > a {
+header {
+
+  a {
   text-decoration: none;
   color: var(--c-text);
 
-  &:hover {
-    opacity: .7;
-    border-bottom: solid 2px var(--c-text);
+    &:hover {
+      opacity: .7;
+      border-bottom: solid 2px var(--c-text);
+    }
+  }
+
+  .eyes {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 20px;
+
+    &> svg > path {
+      stroke: var(--c-text);
+      fill: var(--c-text);
+
+    }
+
+  }
+
+  #wink {
+    padding: 5px; 
+  }
+
+  #mouth {
+    width: 90%; 
+    max-width: 456pt;
+    margin-top: -60px;
+    pointer-events: none;
+    
+    &> path {
+      stroke: var(--c-text);
+    }
   }
 }
 
-.eyes {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-}
+
+
 

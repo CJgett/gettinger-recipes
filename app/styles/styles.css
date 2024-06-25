@@ -6,31 +6,55 @@
   --c-accent-secondary: #35605A;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #1C1B1B;
+    --c-bg-secondary: #8E5572;
+    --c-text: #F2EEE5;
+    --c-accent-primary: #C8D7DE;
+    --c-accent-secondary: #35605A;
+  }
+}
+
 @font-face { 
   font-family: Dongle; 
-  src: local('Dongle'), url('../../assets/fonts/Dongle/Dongle-Regular.ttf') format('ttf');
+  src: local('Dongle'), url('../../assets/fonts/Dongle/Dongle-Regular.ttf') format('truetype');
   font-weight: normal;
 }
 
 @font-face { 
   font-family: Dongle; 
-  src: local('Dongle'), url('../../assets/fonts/Dongle/Dongle-Bold.ttf') format('ttf');
+  src: local('Dongle'), url('../../assets/fonts/Dongle/Dongle-Bold.ttf') format('truetype');
   font-weight: bold;
 }
 
 @font-face { 
   font-family: Dongle; 
-  src: local('Dongle'), url('../../assets/fonts/Dongle/Dongle-Light.ttf') format('ttf');
+  src: local('Dongle'), url('../../assets/fonts/Dongle/Dongle-Light.ttf') format('truetype');
   font-weight: 300;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--c-accent-primary);
 }
 
 body {
   background-color: var(--c-bg);
+  color: var(--c-text);
+  font-size: 30px;
+  color-scheme: light dark;
 }
 
-
 h1 {
-  font-size: 70px;
+  font-size: 100px;
+}
+
+h2 {
+  font-size: 80px;
+}
+
+h3 {
+  font-size: 60px;
 }
 
 .section-container {
