@@ -8,10 +8,6 @@ header {
     justify-content: center;
     gap: 20px;
   }
-}
-
-
-header {
 
   a {
   text-decoration: none;
@@ -32,7 +28,6 @@ header {
     &> svg > path {
       stroke: var(--c-text);
       fill: var(--c-text);
-
     }
 
   }
