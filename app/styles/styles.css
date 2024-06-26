@@ -6,15 +6,13 @@
   --c-accent-secondary: #35605A;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+:root.dark-mode {
     --c-bg: #1C1B1B;
     --c-bg-secondary: #8E5572;
     --c-text: #F2EEE5;
     --c-accent-primary: #C8D7DE;
     --c-accent-secondary: #35605A;
   }
-}
 
 @font-face { 
   font-family: Dongle; 
