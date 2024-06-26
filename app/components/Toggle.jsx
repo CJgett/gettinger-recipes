@@ -5,24 +5,33 @@ import '../styles/toggle.css'
 
 export default function CustomToggle() {
 
-  window.addEventListener("load", (event) => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    // auto-use dark mode, if the user prefers 
-    document.documentElement.classList.add("dark-mode");
-}
-  });
-
 function toggleThemePreference() {
-  if (document.documentElement.classList.contains("dark-mode")) {
-    document.documentElement.classList.remove("dark-mode");
-  } else {
-    document.documentElement.classList.add("dark-mode");
+    if (document.documentElement.classList.contains("dark-mode")) {
+      document.documentElement.classList.remove("dark-mode");
+      document.documentElement.classList.add("light-mode");
+    } else {
+      document.documentElement.classList.remove("light-mode");
+      document.documentElement.classList.add("dark-mode");
+    }
   }
-}
+
+  // set initial state for the checkbox and add the initial theme class based on the user's browser preference
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // user is in dark mode, the checkbox should be set to 'checked'
+        document.documentElement.classList.add("dark-mode");
+        const toggleCheckbox = document.querySelector(".toggle-checkbox");
+        toggleCheckbox.checked = true;
+      } else {
+        document.documentElement.classList.add("light-mode");
+      }
+    }
+  });
 
   return(
     <label className="custom-toggle">
-      <input type="checkbox" onClick={toggleThemePreference}></input>
+      <input className="toggle-checkbox" type="checkbox" onClick={toggleThemePreference}></input>
       <span className="toggle-button">
         <svg className="toggle-icon toggle-sun" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="12" cy="12" r="4.14113" stroke="#000000" stroke-width="1.91129"/>
