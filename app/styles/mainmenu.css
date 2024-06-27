@@ -15,7 +15,13 @@ header {
 
     &:hover {
       opacity: .7;
-      border-bottom: solid 2px var(--c-text);
+        &:not(:has(h1)) {
+        border-bottom: solid 2px var(--c-text);
+      }
+    }
+
+    &> h1 {
+      display:inline-block;
     }
   }
 
