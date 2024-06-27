@@ -1,0 +1,34 @@
+footer {
+  background-color: var(--c-text);
+  color: var(--c-bg);
+
+  &> .footer-container {
+    display: flex;
+    flex-direction: row;
+    padding: 50px;
+
+    &> .footer-subcontainer {
+      display: flex;
+      flex-direction: column;
+
+      &.footer-sm-icons > svg {
+        width: 30px;
+        height: 30px;
+
+          &> path, circle {
+            stroke: var(--c-bg);
+          
+        }
+      }
+
+      &> .footer-header {
+        font-size: 50px;
+      }
+    }
+
+    &.footer-copyright {
+      font-size: 20px;
+    }
+
+  }
+}

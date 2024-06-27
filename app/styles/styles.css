@@ -58,7 +58,7 @@ h3 {
   font-size: 60px;
 }
 
-.section-container {
+section {
   padding: 50px;
   background-color: var(--c-bg-secondary);
 }

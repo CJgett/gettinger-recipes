@@ -2,6 +2,7 @@
 import './styles/reset.css'
 import './styles/styles.css'
 import MainMenu from './components/MainMenu.jsx'
+import Footer from './components/Footer.jsx'
 import localFont from 'next/font/local'
 
 export const metadata = {
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
       <body>
         <MainMenu /> 
         {children}
+        <Footer /> 
       </body>
     </html>
   )
