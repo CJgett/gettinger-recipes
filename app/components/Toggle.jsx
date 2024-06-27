@@ -5,7 +5,11 @@ import '../styles/toggle.css'
 
 export default function CustomToggle() {
 
-function toggleThemePreference() {
+  // true = use dark mode
+  const [theme, setTheme] = React.useState(null);
+
+  function toggleThemePreference() {
+    setTheme(!theme);
     if (document.documentElement.classList.contains("dark-mode")) {
       document.documentElement.classList.remove("dark-mode");
       document.documentElement.classList.add("light-mode");
@@ -18,16 +22,26 @@ function toggleThemePreference() {
   // set initial state for the checkbox and add the initial theme class based on the user's browser preference
   useEffect(() => {
     if (document.readyState === 'complete') {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // user is in dark mode, the checkbox should be set to 'checked'
-        document.documentElement.classList.add("dark-mode");
-        const toggleCheckbox = document.querySelector(".toggle-checkbox");
-        toggleCheckbox.checked = true;
-      } else {
-        document.documentElement.classList.add("light-mode");
+      if(!(document.documentElement.classList.contains("dark-mode") || document.documentElement.classList.contains("light-mode"))) { 
+        const themePrefLocalStorage = window.localStorage.getItem('themePreference');
+        // set dark mode variables if user preference is set to dark mode in local storage or browser preference
+        // the variable in local storage gets precedence
+        if (themePrefLocalStorage === "true" || (themePrefLocalStorage === "null" && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add("dark-mode");
+            const toggleCheckbox = document.querySelector(".toggle-checkbox");
+            toggleCheckbox.checked = true;
+            setTheme(true);
+        } else {
+          document.documentElement.classList.add("light-mode");
+          setTheme(false);
+        }
       }
     }
   });
+
+  React.useEffect(()=>{
+    window.localStorage.setItem('themePreference', theme)
+  },[theme])
 
   return(
     <label className="custom-toggle">
