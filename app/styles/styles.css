@@ -1,3 +1,5 @@
+/*COLOR VARIABLES */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --c-bg: #1C1B1B;
@@ -34,6 +36,8 @@
   --c-accent-secondary: #35605A;
 
 }
+
+/*SITEWIDE STYLES*/
 
 *:focus-visible {
     outline: 3px solid var(--c-accent-primary);

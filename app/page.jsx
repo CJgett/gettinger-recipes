@@ -1,10 +1,8 @@
-import SectionContainer from './components/SectionContainer.jsx'
-
 export default function HomePage() {
  
   return (
-    <SectionContainer>
+    <section>
       HERE'S SOME CONTENT!
-    </SectionContainer>
+    </section>
   );
 }
