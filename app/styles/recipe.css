@@ -1,0 +1,72 @@
+.recipe-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  &> .recipe-title-pic {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    &> .recipe-pic {
+      align-self: flex-end;
+
+      &> img {
+        height: 100px;
+        width: 100px;
+        border-radius: 14px;
+      }
+    }
+  }
+
+  &> .card-section {
+    background-color: var(--c-bg);
+    width: 60%;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 20px;
+  }
+
+  &> .recipe-details {
+    position: relative;
+
+    &> .decorative-arches {
+      position: absolute;
+
+      &.top {
+        transform: rotate(200deg);
+      }
+
+      &.bottom {
+        transform: rotate(20deg);
+      }
+
+      &> path {
+        stroke: var(--c-text);
+      }
+    }
+
+    &> p {
+      text-align: center;
+    }
+  }
+
+  &> .ingredients-directions {
+    &> .ingredient-list{
+      &>li {
+        &> input[type="checkbox"] {
+          margin-right: 8px;
+
+          &:checked {
+            &+ label {
+              text-decoration: underline;
+              text-underline-offset: -15%;
+              text-decoration-skip-ink: none;
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

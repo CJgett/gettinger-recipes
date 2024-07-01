@@ -1,8 +1,13 @@
+import RecipeCard from '../components/Recipe.jsx'
+import '../styles/recipe.css'
+
 export default function RecipePage() {
  
   return (
-    <section>
-    HERE'S THE PAGE WHERE RECIPES LIVE
-    </section>
+    <div className="recipe">
+      <section>
+        <RecipeCard />
+      </section>
+    </div>
   );
 }
