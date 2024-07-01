@@ -25,6 +25,7 @@
     padding: 20px;
     border-radius: 14px;
     margin-top: 20px;
+    box-sizing: border-box;
   }
 
   &> .recipe-details {
@@ -46,8 +47,21 @@
       }
     }
 
-    &> p {
+    &> h3 {
       text-align: center;
+    }
+
+    &> .details-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    &> .details-clickables {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
   }
 
@@ -56,6 +70,9 @@
       &>li {
         &> input[type="checkbox"] {
           margin-right: 8px;
+          accent-color: var(--c-accent-secondary);
+          height: 20px;
+          width: 20px;
 
           &:checked {
             &+ label {
@@ -67,6 +84,19 @@
           }
         }
       }
+    }
+    &> .direction-list {
+      list-style: inside decimal;
+    }
+  }
+
+  &> .notes {
+    background-color: var(--c-bg-secondary);
+    border: dashed 10px var(--c-bg);
+    border-radius: 0px;
+    
+    &> .direction-list {
+      list-style: inside decimal;
     }
   }
 }

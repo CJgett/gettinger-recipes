@@ -1,14 +1,14 @@
 import '../styles/mainmenu.css'
 import Link from 'next/link'
 import Eyes from './Eyes.jsx'
-import CustomToggle from './Toggle.jsx'
+import ThemeToggle from './ThemeToggle.jsx'
 import MenuNav from './MenuNav.jsx'
 
 export default function MainMenu() {
 
   return(
     <header>
-      <CustomToggle />
+      <ThemeToggle />
       <Eyes />
       <Link href="/"><h1>A Pinch of 한미</h1></Link>
       <MenuNav /> 

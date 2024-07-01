@@ -1,10 +1,16 @@
-.custom-toggle {
-  position: absolute;
-  display: inline-block;
-  width: 56px;
-  height: 31px;
+.theme-toggle {
   top: 50px;
   left: 30px;
+  position: absolute;
+}
+
+.inline-toggle {
+  position: relative;
+}
+
+.custom-toggle {
+  width: 56px;
+  height: 31px;
 
   &> input {
     opacity: 0;
