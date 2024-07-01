@@ -1,10 +1,12 @@
 import '../styles/footer.css'
 import Link from 'next/link'
 import MenuNav from './MenuNav.jsx'
+import Squiggle from './Squiggle.jsx'
 
 export default function Footer() {
   return (
     <footer>
+      <Squiggle />
       <div className="footer-container"> 
         <div className="footer-logocontainer">
           <h2>A Pinch of 한미</h2> 

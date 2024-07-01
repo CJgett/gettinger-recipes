@@ -3,10 +3,10 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --c-bg: #1C1B1B;
-    --c-bg-secondary: #8E5572;
+    --c-bg-secondary: #331F29;
     --c-text: #F2EEE5;
     --c-accent-primary: #C8D7DE;
-    --c-accent-secondary: #35605A;
+    --c-accent-secondary: #8E5572;
   }
 }
 
@@ -22,10 +22,10 @@
 
 :root.dark-mode {
   --c-bg: #1C1B1B;
-  --c-bg-secondary: #8E5572;
+  --c-bg-secondary: #331F29;
   --c-text: #F2EEE5;
   --c-accent-primary: #C8D7DE;
-  --c-accent-secondary: #35605A;
+  --c-accent-secondary: #8E5572;
 }
 
 :root.light-mode {
@@ -65,4 +65,19 @@ h3 {
 section {
   padding: 50px;
   background-color: var(--c-bg-secondary);
+}
+
+button {
+  border: inset 3px var(--c-text);
+  border-radius: 14px;
+  background-color: var(--c-bg);
+  padding: 3px 10px 3px 10px;
+  color: var(--c-text);
+  font-family: var(--font-dongle);
+  font-size: 25px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .9;
+  }
 }

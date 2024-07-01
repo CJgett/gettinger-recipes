@@ -1,6 +1,22 @@
 footer {
   background-color: var(--c-accent-secondary);
   color: #F2EEE5;
+  position:relative;
+  overflow: hidden;
+
+  &> #big-squiggle {
+    position: absolute;
+    left: -100px;
+    top: -220px;
+    rotate: -20deg;
+    display: block;
+    pointer-events: none;
+
+    &> path {
+      opacity: 0.1;
+      stroke: var(--c-bg);
+    }
+  }
 
   &> .footer-container {
     display: flex;
@@ -48,12 +64,15 @@ footer {
         &> .footer-header {
           font-size: 50px !important;
         }
+
+        &> button {
+          background-color: var(--c-bg-secondary);
+        }
       }
     }
 
     &.footer-copyright {
       font-size: 20px;
     }
-
   }
 }
