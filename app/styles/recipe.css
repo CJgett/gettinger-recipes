@@ -36,14 +36,30 @@
 
       &.top {
         transform: rotate(200deg);
+        left: -20px;
+        top: -20px;
       }
 
       &.bottom {
         transform: rotate(20deg);
+        right: -20px;
+        bottom: -20px;
       }
 
       &> path {
         stroke: var(--c-text);
+      }
+
+      :first-child {
+        stroke-dasharray: 211.856 211.856;
+        stroke-dashoffset: 211.856;
+        transition: stroke-dashoffset 1s ease-in-out;
+      }
+
+      :nth-child(2) {
+        stroke-dasharray: 384.484 384.484;
+        stroke-dashoffset: 384.484;
+        transition: stroke-dashoffset 1.5s ease-in-out;
       }
     }
 

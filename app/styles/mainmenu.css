@@ -47,9 +47,13 @@ header {
     max-width: 456pt;
     margin-top: -60px;
     pointer-events: none;
-    
+        
     &> path {
       stroke: var(--c-text);
+      transition: stroke-dashoffset 1.5s ease-in-out;
+      stroke-dasharray: 526 526;
+      stroke-dashoffset: 526;
+
     }
   }
 }

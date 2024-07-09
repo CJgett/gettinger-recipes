@@ -1,10 +1,20 @@
+"use client"
+
 import '../styles/mainmenu.css'
 import Link from 'next/link'
 import Eyes from './Eyes.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 import MenuNav from './MenuNav.jsx'
+import React, { useEffect } from 'react'
 
 export default function MainMenu() {
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      document.getElementById('mouth').firstChild.style.strokeDashoffset = '0';
+    }
+  });
+
 
   return(
     <header>

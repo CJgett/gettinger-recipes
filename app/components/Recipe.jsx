@@ -11,22 +11,17 @@ import Toggle from './Toggle.jsx'
 
 export default function RecipeCard() {
 
+  // draw the arches by setting the dashoffset of the path to 0
   useEffect(() => {
-    if(document.readyState === 'complete') {
-      const arches = document.querySelector('.decorative-arches.top');
-      const bottomArches = document.querySelector('.decorative-arches.bottom');
-      const parentPosition = arches.parentElement.getBoundingClientRect();
-
-      arches.style.right = (parentPosition.width - 35) + "px"; 
-      arches.style.top = "-" + (parentPosition.height - 35) + "px";
-
-      bottomArches.style.right = (-35) + "px"; 
-      bottomArches.style.top = (35) + "px";
-
-
+    if (document.readyState === 'complete') {
+      const allArches = Array.from(document.querySelectorAll('.decorative-arches'));
+      allArches.forEach((svg) => {
+       Array.from(svg.children).forEach((path) => 
+        path.style.strokeDashoffset = '0'
+       );
+      });
     }
   });
-
 
   return (
     <div className="recipe-card">
