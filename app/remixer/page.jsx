@@ -1,8 +1,14 @@
+import Remixer from '../components/Remixer.jsx'
+import '../styles/remixer.css'
+
 export default function RemixerPage() {
  
   return (
-    <section>
-    HERE'S THE PAGE WHERE the remixer LIVES
-    </section>
+    <div className="remixer-page">
+      <section>
+        <h2>Recipe Remixer!</h2>
+        <Remixer />
+      </section>
+    </div>
   );
 }

@@ -1,0 +1,117 @@
+.remixer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .remixer {
+    box-sizing: border-box;
+    border: 8px solid var(--c-accent-tertiary);
+    border-radius: 40px;
+    width: 70%;
+    height: 85vh;
+    display: flex;
+    background-color: var(--c-bg);
+
+    .remixer-sidebar {
+      flex: 2;
+      border-right: 4px solid var(--c-accent-tertiary);
+      padding: 25px 0px 25px 0px;
+
+      > * {
+        padding: 0px 25px 0px 25px;
+      }
+
+      .saved-recipes-list {
+        padding-left: 0px;
+        padding-right: 0px;
+
+        li {
+          padding: 0px 25px 0px 25px;
+          
+          &:hover {
+            background-color: rgba(255,255,255,0.3);
+            cursor: pointer;
+          }
+        }
+      }
+    } 
+
+    .remixer-chatbox {
+      flex: 5;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .remixer-messages {
+        overflow: scroll;
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+
+        .remixer-message {
+          display: block;
+          border-radius: 8px;
+          padding: 5px 10px 5px 10px;
+          margin-bottom: 20px;
+          max-width: 80%;
+          width: auto;
+
+          &.bot {
+            border: 2px dashed var(--c-accent-tertiary);
+            margin-right: 30px;
+            align-self: flex-start;
+          }
+
+          &.user {
+            border: 2px solid var(--c-accent-tertiary);
+            float: right;
+            margin-left: 30px;
+            align-self: flex-end;
+          }
+        }
+      }
+
+      .remixer-input {
+        width: 95%;
+        height: 1.5em;
+        background-color: var(--c-bg-secondary); 
+        border-radius: 14px;
+        padding: 10px;
+        align-self: center;
+
+        textarea {
+          background-color: inherit;
+          border: none;
+          height: 100%;
+          width: 90%;
+          resize: none;
+          padding-left: 5px;
+          color: var(--c-text);
+
+          &:focus-visible {
+            outline: none;
+          }
+        }
+
+        button {
+          float: right;
+          border: none;
+        }
+      }
+
+      .remixer-warning {
+        margin-top: 15px;
+        font-size: 20pt;
+      }
+      
+    }
+  }
+}
+
+.remixer-page > section > h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+

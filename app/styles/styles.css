@@ -2,11 +2,17 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    /* daaark gray */
     --c-bg: #1C1B1B;
+    /* daaark maroon */
     --c-bg-secondary: #331F29;
+    /* creamy white */
     --c-text: #F2EEE5;
+    /* light blue */
     --c-accent-primary: #C8D7DE;
+    /* light purple */
     --c-accent-secondary: #8E5572;
+    --c-accent-tertiary: #3E3C3C;
   }
 }
 
@@ -60,6 +66,12 @@ h2 {
 
 h3 {
   font-size: 60px;
+}
+
+textarea {
+  font-family: var(--f-dongle);
+  font-size: 25px;
+  line-height: 20px;
 }
 
 nav > ul {
