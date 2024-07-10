@@ -1,3 +1,5 @@
+"use client"
+
 import '../styles/footer.css'
 import Link from 'next/link'
 import MenuNav from './MenuNav.jsx'

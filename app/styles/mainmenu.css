@@ -51,8 +51,8 @@ header {
     &> path {
       stroke: var(--c-text);
       transition: stroke-dashoffset 1.5s ease-in-out;
-      stroke-dasharray: 526 526;
-      stroke-dashoffset: 526;
+      stroke-dasharray: 526.877 526.877;
+      stroke-dashoffset: 526.877;
 
     }
   }

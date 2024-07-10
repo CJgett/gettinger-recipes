@@ -1,27 +1,15 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Image from 'next/image'
 import recipePic from '../../assets/img/youtube_profile_v1.png'
 
+import Image from 'next/image'
+// my components
 import DecorativeArches from './DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
 import DirectionList from './DirectionList.jsx'
 import Toggle from './Toggle.jsx'
 
 export default function RecipeCard() {
-
-  // draw the arches by setting the dashoffset of the path to 0
-  useEffect(() => {
-    if (document.readyState === 'complete') {
-      const allArches = Array.from(document.querySelectorAll('.decorative-arches'));
-      allArches.forEach((svg) => {
-       Array.from(svg.children).forEach((path) => 
-        path.style.strokeDashoffset = '0'
-       );
-      });
-    }
-  });
 
   return (
     <div className="recipe-card">

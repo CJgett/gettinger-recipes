@@ -52,13 +52,11 @@
 
       :first-child {
         stroke-dasharray: 211.856 211.856;
-        stroke-dashoffset: 211.856;
         transition: stroke-dashoffset 1s ease-in-out;
       }
 
       :nth-child(2) {
         stroke-dasharray: 384.484 384.484;
-        stroke-dashoffset: 384.484;
         transition: stroke-dashoffset 1.5s ease-in-out;
       }
     }

@@ -11,10 +11,13 @@ footer {
     rotate: -20deg;
     display: block;
     pointer-events: none;
+    min-width: 2200px;
 
     &> path {
       opacity: 0.1;
       stroke: var(--c-bg);
+      stroke-dasharray: 5557.063 5557.063;
+      transition: stroke-dashoffset 4s ease-in-out;
     }
   }
 
