@@ -5,7 +5,7 @@
 
   .remixer {
     box-sizing: border-box;
-    border: 8px solid var(--c-accent-tertiary);
+    border: 8px solid var(--c-accent-secondary);
     border-radius: 40px;
     width: 70%;
     height: 85vh;
@@ -14,7 +14,7 @@
 
     .remixer-sidebar {
       flex: 3;
-      border-right: 4px solid var(--c-accent-tertiary);
+      border-right: 4px solid var(--c-accent-secondary);
       padding: 25px 0px 25px 0px;
 
       > * {
@@ -76,13 +76,13 @@
           width: auto;
 
           &.bot {
-            border: 2px dashed var(--c-accent-tertiary);
+            border: 2px dashed var(--c-accent-secondary);
             margin-right: 30px;
             align-self: flex-start;
           }
 
           &.user {
-            border: 2px solid var(--c-accent-tertiary);
+            border: 2px solid var(--c-accent-secondary);
             float: right;
             margin-left: 30px;
             align-self: flex-end;
