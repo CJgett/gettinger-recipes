@@ -16,12 +16,27 @@
       flex: 3;
       border-right: 4px solid var(--c-accent-secondary);
       padding: 25px 0px 25px 0px;
+      overflow-y: scroll;
+      transition: flex-grow .25s linear, opacity .15s linear .1s;
+      opacity: 1;
 
       > * {
         padding: 0px 25px 0px 25px;
+        opacity: 1;
+        transition: opacity .1s linear .15s;
       }
 
-      .sidebar-header {
+      &.collapsed {
+        flex-grow: 0;
+        transition: flex-grow .25s linear;
+        border:none;
+        opacity: 0;
+        > * {
+          display:none;
+        }
+      }
+
+      .sidebar-controls {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -44,6 +59,10 @@
 
         li {
           padding: 0px 25px 0px 25px;
+
+          &.current-recipe {
+            background-color: rgba(255,255,255,0.3);
+          }
           
           &:hover {
             background-color: rgba(255,255,255,0.3);
@@ -59,6 +78,28 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      .remixer-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        button {
+          border: none;
+          font-size: 50px;
+          line-height: 50px;
+          width: 50px;
+
+          &.expand-sidebar.collapsed {
+            rotate: 180deg;
+          }
+
+          &:hover {
+            background-color: rgba(255,255,255,0.3);
+          }
+        }
+      }
 
       .remixer-messages {
         overflow: scroll;
