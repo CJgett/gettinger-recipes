@@ -1,43 +1,49 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import '../styles/toggle.css'
 
 export default function ThemeToggle() {
 
   // true = use dark mode
-  const [theme, setTheme] = React.useState(null);
+  const [theme, setTheme] = React.useState("null");
 
   function toggleThemePreference() {
-    setTheme(!theme);
-    if (document.documentElement.classList.contains("dark-mode")) {
-      document.documentElement.classList.remove("dark-mode");
-      document.documentElement.classList.add("light-mode");
+    let deffoThemeAsBool = theme;
+    if (typeof deffoThemeAsBool === "string") {
+      deffoThemeAsBool = (theme === "true");
+    }
+    setTheme(!deffoThemeAsBool);
+    const docClassList = document.documentElement.classList;
+    if (docClassList.contains("dark-mode")) {
+      docClassList.remove("dark-mode");
+      docClassList.add("light-mode");
     } else {
-      document.documentElement.classList.remove("light-mode");
-      document.documentElement.classList.add("dark-mode");
+      docClassList.remove("light-mode");
+      docClassList.add("dark-mode");
     }
   }
 
   // set initial state for the checkbox and add the initial theme class based on the user's browser preference
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (document.readyState === 'complete') {
-      if(!(document.documentElement.classList.contains("dark-mode") || document.documentElement.classList.contains("light-mode"))) { 
+      const docClassList = document.documentElement.classList;
+      if(!(docClassList.contains("dark-mode") || docClassList.contains("light-mode"))) { 
         const themePrefLocalStorage = window.localStorage.getItem('themePreference');
         // set dark mode variables if user preference is set to dark mode in local storage or browser preference
         // the variable in local storage gets precedence
-        if (themePrefLocalStorage === "true" || (themePrefLocalStorage === "null" && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (themePrefLocalStorage === "true" || (themePrefLocalStorage === "null" && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add("dark-mode");
             const toggleCheckbox = document.querySelector(".toggle-checkbox");
             toggleCheckbox.checked = true;
             setTheme(true);
         } else {
-          document.documentElement.classList.add("light-mode");
+          docClassList.add("light-mode");
           setTheme(false);
         }
       }
     }
-  });
+  },[]);
 
   React.useEffect(()=>{
     window.localStorage.setItem('themePreference', theme)
