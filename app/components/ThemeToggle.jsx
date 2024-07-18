@@ -32,13 +32,14 @@ export default function ThemeToggle() {
         const themePrefLocalStorage = window.localStorage.getItem('themePreference');
         // set dark mode variables if user preference is set to dark mode in local storage or browser preference
         // the variable in local storage gets precedence
-        if (themePrefLocalStorage === "true" || (themePrefLocalStorage === "null" && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (themePrefLocalStorage === "true" || ((themePrefLocalStorage === null || themePrefLocalStorage === "null") && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add("dark-mode");
             const toggleCheckbox = document.querySelector(".toggle-checkbox");
             toggleCheckbox.checked = true;
             setTheme(true);
         } else {
           docClassList.add("light-mode");
+          console.log(themePrefLocalStorage);
           setTheme(false);
         }
       }
