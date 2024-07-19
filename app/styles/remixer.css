@@ -1,3 +1,27 @@
+@keyframes slideup {
+  0% {opacity:0;
+      transform: translate(0, 20px);}
+  25% {opacity:.25;
+      transform: translate(0, 15px);}
+  50% {opacity:.5;
+      transform: translate(0, 10px);}
+  75% {opacity:.75;
+      transform: translate(0, 5px);}
+  100% {opacity:1;}
+}
+
+@keyframes slideright {
+  0% {opacity:0;
+      transform: translate(-50px, 0);}
+  25% {opacity:.25;
+      transform: translate(-35px, 0);}
+  50% {opacity:.5;
+      transform: translate(-20px, 0);}
+  75% {opacity:.75;
+      transform: translate(-5px, 0);}
+  100% {opacity:1;}
+}
+
 .remixer-container {
   display: flex;
   flex-direction: column;
@@ -16,46 +40,32 @@
       flex: 3;
       border-right: 4px solid var(--c-accent-secondary);
       padding: 25px 0px 25px 0px;
-      overflow-y: scroll;
-      transition: flex-grow .25s linear, opacity .15s linear .1s;
+      transition: flex-grow .25s linear, opacity .15s linear 5s;
       opacity: 1;
+      overflow: hidden;
 
       > * {
         padding: 0px 25px 0px 25px;
         opacity: 1;
-        transition: opacity .1s linear .15s;
+        transition: opacity .15s linear 5s;
       }
 
       &.collapsed {
         flex-grow: 0;
         transition: flex-grow .25s linear;
         border:none;
-        opacity: 0;
         > * {
           display:none;
-        }
-      }
-
-      .sidebar-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        button {
-          border: none;
-          font-size: 50px;
-          line-height: 50px;
-          width: 50px;
-
-          &:hover {
-            background-color: rgba(255,255,255,0.3);
-          }
+          opacity: 0;
+          transition: opacity .15s linear 5s;
         }
       }
 
       .saved-recipes-list {
+        overflow-y: auto;
         padding-left: 0px;
         padding-right: 0px;
+        height: calc(100% - 60px);
 
         li {
           padding: 0px 25px 0px 25px;
@@ -79,54 +89,90 @@
       flex-direction: column;
       justify-content: space-between;
 
-      .remixer-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
+      .remixer-display-container {
+        min-height:0;
+        overflow: hidden;
+        margin-bottom: 10px;
 
-        button {
-          border: none;
-          font-size: 50px;
-          line-height: 50px;
-          width: 50px;
+        .remixer-controls {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+          padding: 5px;
 
-          &.expand-sidebar.collapsed {
-            rotate: 180deg;
-          }
+          button {
+            border: none;
+            font-size: 50px;
+            line-height: 50px;
+            width: 50px;
 
-          &:hover {
-            background-color: rgba(255,255,255,0.3);
+            &.expand-sidebar.collapsed {
+              rotate: 180deg;
+            }
+
+            &:hover {
+              background-color: rgba(255,255,255,0.3);
+            }
           }
         }
-      }
 
-      .remixer-messages {
-        overflow: scroll;
-        align-self: center;
-        display: flex;
-        flex-direction: column;
-        width: 95%;
+        .remixer-messages {
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          padding: 0px 10px 0px 5px;
+          max-height: calc(100% - 3em);;
 
-        .remixer-message {
-          display: block;
-          border-radius: 8px;
-          padding: 5px 10px 5px 10px;
-          margin-bottom: 20px;
-          max-width: 80%;
-          width: auto;
+          .remixer-message {
+            display: block;
+            border-radius: 8px;
+            padding: 10px 10px 5px 10px;
+            margin-bottom: 20px;
+            max-width: 80%;
+            width: auto;
 
-          &.bot {
-            border: 2px dashed var(--c-accent-secondary);
-            margin-right: 30px;
-            align-self: flex-start;
-          }
+            div{
+              display: flex;
+              flex-direction: row;
+            }
 
-          &.user {
-            border: 2px solid var(--c-accent-secondary);
-            float: right;
-            margin-left: 30px;
-            align-self: flex-end;
+            &.bot {
+              border: 2px dashed var(--c-accent-secondary);
+              margin-right: 30px;
+              align-self: flex-start;
+
+              &:last-child {
+                > * {
+              
+                }
+                .in-view {
+                  .slide-in{
+                    display: inline-block;
+                    opacity: 0;
+                    animation: slideup .5s;
+                    animation-timing-function: linear;
+                    animation-fill-mode: forwards;
+                  }
+                  .slide-over {
+                    display: inline-block;
+                    opacity:0;
+                    animation: slideright 1s .5s;
+                    animation-timing-function: linear;
+                    animation-fill-mode: forwards;
+                  }
+                }
+              }
+            }
+
+            &.user {
+              border: 2px solid var(--c-accent-secondary);
+              float: right;
+              margin-left: 30px;
+              align-self: flex-end;
+            }
+
+            
           }
         }
       }
@@ -137,7 +183,6 @@
         background-color: var(--c-bg-secondary); 
         border-radius: 14px;
         padding: 10px;
-        align-self: center;
 
         textarea {
           background-color: inherit;
@@ -172,4 +217,6 @@
   text-align: center;
   margin-bottom: 25px;
 }
+
+
 

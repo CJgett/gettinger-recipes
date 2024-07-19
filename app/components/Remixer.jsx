@@ -1,10 +1,16 @@
 "use client"
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useInView, InView } from 'react-intersection-observer'
 
 export default function Remixer() {
 
-  /* setup textarea input */ 
+  const { messageRef, inView } = useInView ({
+    triggerOnce: true,
+  });
 
+/* TODO save stuff in local storage OR just straight up do cookies?*/
+
+  /* setup textarea input */ 
   const [textareaValue, setTextareaValue] = useState("");
 
   function handleTextareaChange(event) {
@@ -12,15 +18,43 @@ export default function Remixer() {
   }
 
   /* setup array of chat arrays (Saved Recipes) */
-  const initMessage = {"botOrUser":"bot", "messageText":`hello! how can i help you remix your recipe? :)`};
+  const initMessage = {"botOrUser":"bot", "botAnimText": "hello!", "messageText":"how can i help you remix your recipe? :)"};
   const [allChatsArray, setAllChatsArray] = useState(new Array(new Array (initMessage)));
 
   const [currentChatID, setCurrentChatID] = useState(0);
+
+
+  // use to get data from local storage only once.
+  let setupDone = false;
+
+  /* setup variables from local storage */
+  useEffect(() => {
+    if(document.readyState === 'complete' && setupDone == false) {
+      setupDone = true;
+      const chatsFromLocalStorage = JSON.parse(window.localStorage.getItem('chatsFromLocalStorage'));
+
+      console.log(chatsFromLocalStorage);
+      let lastChatID = JSON.parse(window.localStorage.getItem('lastChatID')); 
+      console.log(lastChatID);
+      if (chatsFromLocalStorage !== 'undefined' && chatsFromLocalStorage !== null ) {
+        if(lastChatID > chatsFromLocalStorage.length) {
+          lastChatID = 0;
+        }
+        setAllChatsArray(chatsFromLocalStorage);
+        setCurrentChatID(lastChatID);
+        console.log(allChatsArray);
+        console.log(currentChatID);
+        console.log(allChatsArray[currentChatID]);
+      }
+    }
+  },[]);
 
   function updateAllChatsArray(newMessage) {
     let newAllChatsArray = allChatsArray.slice();
     newAllChatsArray[currentChatID] = [...newAllChatsArray[currentChatID], newMessage];
     setAllChatsArray(newAllChatsArray);
+    window.localStorage.setItem('chatsFromLocalStorage', JSON.stringify(newAllChatsArray));
+    window.localStorage.setItem('lastChatID', currentChatID);
   }
 
   const textareaRef = useRef(null);
@@ -37,12 +71,11 @@ export default function Remixer() {
     const newCurrentChatID = e.target.dataset.key;
     const oldCurrentChatID = currentChatID;
     setCurrentChatID(newCurrentChatID);
+    window.localStorage.setItem('lastChatID', newCurrentChatID);
 
-    /*TODO delete newest remix if there's no new chats*/
     if (allChatsArray[oldCurrentChatID].length == 1) {
       allChatsArray.pop();
     }
-
   }
     
   /* what to do when a user sends a message 
@@ -52,8 +85,8 @@ export default function Remixer() {
     updateAllChatsArray({"botOrUser":"user", "messageText":textareaValue});
     setTextareaValue("");
     textareaRef.current.focus();
+    window.localStorage.setItem('lastChatID', currentChatID);
   }
-
   
   function toggleSidebar() {
     const sidebarClasses = document.querySelector(".remixer-sidebar").classList;
@@ -75,45 +108,45 @@ export default function Remixer() {
     <div className="remixer-container">
       <div className="remixer">
         <div className="remixer-sidebar">
-                    <h3>Saved Recipes</h3> 
+          <h3>Saved Recipes</h3> 
           <ul className="saved-recipes-list">
             {allChatsArray.map(
               function(currentChat, index) {
                 return(
-                 <li className={`${index == currentChatID ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick}>Saved Recipe #{index + 1}</li> 
+                 <li className={`${index == currentChatID ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick} tabIndex="0">Saved Recipe #{index + 1}</li> 
                 );
               }
             )}
           </ul>
         </div>
         <div className="remixer-chatbox">
+          <div className="remixer-display-container">
+            <div className="remixer-controls">
+              <button title="collapse sidebar" className="expand-sidebar" onClick={toggleSidebar} >&lt;</button>
+              <h3>Saved Recipe #{parseFloat(currentChatID) + 1}</h3>
+              <button title="start new remix!" className="new-remix-button"  onClick={startNewRemix} disabled={allChatsArray[currentChatID].length === 1 ? true : false}>&#43;</button>
+            </div>
+            <div className="remixer-messages">
+              {allChatsArray[currentChatID].map(
+                function(message,index) {
+                  return(
+                    <div  key={index} className={`remixer-message ${message.botOrUser}`}> 
+                    {message.botOrUser == "bot" ? (<InView as="div" className="in-view" onChange={(inView, entry, ref) => console.log(entry)} triggerOnce="true">{({ inView, ref, entry }) => (<div ref={ref} className={inView ? "in-view" : ""}> <span className="slide-in">{message.botAnimText}&nbsp;</span> <span className="slide-over">{message.messageText}</span></div>)}</InView>) : <span>{message.messageText}</span>}
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          </div>
           <div>
-          <div className="remixer-controls">
-            <button title="collapse sidebar" className="expand-sidebar" onClick={toggleSidebar} >&lt;</button>
-            <h3>Saved Recipe #{parseFloat(currentChatID) + 1}</h3>
-            <button title="start new remix!" className="new-remix-button"  onClick={startNewRemix} disabled={allChatsArray[currentChatID].length === 1 ? true : false}>&#43;</button>
+            <form className="remixer-input" onSubmit={sendMessage}>
+              <textarea value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="start chatting with the remixer here"></textarea>
+              <button type="submit" onClick={sendMessage} disabled={(textareaValue === "") ? true : false}>&crarr;</button>
+            </form>
+            <div className="remixer-warning">
+            All chatbots can make mistakes. Please use responsibly.
+            </div>
           </div>
-          <div className="remixer-messages">
-            {allChatsArray[currentChatID].map(
-              function(message,index) {
-                return(
-                  <div key={index} className={`remixer-message ${message.botOrUser}`}>
-                  {message.messageText} 
-                  </div>
-                );
-              }
-            )}
-          </div>
-          </div>
-          <div>
-          <form className="remixer-input" onSubmit={sendMessage}>
-            <textarea value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="start chatting with the remixer here"></textarea>
-            <button type="submit" onClick={sendMessage} disabled={(textareaValue === "") ? true : false}>&crarr;</button>
-          </form>
-          <div className="remixer-warning">
-          All chatbots can make mistakes. Please use responsibly.
-          </div>
-        </div>
         </div>
       </div>
     </div>
