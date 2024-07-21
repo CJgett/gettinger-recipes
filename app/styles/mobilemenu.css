@@ -1,0 +1,34 @@
+.off-canvas-menu {
+  box-sizing: border-box;
+  background-color: rgb(var(--c-accent-secondary-rgb), 0.95); 
+  position: fixed;
+  top: 0;
+  right:0;
+  width: 320px;
+  max-width: 100%;
+  height: 100%;
+  z-index: 99;
+  padding: 45px 80px 30px 60px;
+  transition: right .3s linear;
+  -webkit-mask: var(--mask-scallop-left);
+  mask: var(--mask-scallop-left);
+
+  &.hide {
+    right: -100vw;
+    transition: right .3s linear;
+  }
+
+  h1 {
+   font-size: 70px; 
+  }
+
+  .theme-toggle {
+    display: inline-block;
+    top: unset;
+    left: 40%;
+
+    .toggle-button {
+      background: var(--c-text);
+    }
+  }
+}

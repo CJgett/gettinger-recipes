@@ -13,6 +13,10 @@ header {
   text-decoration: none;
   color: var(--c-text);
 
+  &:not(:has(h1)) {
+    line-height: 40px;
+  }
+
     &:hover {
       opacity: .7;
         &:not(:has(h1)) {
@@ -35,7 +39,6 @@ header {
       stroke: var(--c-text);
       fill: var(--c-text);
     }
-
   }
 
   #wink {
@@ -54,6 +57,61 @@ header {
       stroke-dasharray: 526.877 526.877;
       stroke-dashoffset: 526.877;
 
+    }
+  }
+
+  .hamburger {
+    height: 25px;
+    width: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: fixed;
+    top: 50px;
+    right: 30px;
+    z-index: 200;
+    padding: 5px;
+
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(var(--c-text-rgb),0.3);
+      border-radius: 8px;
+    }
+
+    &:not(.hide) {
+      justify-content: space-between;
+
+      .hamburger-line{
+        transition: transform .3s linear;
+        width: 28px;
+
+        &:first-child {
+          transform-origin:  bottom left;
+          transform: rotate(45deg);
+        }
+
+        &:nth-child(2) {
+          visibility: hidden;
+        }
+
+        &:last-child {
+          transform-origin:  top left;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    .hamburger-line {
+      height: 4px;
+      width: 25px;
+      background-color: var(--c-text);
+      pointer-events:none;
+      transition: transform .3s linear, visibility .01s .29s;
+      border-radius: 4px;
     }
   }
 }
