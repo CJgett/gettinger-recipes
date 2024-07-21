@@ -5,6 +5,9 @@
     radial-gradient(59.17px at 81px 50%,#000 99%,#0000 101%) 0 calc(50% - 60px)/100% 120px,
     radial-gradient(59.17px at -51px 50%,#0000 99%,#000 101%) 30px 50%/100% 120px repeat-y;
 
+--mask-scallop-top:
+    radial-gradient(59.17px at 50% 81px,#000 99%,#0000 101%) calc(50% - 60px) 0/120px 100%,
+    radial-gradient(59.17px at 50% -51px,#0000 99%,#000 101%) 50% 30px/120px 100% repeat-x;
 }
 
 @media (prefers-color-scheme: dark) {

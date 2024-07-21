@@ -12,6 +12,15 @@
   transition: right .3s linear;
   -webkit-mask: var(--mask-scallop-left);
   mask: var(--mask-scallop-left);
+  color: #F2EEE5 !important;
+
+  a {
+    color: #F2EEE5;
+
+    &:not(:has(h1)):hover {
+      border-bottom: 1px solid #F2EEE5;
+    }
+  }
 
   &.hide {
     right: -100vw;
