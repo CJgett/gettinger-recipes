@@ -11,7 +11,7 @@ import ThemeToggle from './ThemeToggle.jsx'
 import MenuNav from './MenuNav.jsx'
 import OffCanvasMenu from './OffCanvasMenu.jsx'
 import Hamburger from './Hamburger'
-import Smile from './Smile'
+import StickyMenu from './StickyMenu'
 import Mouth from './Mouth'
 
 export default function MainMenu() {
@@ -34,14 +34,16 @@ export default function MainMenu() {
   return(
     <InView as="div" className="in-view-smile-trigger" onChange={(inView) => lowerSmile(inView)}>
     <header>
-      <Smile />
       <Eyes />
-      <Link href="/"><h1>A Pinch of 한미</h1></Link>
-      <MenuNav /> 
+      <div className="sticky-part">
+        <Link href="/"><h1>A Pinch of 한미</h1></Link>
+        <MenuNav /> 
+      </div>
       <Mouth optionalID={'main-mouth'}/>
       <ThemeToggle />
       <Hamburger />
       <OffCanvasMenu />
+      <StickyMenu />
     </header>
     </InView>
   );

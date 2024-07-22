@@ -2,7 +2,7 @@ header {
   text-align: center;
   padding: 50px;
 
-  &> nav > ul {
+  ul {
     padding-top: 15px;
     display: flex;
     justify-content: center;
@@ -12,6 +12,7 @@ header {
   a {
     text-decoration: none;
     color: var(--c-text);
+    transition: opacity 0.1s;
 
     &:not(:has(h1)) {
       line-height: 40px;
@@ -19,6 +20,7 @@ header {
 
     &:hover {
       opacity: .7;
+      transition: opacity 0.1s;
         &:not(:has(h1)) {
         border-bottom: solid 2px var(--c-text);
       }
@@ -90,7 +92,7 @@ header {
         width: 28px;
 
         &:first-child {
-          transform-origin:  bottom left;
+          transform-origin: bottom left;
           transform: rotate(45deg);
         }
 
@@ -115,77 +117,125 @@ header {
     }
   }
 
-  .travelling-smile {
-    position: fixed;
-    bottom: 100vh; 
-    visibility: hidden;
-    left: 50px;
-    z-index: 30;
-    transition: bottom ease-in-out .3s, visibility .1s linear .3s;
+  &:has(> .sticky-menu > .visible) {
+    padding: 0px;
+  }
 
-    &.visible {
-      bottom: calc(100vh - 175px);
-      visibility: visible;
-      transition: bottom ease-in-out .3s;
+  .sticky-menu {
+    @media only screen and (max-width: 768px) { 
+      visibility: hidden;
+  }
+
+    visibility: visible;
+
+    &:not(:has(.visible)) {
+      visibility: hidden;
     }
 
-    svg {
-      opacity: 0.3;
-      transition: opacity ease-in-out 1s;
-    }
+    .travelling-smile {
+      position: fixed;
+      bottom: 100vh; 
+      visibility: hidden;
+      left: 50px;
+      z-index: 30;
+      transition: bottom ease-in-out .3s, visibility .1s linear .3s;
 
-    a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-
-      &:hover {
-        border: none;
+      &:not(.visible) {
+        &~ .sticky-part {
+          position: fixed;
+          top: 150px;
+        }
       }
-    }
 
-    .eyes {
-      width: 100px;
-      height: 75px;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: -20px;
+      &.visible {
+        bottom: calc(100vh - 150px);
+        visibility: visible;
+        transition: bottom ease-in-out .3s;
+
+        path {
+          stroke-dashoffset: 0;
+        }
+
+        &~ .sticky-part {
+          display: flex;
+          position: fixed;
+          top: -150px;
+          width: calc(100vw);
+          padding: 15px 50px 35px 200px;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          z-index: 28;
+          transform: translate(0px, 149px);
+          transition: transform linear .3s .3s;
+          background-color: rgb(var(--c-bg-rgb), 0.5);
+          backdrop-filter: blur(13px);
+          mask: var(--mask-scallop-bottom);
+
+          ul {
+            padding-top: 0px;
+          }
+        }
+      }
 
       svg {
-        height: 100%;
-        width: 30%;
-        flex-shrink: 0;
-      }
-    }
-
-    .mouth {
-      pointer-events: all;
-      width: 100px;
-      height: 70px;
-      margin-top: 20px;
-      margin-bottom: -15px;
-
-      path {
-        transition: none;
-        stroke-dashoffset: 0;
-      }
-      
-    }
-
-  
-    &.in-footer {
-      bottom: 100px;
-      transition: bottom ease-in-out .5s;
-
-      svg {
-        opacity: 1;
+        opacity: 0.8;
         transition: opacity ease-in-out 1s;
       }
 
-      @media only screen and (max-width: 768px) {
-        left: calc(50% - 60px);
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+
+        &:hover {
+          border: none;
+        }
+      }
+
+      .eyes {
+        width: 100px;
+        height: 75px;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: -20px;
+
+        svg {
+          height: 100%;
+          width: 30%;
+          flex-shrink: 0;
+        }
+      }
+
+      .mouth {
+        pointer-events: all;
+        width: 100px;
+        height: 70px;
+        margin-top: 20px;
+        margin-bottom: -15px;
+      }
+    
+      &.in-footer {
+        bottom: 100px;
+        transition: bottom ease-in-out .3s;
+
+        &~ .sticky-part {
+          transform: translate(0px, 0px);
+          transition: transform linear .3s .3s;
+
+        }
+
+        svg {
+          opacity: 1;
+          transition: opacity ease-in-out 1s;
+        }
+
+        @media only screen and (max-width: 768px) {
+          left: calc(50% - 60px);
+          transition: left linear .3s , bottom linear .3s;
+        }
       }
     }
   }
