@@ -132,10 +132,6 @@
             max-width: 80%;
             width: auto;
 
-            div{
-              display: flex;
-              flex-direction: row;
-            }
 
             &.bot {
               border: 2px dashed var(--c-accent-secondary);

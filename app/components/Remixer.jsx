@@ -131,7 +131,7 @@ export default function Remixer() {
                 function(message,index) {
                   return(
                     <div  key={index} className={`remixer-message ${message.botOrUser}`}> 
-                    {message.botOrUser == "bot" ? (<InView as="div" className="in-view" onChange={(inView, entry, ref) => console.log(entry)} triggerOnce="true">{({ inView, ref, entry }) => (<div ref={ref} className={inView ? "in-view" : ""}> <span className="slide-in">{message.botAnimText}&nbsp;</span> <span className="slide-over">{message.messageText}</span></div>)}</InView>) : <span>{message.messageText}</span>}
+                    {message.botOrUser == "bot" ? (<InView as="div" className="in-view" onChange={(inView, entry, ref) => console.log(entry)} triggerOnce="true">{({ inView, ref, entry }) => (<div ref={ref} className={inView ? "in-view" : ""}> <p className="slide-in">{message.botAnimText}&nbsp;</p> <p className="slide-over">{message.messageText}</p></div>)}</InView>) : <span>{message.messageText}</span>}
                     </div>
                   );
                 }
