@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
+import { useInView, InView } from 'react-intersection-observer'
 
 import '../styles/mainmenu.css'
 
@@ -15,15 +16,23 @@ import Mouth from './Mouth'
 
 export default function MainMenu() {
 
-  const ref = useRef(null);
-
   useEffect(() => {
     if (document.readyState === 'complete') {
       document.getElementById('main-mouth').firstChild.style.strokeDashoffset = '0';
     }
   });
+  
+  function lowerSmile(navIsVisible) {
+    const travellingSmileClasses = document.querySelector(".travelling-smile").classList;  
+    if (navIsVisible == true || navIsVisible == "true") {
+      travellingSmileClasses.remove("visible");
+    } else {
+      travellingSmileClasses.add("visible");
+    }
+  }
 
   return(
+    <InView as="div" className="in-view-smile-trigger" onChange={(inView) => lowerSmile(inView)}>
     <header>
       <Smile />
       <Eyes />
@@ -34,5 +43,6 @@ export default function MainMenu() {
       <Hamburger />
       <OffCanvasMenu />
     </header>
+    </InView>
   );
 }

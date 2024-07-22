@@ -117,12 +117,21 @@ header {
 
   .travelling-smile {
     position: fixed;
-    top: 50px;
-    left: 30px;
+    bottom: 100vh; 
+    visibility: hidden;
+    left: 50px;
     z-index: 30;
+    transition: bottom ease-in-out .3s, visibility .1s linear .3s;
+
+    &.visible {
+      bottom: calc(100vh - 175px);
+      visibility: visible;
+      transition: bottom ease-in-out .3s;
+    }
 
     svg {
-      opacity: 0.2;
+      opacity: 0.3;
+      transition: opacity ease-in-out 1s;
     }
 
     a {
@@ -135,6 +144,7 @@ header {
         border: none;
       }
     }
+
     .eyes {
       width: 100px;
       height: 75px;
@@ -164,7 +174,20 @@ header {
       
     }
 
-    
+  
+    &.in-footer {
+      bottom: 100px;
+      transition: bottom ease-in-out .5s;
+
+      svg {
+        opacity: 1;
+        transition: opacity ease-in-out 1s;
+      }
+
+      @media only screen and (max-width: 768px) {
+        left: calc(50% - 60px);
+      }
+    }
   }
 }
 

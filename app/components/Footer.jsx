@@ -1,11 +1,24 @@
 "use client"
 
+import { useInView, InView } from 'react-intersection-observer'
+
 import '../styles/footer.css'
 import Link from 'next/link'
 import MenuNav from './MenuNav.jsx'
 import Squiggle from './Squiggle.jsx'
 
+
 export default function Footer() {
+
+  function moveSmile(footerInView) {
+    const travellingSmileClasses = document.querySelector(".travelling-smile").classList;  
+    if (footerInView == true || footerInView == "true") {
+      travellingSmileClasses.add("in-footer");
+    } else {
+      travellingSmileClasses.remove("in-footer");
+    }
+  }
+
   return (
     <footer>
       <Squiggle />
@@ -38,9 +51,12 @@ export default function Footer() {
         </div>
       </div>
       </div>
+      <InView as="div" className="in-view-smile-trigger" onChange={(inView) => moveSmile(inView)}>
       <div className="footer-container footer-copyright">
         <p>&#169; 2024 A Pinch of 한미 | Website by Carly Gettinger</p>
       </div>
+    </InView>
     </footer>
   );
+
 }

@@ -3,6 +3,7 @@ footer {
   color: #F2EEE5;
   position:relative;
   overflow: hidden;
+  padding: 50px;
 
   &> #big-squiggle {
     position: absolute;
@@ -25,7 +26,6 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 50px;
     gap: 50px;
 
     @media only screen and (max-width: 1024px) {
@@ -74,8 +74,10 @@ footer {
       }
     }
 
-    &.footer-copyright {
-      font-size: 20px;
-    }
+    
   }
+  .footer-copyright {
+      font-size: 20px;
+      margin-top: 175px;
+    }
 }

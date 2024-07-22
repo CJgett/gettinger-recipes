@@ -4,10 +4,6 @@ import { useInView, InView } from 'react-intersection-observer'
 
 export default function Remixer() {
 
-  const { messageRef, inView } = useInView ({
-    triggerOnce: true,
-  });
-
 /* TODO save stuff in local storage OR just straight up do cookies?*/
 
   /* setup textarea input */ 
@@ -131,7 +127,7 @@ export default function Remixer() {
                 function(message,index) {
                   return(
                     <div  key={index} className={`remixer-message ${message.botOrUser}`}> 
-                    {message.botOrUser == "bot" ? (<InView as="div" className="in-view" onChange={(inView, entry, ref) => console.log(entry)} triggerOnce="true">{({ inView, ref, entry }) => (<div ref={ref} className={inView ? "in-view" : ""}> <p className="slide-in">{message.botAnimText}&nbsp;</p> <p className="slide-over">{message.messageText}</p></div>)}</InView>) : <span>{message.messageText}</span>}
+                    {message.botOrUser == "bot" ? (<InView as="div" triggerOnce="true">{({ inView, ref }) => (<div ref={ref} className={inView ? "in-view" : ""}> <p className="slide-in">{message.botAnimText}&nbsp;</p> <p className="slide-over">{message.messageText}</p></div>)}</InView>) : <span>{message.messageText}</span>}
                     </div>
                   );
                 }
