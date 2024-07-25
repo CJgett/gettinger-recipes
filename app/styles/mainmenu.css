@@ -181,6 +181,10 @@ header {
       svg {
         opacity: 0.8;
         transition: opacity ease-in-out 1s;
+
+        path {
+          transition: fill 1s, stroke 1s;
+        }
       }
 
       a {
@@ -230,6 +234,16 @@ header {
         svg {
           opacity: 1;
           transition: opacity ease-in-out 1s;
+          stroke: green;
+          
+          path {
+            stroke: #F2EEE5;
+            transition: fill 1s, stroke 1s;
+          }
+
+          &:not(.mouth) > path {
+            fill: #F2EEE5;
+          }
         }
 
         @media only screen and (max-width: 768px) {
