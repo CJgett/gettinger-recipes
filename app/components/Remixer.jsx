@@ -1,10 +1,9 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
 import { useInView, InView } from 'react-intersection-observer'
+import { accessToken } from '../../ignore/huggingface_accesstoken'
 
 export default function Remixer() {
-
-/* TODO save stuff in local storage OR just straight up do cookies?*/
 
   /* setup textarea input */ 
   const [textareaValue, setTextareaValue] = useState("");
@@ -29,18 +28,13 @@ export default function Remixer() {
       setupDone = true;
       const chatsFromLocalStorage = JSON.parse(window.localStorage.getItem('chatsFromLocalStorage'));
 
-      console.log(chatsFromLocalStorage);
       let lastChatID = JSON.parse(window.localStorage.getItem('lastChatID')); 
-      console.log(lastChatID);
       if (chatsFromLocalStorage !== 'undefined' && chatsFromLocalStorage !== null ) {
         if(lastChatID > chatsFromLocalStorage.length) {
           lastChatID = 0;
         }
         setAllChatsArray(chatsFromLocalStorage);
         setCurrentChatID(lastChatID);
-        console.log(allChatsArray);
-        console.log(currentChatID);
-        console.log(allChatsArray[currentChatID]);
       }
     }
   },[]);
@@ -73,12 +67,39 @@ export default function Remixer() {
       allChatsArray.pop();
     }
   }
+
+  function concatAllChats() {
+    let allChats = "";
+    allChatsArray[currentChatID].forEach((message) => {
+      allChats = allChats + " " + message.messageText;
+    });
+    return allChats;
+  }
     
   /* what to do when a user sends a message 
    * (update the chats array, reset textarea, focus text area)*/
+  async function queryAndUpdate(textareaValue) {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
+    const toSend = "Hi! It's nice talking to you :) what is your response to the folllowing message? please dont say you don't know how to: " + textareaValue;
+    const response = await fetch(
+        "https://api-inference.huggingface.co/models/mistralai/Mistral-Nemo-Instruct-2407",
+        {
+            headers: myHeaders,
+            method: "POST",
+            body: JSON.stringify({inputs: toSend}),
+        }
+    );
+    const result = await response.json();
+    updateAllChatsArray({"botOrUser":"bot", "botAnimText":"Here's my response: " ,"messageText":result[0].generated_text});
+  }
+
+
   function sendMessage (e) { 
     e.preventDefault();
     updateAllChatsArray({"botOrUser":"user", "messageText":textareaValue});
+    queryAndUpdate(textareaValue);
     setTextareaValue("");
     textareaRef.current.focus();
     window.localStorage.setItem('lastChatID', currentChatID);
@@ -127,7 +148,7 @@ export default function Remixer() {
                 function(message,index) {
                   return(
                     <div  key={index} className={`remixer-message ${message.botOrUser}`}> 
-                    {message.botOrUser == "bot" ? (<InView as="div" triggerOnce="true">{({ inView, ref }) => (<div ref={ref} className={inView ? "in-view" : ""}> <p className="slide-in">{message.botAnimText}&nbsp;</p> <p className="slide-over">{message.messageText}</p></div>)}</InView>) : <span>{message.messageText}</span>}
+                    {message.botOrUser == "bot" ? (<InView as="div" triggerOnce="true">{({ inView, ref }) => (<div ref={ref} className={inView ? "in-view" : ""}> <p className="slide-in">{message.botAnimText}</p> <p className="slide-over">{message.messageText}</p></div>)}</InView>) : <span>{message.messageText}</span>}
                     </div>
                   );
                 }

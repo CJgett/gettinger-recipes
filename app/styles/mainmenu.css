@@ -140,10 +140,18 @@ header {
       z-index: 30;
       transition: bottom ease-in-out .3s, visibility .1s linear .3s;
 
+      .mouth {
+        stroke-dasharray: 526.877 526.877;
+      }
+
       &:not(.visible) {
         &~ .sticky-part {
           position: fixed;
           top: 150px;
+        }
+        .mouth > path {
+          stroke-dashoffset: 526.877;
+
         }
       }
 
@@ -183,7 +191,7 @@ header {
         transition: opacity ease-in-out 1s;
 
         path {
-          transition: fill 1s, stroke 1s;
+          transition: fill 1s, stroke 1s, stroke-dashoffset 1.5s;
         }
       }
 
@@ -238,7 +246,7 @@ header {
           
           path {
             stroke: #F2EEE5;
-            transition: fill 1s, stroke 1s;
+            transition: fill 1s, stroke 1s
           }
 
           &:not(.mouth) > path {
