@@ -9,11 +9,11 @@ export default function ThemeToggle() {
   const [theme, setTheme] = React.useState("null");
 
   function toggleThemePreference() {
-    let deffoThemeAsBool = theme;
-    if (typeof deffoThemeAsBool === "string") {
-      deffoThemeAsBool = (theme === "true");
+    let themeAsBool = theme;
+    if (typeof themeAsBool === "string") {
+      themeAsBool = (theme === "true");
     }
-    setTheme(!deffoThemeAsBool);
+    setTheme(!themeAsBool);
     const docClassList = document.documentElement.classList;
     if (docClassList.contains("dark-mode")) {
       docClassList.remove("dark-mode");
