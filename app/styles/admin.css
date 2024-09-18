@@ -1,0 +1,12 @@
+/*FORM TO ADD A NEW RECIPE*/
+.add-recipe-page {
+  &> form {
+    display: flex;
+    flex-direction: column;
+    &> .form-group {
+      &> fieldset {
+        padding: 0px;
+      }
+    }
+  }
+}

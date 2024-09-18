@@ -1,3 +1,28 @@
+.recipes {
+  text-align: center;
+ &> .recipes-container {
+   &> .recipe-box-tabs {
+     padding-top: var(--padding-horizontal);
+     text-align: left;
+
+     &> .recipe-box-tab {
+       border-bottom: 0px;
+       border-radius: 8px;
+       border-bottom-right-radius: 0px;
+       border-bottom-left-radius: 0px;
+       margin-right: 5px;
+     }
+   }
+
+   &>  .recipe-box {
+     border: 3px solid var(--c-text);
+     border-radius: 8px;
+     border-top-left-radius: 0px;
+   } 
+ }
+}
+
+
 .recipe-card {
   display: flex;
   align-items: center;
