@@ -1,10 +1,77 @@
 /*FORM TO ADD A NEW RECIPE*/
 .add-recipe-page {
-  &> form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &> h2 {
+    margin-bottom: var(--padding-horizontal);
+  }
+  & form {
     display: flex;
     flex-direction: column;
-    &> .form-group {
-      &> fieldset {
+    gap: 20px;
+    border: 4px solid var(--c-text);
+    padding: 20px;
+    border-radius: 14px;
+
+
+    & .form-group {
+      display: flex;
+      gap: 20px;
+
+        .form-question {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+    }
+
+    & .form-question {
+      & input:not([type="file"]), textarea, select {
+        color: var(--c-text);
+        background-color: var(--c-bg);
+        caret-color: var(--c-text);
+        border: none;
+        padding: 5px;
+        font-size: 16px;
+        
+        &[type="radio"] {
+          accent-color: var(--c-accent-secondary);
+        }
+        &[type="number"] {
+          appearance: none;
+          -moz-appearance: textfield;
+          appearance: textfield;
+        }
+        
+        &> option {
+          background-color: red;
+        }
+      }
+      
+      & textarea {
+        font-family: none;
+        line-height: normal;
+
+      }
+
+      & .duration-input {
+        display: flex;
+        gap: 5px
+      }
+
+      & .new-ingred-button {
+          border: none;
+          font-size: 30px;
+          line-height: 30px;
+          width: 30px;
+      } 
+       
+      &> span {
+        font-size: 20px;
+      }
+
+      & fieldset {
         padding: 0px;
       }
     }

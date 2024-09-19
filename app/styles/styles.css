@@ -120,7 +120,7 @@ section {
   background-color: var(--c-bg-secondary);
 }
 
-button {
+button, input[type="file"]::file-selector-button  {
   border: inset 3px var(--c-text);
   border-radius: 14px;
   background-color: var(--c-bg);
