@@ -1,6 +1,6 @@
-export default function NewIngredientField({ ingredientKey }) {
+export default function NewIngredientField(ingredientKey) {
   return (
-    <div className={"new-ingredient-field-" + ingredientKey + " form-group"}>
+    <div className={`new-ingredient-field-${ingredientKey} form-group`}>
       <div>
         <label htmlFor={"ingredient_" + ingredientKey}>Ingredient Name: </label>
         <input id={"ingredient_" + ingredientKey} />

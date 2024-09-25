@@ -7,24 +7,30 @@ import NewIngredientField from '../components/form-components/NewIngredientField
 
 
 export default function AddRecipePage() {
-
-  const [ingredientArray, setIngredientArray] = useState([new NewIngredientField(0)]);
+  const [ingredientIDCounter, setIngredientIDCounter] = useState(0);
+  const initialIngredientField = new NewIngredientField(ingredientIDCounter);
+  const [ingredientArray, setIngredientArray] = useState([{'key': ingredientIDCounter, 'ingredientField': initialIngredientField}]);
 
   function addNewIngredient(e) {
-    let newIngredientArray = ingredientArray.slice(0); 
-    newIngredientArray.push(new NewIngredientField(newIngredientArray.length));
     e.preventDefault();
-    console.log("new ingredient added!");
+    let newID = ingredientIDCounter;
+    newID++;
+    setIngredientIDCounter(newID);
+    let newIngredientArray = ingredientArray.slice(0); 
+    let nextIngredField = new NewIngredientField(newID);
+    newIngredientArray.push({'key': newID, 'ingredientField': nextIngredField});
     setIngredientArray(newIngredientArray); 
   }
 
-  function deleteLastIngredient(e) {
+  function deleteThisIngredient(e, id) {
     e.preventDefault();
-    let updatedIngredientArray = ingredientArray.slice(0);
-    console.log(updatedIngredientArray);
-    updatedIngredientArray.pop()
-    setIngredientArray(updatedIngredientArray);
-
+    if (ingredientArray.length > 1) {
+      setIngredientArray((prevArray) => {
+        let updatedArray = prevArray.slice(0);
+        updatedArray.splice(updatedArray.findIndex((element) => element.key == id), 1);
+        return updatedArray;
+      });
+    }
   }
 
   return (
@@ -69,13 +75,13 @@ export default function AddRecipePage() {
         </div>
         <div id="ingredients" className="form-question">
           <label htmlFor="ingredients">Ingredients </label>
-              {ingredientArray.map((ingredient, index) => (
-                <div key={index}>
-                {ingredient}
+              {ingredientArray.map((ingredient) => (
+                <div className="ingredient-group" key={ingredient.key}>
+                  {ingredient.ingredientField}
+                  <button className="delete-ingred-button" onClick={(e) => {deleteThisIngredient(e, ingredient.key)}}>-</button>
                 </div>
               ))}
           <button className="new-ingred-button" onClick={(e) => {addNewIngredient(e)}}>+</button>
-          <button className="new-ingred-button" onClick={(e) => {deleteLastIngredient(e)}}>-</button>
         </div>
         <div className="form-question">
           <label htmlFor="directions_en">Directions: </label>

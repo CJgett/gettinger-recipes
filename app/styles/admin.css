@@ -43,16 +43,11 @@
           -moz-appearance: textfield;
           appearance: textfield;
         }
-        
-        &> option {
-          background-color: red;
-        }
       }
       
       & textarea {
         font-family: none;
         line-height: normal;
-
       }
 
       & .duration-input {
@@ -60,7 +55,16 @@
         gap: 5px
       }
 
-      & .new-ingred-button {
+      & .ingredient-group {
+        display: flex;
+        align-items: center;
+
+        & input[type="number"] {
+          max-width: 30px;
+        }
+      }
+
+      & .new-ingred-button, .delete-ingred-button {
           border: none;
           font-size: 30px;
           line-height: 30px;
