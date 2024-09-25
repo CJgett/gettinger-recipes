@@ -3,13 +3,44 @@
 import { useState } from 'react'
 import '../styles/admin.css'
 import DurationInputField from '../components/form-components/DurationInputField.jsx'
-import NewIngredientField from '../components/form-components/NewIngredientField.jsx'
+import IngredientField from '../components/form-components/NewIngredientField.jsx'
+import DirectionField from '../components/form-components/NewDirectionField.jsx'
 
 
 export default function AddRecipePage() {
+  /* setup INGREDIENTS */
   const [ingredientIDCounter, setIngredientIDCounter] = useState(0);
-  const initialIngredientField = new NewIngredientField(ingredientIDCounter);
+  const initialIngredientField = new IngredientField(ingredientIDCounter);
   const [ingredientArray, setIngredientArray] = useState([{'key': ingredientIDCounter, 'ingredientField': initialIngredientField}]);
+
+  /* setup DIRECTIONS */
+  const [directionIDCounter, setDirectionIDCounter] = useState(0);
+  const initialDirectionField = new DirectionField(directionIDCounter);
+  const [directionArray, setDirectionArray] = useState([{'key': directionIDCounter, 'directionField': initialDirectionField}]);
+
+function addNewDirection(e) {
+    e.preventDefault();
+    let newID = directionIDCounter;
+    newID++;
+    setDirectionIDCounter(newID);
+    let newDirectionArray = directionArray.slice(0); 
+    let nextDirectionField = new DirectionField(newID);
+    newDirectionArray.push({'key': newID, 'directionField': nextDirectionField});
+    setDirectionArray(newDirectionArray); 
+  }
+
+  function deleteThisField(e, id) {
+    e.preventDefault();
+    if (directionArray.length > 1) {
+      setDirectionArray((prevArray) => {
+        let updatedArray = prevArray.slice(0);
+        updatedArray.splice(updatedArray.findIndex((element) => element.key == id), 1);
+        return updatedArray;
+      });
+    }
+  }
+  /* setup NOTES */
+
 
   function addNewIngredient(e) {
     e.preventDefault();
@@ -17,7 +48,7 @@ export default function AddRecipePage() {
     newID++;
     setIngredientIDCounter(newID);
     let newIngredientArray = ingredientArray.slice(0); 
-    let nextIngredField = new NewIngredientField(newID);
+    let nextIngredField = new IngredientField(newID);
     newIngredientArray.push({'key': newID, 'ingredientField': nextIngredField});
     setIngredientArray(newIngredientArray); 
   }
@@ -73,20 +104,46 @@ export default function AddRecipePage() {
             <input id="servings" required />
           </div>
         </div>
+
+       /* INGREDIENTS */       
+
         <div id="ingredients" className="form-question">
-          <label htmlFor="ingredients">Ingredients </label>
+          <div>
+            <label htmlFor="ingredients">Ingredients </label>
+
+            <button className="new-field-button" onClick={(e) => {addNewIngredient(e)}} title="add new ingredient">+</button>
+          </div>
               {ingredientArray.map((ingredient) => (
                 <div className="ingredient-group" key={ingredient.key}>
                   {ingredient.ingredientField}
-                  <button className="delete-ingred-button" onClick={(e) => {deleteThisIngredient(e, ingredient.key)}}>-</button>
+                  <button className="delete-field-button" onClick={(e) => {deleteThisIngredient(e, ingredient.key)}} title="delete this ingredient">-</button>
                 </div>
               ))}
-          <button className="new-ingred-button" onClick={(e) => {addNewIngredient(e)}}>+</button>
         </div>
-        <div className="form-question">
-          <label htmlFor="directions_en">Directions: </label>
-          <input id="directions_en" required />
+
+        /* DIRECTIONS */
+
+        <div className="form-question directions"> 
+          Directions
+          <button className="new-field-button" onClick={(e) => {addNewDirection(e)}} title="add new direction">
+            +
+          </button>
+          {directionArray.map((direction, index) => (
+            <div key={direction.key}>
+              <span className="direction-number">
+                {index + 1}
+              </span>
+              <div className="direction">
+                {direction.directionField}
+                <button className="delete-field-button" onClick={(e) => {deleteThisField(e, direction.key)}} title="delete this direction">
+                  -
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
+             
+
         <div className="form-question">
           <label htmlFor="notes_en">Notes: </label>
           <input id="notes_en" required />

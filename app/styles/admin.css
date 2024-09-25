@@ -64,13 +64,24 @@
         }
       }
 
-      & .new-ingred-button, .delete-ingred-button {
-          border: none;
-          font-size: 30px;
-          line-height: 30px;
-          width: 30px;
+      & .new-field-button, .delete-field-button {
+        border: none;
+        font-size: 30px;
+        line-height: 30px;
+        width: 30px;
       } 
-       
+
+      .delete-field-button {
+      margin-left: 10px;
+      margin-top: -2px;
+      }
+        
+      &#ingredients {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
       &> span {
         font-size: 20px;
       }
@@ -79,5 +90,23 @@
         padding: 0px;
       }
     }
+
+    & .directions {
+      &> div {
+        display: flex;
+        align-items: top;
+        gap: 10px;
+
+        span {
+          background: var(--c-bg);
+          width: 30px;
+          height: 30px;
+          border-radius: 30px;
+          line-height: 33px;
+          text-align: center;
+        }
+      }
+    }
   }
+
 }
