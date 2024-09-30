@@ -101,7 +101,7 @@
 
     & .directions, .notes {
      
-      &> div {
+      &> div > div {
         display: flex;
         align-items: top;
         gap: 10px;
