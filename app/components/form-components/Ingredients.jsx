@@ -12,7 +12,6 @@ export default function Ingredients() {
   const initialIngredientField = new IngredientField(ingredientIDCounter);
   const [ingredientArray, setIngredientArray] = useState([{'key': ingredientIDCounter, 'ingredientField': initialIngredientField}]);
 
-
   return (
     <div>
       <div>

@@ -7,6 +7,7 @@ import Ingredients from '../components/form-components/Ingredients.jsx'
 import Directions from '../components/form-components/Directions.jsx'
 import Notes from '../components/form-components/Notes.jsx'
 import Sources from '../components/form-components/Sources.jsx'
+import { formatIngredientsAsJSON } from '../components/form-components/form-functions.js'
 
 export default function AddRecipePage() {
   
@@ -14,17 +15,21 @@ export default function AddRecipePage() {
   "use server"
 
     const recipeAuthor = formData.get("recipe-author");
-    const escapedAuthor = recipeAuthor.replace(/'/g, "''");
+    const nameEN = formData.get("name_en");
+    const nameKR = formData.get("name_kr");
+    const ingredients = formatIngredientsAsJSON(formData.getAll("ingredient_name"), formData.getAll("metric_measurement"), formData.getAll("metric_measurement_unit"), formData.getAll("imperial_measurement"), formData.getAll("imperial_measurement_unit"));
+    console.log(ingredients);
 
-    const postResult = await dbFetch(`INSERT INTO minimalest_test (author) VALUES ('${escapedAuthor}') RETURNING *;`);
+    const isFamilyRecipe = (formData.get("family_recipe") === "on");
+    const escapedAuthor = recipeAuthor.replace(/'/g, "''");
+    console.log("TEST RESULTS - SUBMIT");
+
+    const postResult = await dbFetch(`INSERT INTO minimal_test (author, name_en, name_kr, ingredients, family_recipe) VALUES ('${recipeAuthor}', '${nameEN}', '${nameKR}', '${ingredients}', '${isFamilyRecipe}') RETURNING *;`);
     console.log("DB result: " + postResult);
 
     const prepTimeHrs = formData.get("prep_time_hrs");
     const prepTimeMins = formData.get("prep_time_mins");
     const picAltText = formData.get("pic_alt");
-    console.log(recipeAuthor);
-    console.log(picAltText);
-    console.log(prepTimeHrs +"hrs, " + prepTimeMins + "min");
     console.log("submitted");
   }
 
@@ -103,7 +108,7 @@ export default function AddRecipePage() {
             <div>
               <input id="family_recipe_yes" name="family_recipe" type="radio" />
               <label htmlFor="family_recipe_yes">yes </label>
-              <input id="family_recipe_no" name="family_recipe" type="radio" />
+              <input id="family_recipe_no" type="radio" />
               <label htmlFor="family_recipe_no">no </label>
             </div>
           </fieldset>

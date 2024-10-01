@@ -36,9 +36,31 @@ export function deleteThisField(e, id, fieldArray, arraySettingFunction) {
     e.preventDefault();
     if (fieldArray.length > 1) {
       arraySettingFunction((prevArray) => {
-        let updatedArray = prevArray.slice(0);
-        updatedArray.splice(updatedArray.findIndex((element) => element.key == id), 1);
-        return updatedArray;
-      });
-    }
+      let updatedArray = prevArray.slice(0);
+      updatedArray.splice(updatedArray.findIndex((element) => element.key == id), 1);
+      return updatedArray;
+    });
   }
+}
+
+export function formatIngredientsAsJSON(names, metricMeasurements, metricUnits, imperialMeasurements, imperialUnits) {
+  let ingredients = [];
+  let name;
+  let metricMeasurement;
+  let imperialMeasurement;
+  for (let i = 0; i < names.length; i++ ) {
+    name = names[i];
+    metricMeasurement = metricMeasurements[i] + " " + metricUnits[i];
+    if (metricMeasurements[i] > 1) {
+      metricMeasurement = metricMeasurement + "s";
+    }
+    if (imperialMeasurements[i] === "") {
+      imperialMeasurement = "";
+    } else {
+      imperialMeasurement = imperialMeasurements[i] + " " + imperialUnits[i];
+    }
+    ingredients.push({'ingredient_name_en': [name],'metric_measurement': [metricMeasurement], 'imperial_measurement': [imperialMeasurement]});
+  }
+
+  return JSON.stringify(ingredients); 
+}
