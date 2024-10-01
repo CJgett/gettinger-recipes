@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 
 import FieldType from '../../constants/FieldType.jsx'
-import DirectionField from './NewDirectionField.jsx'
+import NumberedTextField from './NumberedTextField.jsx'
 import {addNewField, deleteThisField} from './form-functions.js'
 
 export default function Notes() {
 
   /* setup NOTES */
   const [noteIDCounter, setNoteIDCounter] = useState(0);
-  const initialNoteField = new DirectionField(noteIDCounter, false);
+  const initialNoteField = new NumberedTextField(noteIDCounter, false);
   const [noteArray, setNoteArray] = useState([{'key': noteIDCounter, 'noteField': initialNoteField}]);
 
   return (

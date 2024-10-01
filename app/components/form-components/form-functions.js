@@ -1,6 +1,6 @@
 import FieldType from '../../constants/FieldType.jsx'
 import IngredientField from './NewIngredientField.jsx'
-import DirectionField from './NewDirectionField.jsx'
+import NumberedTextField from './NumberedTextField.jsx'
 import SourceField from './SourceField.jsx'
 
 export function addNewField(e, fieldType, idCounter, counterSettingFunction, fieldArray, arraySettingFunction) {
@@ -11,15 +11,14 @@ export function addNewField(e, fieldType, idCounter, counterSettingFunction, fie
     objectToBeAdded = new IngredientField(idCounter + 1)
     fieldName = 'ingredientField'; 
   } else if (fieldType === FieldType.Direction) {
-    objectToBeAdded = new DirectionField(idCounter + 1, true)
+    objectToBeAdded = new NumberedTextField(idCounter + 1, true)
     fieldName = 'directionField';
   } else if (fieldType === FieldType.Note) {
-    objectToBeAdded = new DirectionField(idCounter + 1, false);
+    objectToBeAdded = new NumberedTextField(idCounter + 1, false);
     fieldName = 'noteField';
   } else if (fieldType === FieldType.Source) {
     objectToBeAdded = new SourceField(idCounter + 1);    fieldName = 'sourceField';
   } else {
-    console.log("NOTHING HAPPENED HAHAHA stoopid");
     return;
   }
 
@@ -59,8 +58,20 @@ export function formatIngredientsAsJSON(names, metricMeasurements, metricUnits, 
     } else {
       imperialMeasurement = imperialMeasurements[i] + " " + imperialUnits[i];
     }
-    ingredients.push({'ingredient_name_en': [name],'metric_measurement': [metricMeasurement], 'imperial_measurement': [imperialMeasurement]});
+    ingredients.push({'ingredient_name_en': name,'metric_measurement': metricMeasurement, 'imperial_measurement': imperialMeasurement});
   }
 
   return JSON.stringify(ingredients); 
+}
+
+export function formatSourcesAsJSON(sourceLinks, sourceTitles) {
+  let sources = [];
+  let sourceLink;
+  let sourceTitle;
+  for (let i = 0; i < sourceLinks.length; i++) {
+    sourceLink = sourceLinks[i]; 
+    sourceTitle = sourceTitles[i]; 
+    sources.push({'source_link': sourceLink, 'source_title': sourceTitle});
+  }
+  return JSON.stringify(sources);
 }

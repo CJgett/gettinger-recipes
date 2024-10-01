@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 
 import FieldType from '../../constants/FieldType.jsx'
-import DirectionField from './NewDirectionField.jsx'
+import NumberedTextField from './NumberedTextField.jsx'
 import {addNewField, deleteThisField} from './form-functions.js'
 
 export default function Directions() {
 
   /* setup DIRECTIONS */
   const [directionIDCounter, setDirectionIDCounter] = useState(0);
-  const initialDirectionField = new DirectionField(directionIDCounter, true);
+  const initialDirectionField = new NumberedTextField(directionIDCounter, true);
   const [directionArray, setDirectionArray] = useState([{'key': directionIDCounter, 'directionField': initialDirectionField}]);
 
   return (

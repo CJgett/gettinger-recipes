@@ -7,7 +7,7 @@ import Ingredients from '../components/form-components/Ingredients.jsx'
 import Directions from '../components/form-components/Directions.jsx'
 import Notes from '../components/form-components/Notes.jsx'
 import Sources from '../components/form-components/Sources.jsx'
-import { formatIngredientsAsJSON } from '../components/form-components/form-functions.js'
+import { formatIngredientsAsJSON, formatSourcesAsJSON } from '../components/form-components/form-functions.js'
 
 export default function AddRecipePage() {
   
@@ -17,19 +17,33 @@ export default function AddRecipePage() {
     const recipeAuthor = formData.get("recipe-author");
     const nameEN = formData.get("name_en");
     const nameKR = formData.get("name_kr");
+
+    const picAltText = formData.get("pic_alt");
+
+    const prepTime = formData.get("prep_time_hrs") + "hrs " + formData.get("prep_time_mins") + "mins";
+    const cookTime = formData.get("cook_time_hrs") + "hrs " + formData.get("cook_time_mins") + "mins";
+    console.log("prepTime: " + prepTime);
+    const servings = formData.get("servings");
+
     const ingredients = formatIngredientsAsJSON(formData.getAll("ingredient_name"), formData.getAll("metric_measurement"), formData.getAll("metric_measurement_unit"), formData.getAll("imperial_measurement"), formData.getAll("imperial_measurement_unit"));
-    console.log(ingredients);
+    const directions = JSON.stringify(formData.getAll("direction_text"));
+    const notes = JSON.stringify(formData.getAll("note_text"));
+    const sources = formatSourcesAsJSON(formData.getAll("source-link"), formData.getAll("source-title"));
 
     const isFamilyRecipe = (formData.get("family_recipe") === "on");
+
     const escapedAuthor = recipeAuthor.replace(/'/g, "''");
+
     console.log("TEST RESULTS - SUBMIT");
+    console.log(directions);
+    console.log(notes);
+    console.log(sources);
+    console.log(isFamilyRecipe);
 
-    const postResult = await dbFetch(`INSERT INTO minimal_test (author, name_en, name_kr, ingredients, family_recipe) VALUES ('${recipeAuthor}', '${nameEN}', '${nameKR}', '${ingredients}', '${isFamilyRecipe}') RETURNING *;`);
+    const postResult = await dbFetch(`INSERT INTO test_table (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, is_family_recipe) 
+      VALUES ('${recipeAuthor}', '${nameEN}', '${nameKR}', 'pic test', '${picAltText}', '${prepTime}', '${cookTime}', '${servings}', '${ingredients}', '${directions}', '${notes}', '${sources}', '${isFamilyRecipe}') RETURNING *;`);
+
     console.log("DB result: " + postResult);
-
-    const prepTimeHrs = formData.get("prep_time_hrs");
-    const prepTimeMins = formData.get("prep_time_mins");
-    const picAltText = formData.get("pic_alt");
     console.log("submitted");
   }
 
