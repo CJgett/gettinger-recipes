@@ -20,7 +20,9 @@ export default function AddRecipePage() {
     const nameKR = formData.get("name_kr");
 
     //TODO restrict size and type of file
-    const recipePicPath = uploadFileAndGetURL(formData.get("recipe_pic"), nameEN);
+    const recipePicPath = await uploadFileAndGetURL(formData.get("recipe_pic"), nameEN);
+    console.log("recipe pic path - page.jsx");
+    console.log(recipePicPath);
     const picAltText = formData.get("pic_alt");
 
     const prepTime = formData.get("prep_time_hrs") + "hrs " + formData.get("prep_time_mins") + "mins";

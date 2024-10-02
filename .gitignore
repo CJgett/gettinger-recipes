@@ -4,4 +4,4 @@ node_modules
 assets/
 ignore/
 utils/
-uploads/
+public/

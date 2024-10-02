@@ -14,9 +14,9 @@ export async function uploadFileAndGetURL(file, recipeName) {
   console.log("file details in uploadFile function");
   console.log(fileToUpload);
   console.log(recipeName);
-  let filePath = 'app/uploads/recipe_pics' + '/' + fileName;
-
-  // TODO BUILD: use process.cwd() to get the root
+  //TODO File path - check to see if this changes with deploy!
+  let filePath = 'public/recipe_pics' + '/' + fileName;
+  console.log(filePath);
 
   const config = {
     headers: {
@@ -27,6 +27,7 @@ export async function uploadFileAndGetURL(file, recipeName) {
   await fs.writeFile(filePath, buffer, (err) => {
     if (err) throw err;
     console.log('file saved!');
-    return filePath;
   });
+
+  return '/recipe_pics/' + fileName;
 }

@@ -1,9 +1,9 @@
 .recipes {
   text-align: center;
- &> .recipes-container {
-   &> .recipe-box-tabs {
-     padding-top: var(--padding-horizontal);
-     text-align: left;
+  &> .recipes-container {
+    &> .recipe-box-tabs {
+      padding-top: var(--padding-horizontal);
+      text-align: left;
 
      &> .recipe-box-tab {
        border-bottom: 0px;
@@ -14,12 +14,37 @@
      }
    }
 
-   &>  .recipe-box {
-     border: 3px solid var(--c-text);
-     border-radius: 8px;
-     border-top-left-radius: 0px;
-   } 
- }
+    &> .recipe-box {
+    padding: 50px 20px 50px 20px;
+    border: 3px solid var(--c-text);
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+
+      & .recipe-card {
+        width: 30%;
+        min-width: 200px;
+        max-width: 350px;
+
+        & img {
+          width: 100%;
+          aspect-ratio: 1/1;
+          object-fit: cover;
+          object-position: center;
+          border-radius: 14px;
+        }
+
+        & h3 {
+          margin-top: 15px;
+          word-break: break-word;
+          line-height: 40px;
+        }
+      }
+    } 
+  }
 }
 
 

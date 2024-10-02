@@ -5,7 +5,7 @@ import { dbFetch } from '../../utils/postgres.js'
 
 export default async function RecipePage() {
 
-const allRecipes = await dbFetch("SELECT * FROM all_recipes");
+const allRecipes = await dbFetch("SELECT * FROM test_table");
 // TODO dynamically determine categries based on existing recipe tag from allRecipes?
 const tabCategories = ["breakfast", "main", "side", "dessert", "family recipes!"]
 
@@ -18,8 +18,8 @@ const tabCategories = ["breakfast", "main", "side", "dessert", "family recipes!"
           <button role="tab" className="recipe-box-tab">        
           all recipes
           </button>
-          {tabCategories.map((tab) => (
-          <button role="tab" className="recipe-box-tab">        
+          {tabCategories.map((tab, index) => (
+          <button role="tab" className="recipe-box-tab" key={index}>        
             {tab}
           </button>
           ))}
@@ -27,8 +27,9 @@ const tabCategories = ["breakfast", "main", "side", "dessert", "family recipes!"
         <div className="recipe-box">
           {allRecipes.map((recipe) => (
             <div key={recipe.id} className="recipe-card"> 
+              <img src={recipe.pic} />
               <h3>{recipe.name_en}</h3>
-              <p>main </p>
+              <p>main</p>
             </div>
           ))}  
         </div>
