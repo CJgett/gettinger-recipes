@@ -8,6 +8,7 @@ import Directions from '../components/form-components/Directions.jsx'
 import Notes from '../components/form-components/Notes.jsx'
 import Sources from '../components/form-components/Sources.jsx'
 import { formatIngredientsAsJSON, formatSourcesAsJSON } from '../components/form-components/form-functions.js'
+import { uploadFileAndGetURL } from '../components/form-components/form-server-functions.js'
 
 export default function AddRecipePage() {
   
@@ -18,11 +19,12 @@ export default function AddRecipePage() {
     const nameEN = formData.get("name_en");
     const nameKR = formData.get("name_kr");
 
+    //TODO restrict size and type of file
+    const recipePicPath = uploadFileAndGetURL(formData.get("recipe_pic"), nameEN);
     const picAltText = formData.get("pic_alt");
 
     const prepTime = formData.get("prep_time_hrs") + "hrs " + formData.get("prep_time_mins") + "mins";
     const cookTime = formData.get("cook_time_hrs") + "hrs " + formData.get("cook_time_mins") + "mins";
-    console.log("prepTime: " + prepTime);
     const servings = formData.get("servings");
 
     const ingredients = formatIngredientsAsJSON(formData.getAll("ingredient_name"), formData.getAll("metric_measurement"), formData.getAll("metric_measurement_unit"), formData.getAll("imperial_measurement"), formData.getAll("imperial_measurement_unit"));
@@ -30,21 +32,16 @@ export default function AddRecipePage() {
     const notes = JSON.stringify(formData.getAll("note_text"));
     const sources = formatSourcesAsJSON(formData.getAll("source-link"), formData.getAll("source-title"));
 
-    const isFamilyRecipe = (formData.get("family_recipe") === "on");
-
-    const escapedAuthor = recipeAuthor.replace(/'/g, "''");
+    const isFamilyRecipe = (formData.get("family_recipe") === "yes");
 
     console.log("TEST RESULTS - SUBMIT");
-    console.log(directions);
-    console.log(notes);
-    console.log(sources);
-    console.log(isFamilyRecipe);
 
-    const postResult = await dbFetch(`INSERT INTO test_table (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, is_family_recipe) 
-      VALUES ('${recipeAuthor}', '${nameEN}', '${nameKR}', 'pic test', '${picAltText}', '${prepTime}', '${cookTime}', '${servings}', '${ingredients}', '${directions}', '${notes}', '${sources}', '${isFamilyRecipe}') RETURNING *;`);
+    const postResult = await dbFetch(`INSERT INTO test_table (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *;`, [recipeAuthor, nameEN, nameKR, recipePicPath, picAltText, prepTime, cookTime, servings, ingredients, directions, notes, sources, isFamilyRecipe]);
 
     console.log("DB result: " + postResult);
     console.log("submitted");
+
+    //revalidatePath("/recipes");
   }
 
   return (
@@ -68,7 +65,7 @@ export default function AddRecipePage() {
         <div className="form-group pic">
           <div className="form-question">
             <label htmlFor="pic">Picture of finished dish: </label>
-            <input type="file" name="recipe_pic" id="pic">
+            <input type="file" name="recipe_pic" id="pic" accept="image/*">
             </input>
           </div>
           <div className="form-question">
@@ -120,9 +117,9 @@ export default function AddRecipePage() {
           <fieldset>
             <legend>Is this a Family Recipe?</legend>
             <div>
-              <input id="family_recipe_yes" name="family_recipe" type="radio" />
+              <input id="family_recipe_yes" name="family_recipe" value="yes" type="radio" />
               <label htmlFor="family_recipe_yes">yes </label>
-              <input id="family_recipe_no" type="radio" />
+              <input id="family_recipe_no" name="family_recipe" value="no" type="radio" />
               <label htmlFor="family_recipe_no">no </label>
             </div>
           </fieldset>
