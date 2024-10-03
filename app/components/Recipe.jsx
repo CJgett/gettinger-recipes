@@ -1,37 +1,35 @@
-import recipePic from '../../assets/img/youtube_profile_v1.png'
-
-import Image from 'next/image'
-// my components
 import DecorativeArches from './DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
-import DirectionList from './DirectionList.jsx'
+import CustomList from './CustomList.jsx'
+import SourceList from './SourceList.jsx'
 import Toggle from './Toggle.jsx'
 
 import { dbFetch } from '../../utils/postgres.js'
 
-export default async function RecipeCard() {
-
-const recipeTable = await dbFetch("SELECT * FROM all_recipes WHERE name_en = 'Yangnyeom Tofu'");
+export default async function Recipe(recipeID) {
+  console.log(recipeID);
+let fetchedRecipe = await dbFetch('SELECT * FROM test_table WHERE id = $1', [recipeID.recipeID]);
+  fetchedRecipe = fetchedRecipe[0];
 
   return (
-    <div className="recipe-card">
+    <section className="recipe-detailed">
       <div className="recipe-title-pic">
         <div className="recipe-title">
-          <h2>{recipeTable[0].name_en}</h2>
-          <h3>{recipeTable[0].name_kr}</h3>
+          <h2>{fetchedRecipe.name_en}</h2>
+          <h3>{fetchedRecipe.name_kr}</h3>
         </div>
         <div className="recipe-pic">
-          <Image src={recipePic} width="200" height="200" alt="EXAMPLE: cucmbers in a spicy sauce on a bed of rice"/>
+          <img src={fetchedRecipe.pic} alt={fetchedRecipe.pic_alt}/>
         </div>
       </div>
       <div className="card-section recipe-details">
         <DecorativeArches additionalClasses={'top'}/>
         <h3>quick info</h3>
         <div className="details-container">
-          <span>Prep Time: {recipeTable[0].prep_time} min</span>
-          <span>Cook Time: {recipeTable[0].cook_time} min</span>
-          <span>Total Time: {recipeTable[0].prep_time + recipeTable[0].cook_time} min</span>
-          <span>Servings: {recipeTable[0].servings}</span>
+          <span>Prep Time: {fetchedRecipe.prep_time}</span>
+          <span>Cook Time: {fetchedRecipe.cook_time}</span>
+          <span>Total Time: {fetchedRecipe.prep_time + fetchedRecipe.cook_time}</span>
+          <span>Servings: {fetchedRecipe.servings}</span>
         </div>
         <div className="details-clickables">
           <button>print</button>
@@ -42,15 +40,19 @@ const recipeTable = await dbFetch("SELECT * FROM all_recipes WHERE name_en = 'Ya
       </div>
       <div className="card-section ingredients-directions">
         <h3>Ingredients:</h3>
-        <IngredientList />
+        <IngredientList ingredients={fetchedRecipe.ingredients} />
         <h3>Directions</h3>
-        <DirectionList />
+        <CustomList listItems={fetchedRecipe.directions}/>
       </div>
       <div className="card-section notes">
         <h3>Notes</h3>
-        <DirectionList /> 
+        <CustomList listItems={fetchedRecipe.notes } /> 
       </div>  
+      <div className="card-section sources">
+        <h3>Sources / Inspiration</h3>
+        <SourceList listItems={fetchedRecipe.sources} /> 
     </div>
-    
+
+    </section>
   );
 }

@@ -1,11 +1,13 @@
-export default function IngredientList() {
+export default function IngredientList(ingredients) {
  
   return (
     <ul className="ingredient-list">
-      <li>
-        <input type="checkbox" id="a friggen list element" />
-        <label htmlFor="a friggen list element">a friggen list element</label>
-      </li>
+      {ingredients.ingredients.map((ingredient, index) => (
+        <li key={index}>
+          <input type="checkbox" id={ingredient.ingredient_name_en} />
+          <label htmlFor={ingredient.ingredient_name_en}>{ingredient.metric_measurement} {ingredient.ingredient_name_en}</label>
+        </li>
+      ))}
     </ul>
   );
 }

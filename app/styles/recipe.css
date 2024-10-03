@@ -48,7 +48,7 @@
 }
 
 
-.recipe-card {
+.recipe-detailed {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -71,8 +71,9 @@
 
   &> .card-section {
     background-color: var(--c-bg);
-    width: 60%;
-    padding: 20px;
+    width: 70%;
+    min-width: 320px;
+    padding: 40px;
     border-radius: 14px;
     margin-top: 20px;
     box-sizing: border-box;
@@ -149,18 +150,26 @@
         }
       }
     }
-    &> .direction-list {
-      list-style: inside decimal;
-    }
+  }
+
+  .custom-list {
+    list-style: inside decimal;
+    padding-left: 0px;
   }
 
   &> .notes {
     background-color: var(--c-bg-secondary);
     border: dashed 10px var(--c-bg);
     border-radius: 0px;
-    
-    &> .direction-list {
-      list-style: inside decimal;
+  }
+
+  .sources {
+    background-color: var(--c-bg-secondary);
+    padding-top: 10px;
+    ul {
+      padding-left: 0px;
     }
   }
+
+  
 }

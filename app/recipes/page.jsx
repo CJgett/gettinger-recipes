@@ -1,6 +1,6 @@
-import RecipeCard from '../components/Recipe.jsx'
-import '../styles/recipe.css'
+import Link from 'next/link'
 
+import '../styles/recipe.css'
 import { dbFetch } from '../../utils/postgres.js' 
 
 export default async function RecipePage() {
@@ -27,9 +27,11 @@ const tabCategories = ["breakfast", "main", "side", "dessert", "family recipes!"
         <div className="recipe-box">
           {allRecipes.map((recipe) => (
             <div key={recipe.id} className="recipe-card"> 
-              <img src={recipe.pic} />
-              <h3>{recipe.name_en}</h3>
-              <p>main</p>
+              <Link href={`/recipes/${recipe.id}`}>
+                <img src={recipe.pic} />
+                <h3>{recipe.name_en}</h3>
+                <p>main</p>
+              </Link>
             </div>
           ))}  
         </div>
