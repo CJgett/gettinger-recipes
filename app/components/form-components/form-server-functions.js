@@ -2,21 +2,20 @@
 import fs from 'fs'
 import path from "path"
 
-export async function uploadFileAndGetURL(file, recipeName) {
+export async function saveFile(file, recipeID) {
   if (file.name === 'undefined') {
     return '';
   }
   let indexOfLastPeriod = file.name.lastIndexOf('.');
-  let fileName = recipeName + file.name.substring(indexOfLastPeriod);
+  let fileName = recipeID + file.name.substring(indexOfLastPeriod);
   let fileToUpload = new File([file], fileName , {type: file.type});
   const arrayBuffer = await fileToUpload.arrayBuffer();
   const buffer = new Uint8Array(arrayBuffer);
   console.log("file details in uploadFile function");
   console.log(fileToUpload);
-  console.log(recipeName);
-  //TODO File path - check to see if this changes with deploy!
+  console.log(recipeID);
+
   let filePath = 'public/recipe_pics' + '/' + fileName;
-  console.log(filePath);
 
   const config = {
     headers: {
@@ -28,6 +27,4 @@ export async function uploadFileAndGetURL(file, recipeName) {
     if (err) throw err;
     console.log('file saved!');
   });
-
-  return '/recipe_pics/' + fileName;
 }

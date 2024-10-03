@@ -8,7 +8,7 @@ import Directions from '../components/form-components/Directions.jsx'
 import Notes from '../components/form-components/Notes.jsx'
 import Sources from '../components/form-components/Sources.jsx'
 import { formatIngredientsAsJSON, formatSourcesAsJSON } from '../components/form-components/form-functions.js'
-import { uploadFileAndGetURL } from '../components/form-components/form-server-functions.js'
+import { saveFile } from '../components/form-components/form-server-functions.js'
 
 export default function AddRecipePage() {
   
@@ -20,9 +20,6 @@ export default function AddRecipePage() {
     const nameKR = formData.get("name_kr");
 
     //TODO restrict size and type of file
-    const recipePicPath = await uploadFileAndGetURL(formData.get("recipe_pic"), nameEN);
-    console.log("recipe pic path - page.jsx");
-    console.log(recipePicPath);
     const picAltText = formData.get("pic_alt");
 
     const prepTime = formData.get("prep_time_hrs") + "hrs " + formData.get("prep_time_mins") + "mins";
@@ -38,9 +35,10 @@ export default function AddRecipePage() {
 
     console.log("TEST RESULTS - SUBMIT");
 
-    const postResult = await dbFetch(`INSERT INTO test_table (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *;`, [recipeAuthor, nameEN, nameKR, recipePicPath, picAltText, prepTime, cookTime, servings, ingredients, directions, notes, sources, isFamilyRecipe]);
+    const postResult = await dbFetch(`INSERT INTO test_table (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *;`, [recipeAuthor, nameEN, nameKR, nameEN, picAltText, prepTime, cookTime, servings, ingredients, directions, notes, sources, isFamilyRecipe]);
 
     console.log("DB result: " + postResult);
+    saveFile(formData.get("recipe_pic"), postResult[0].id);
     console.log("submitted");
 
     //revalidatePath("/recipes");
