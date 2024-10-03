@@ -15,7 +15,9 @@ header {
     transition: opacity 0.1s;
 
     &:not(:has(h1)) {
-      line-height: 40px;
+      display: inline-block;
+      height: 35px;
+      line-height: 45px;
     }
 
     &:hover {

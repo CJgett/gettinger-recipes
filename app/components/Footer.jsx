@@ -28,7 +28,7 @@ export default function Footer() {
           <p>Two friends having fun, one recipe at a time :)</p>
         </div>
         <div className="footer-restcontainer"> 
-        <div className="footer-subcontainer">
+        <div className="footer-subcontainer footer-sitemap-container">
           <h2 className="footer-header">Sitemap</h2>
           <MenuNav />
           <nav>

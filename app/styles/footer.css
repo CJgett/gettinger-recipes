@@ -53,14 +53,18 @@ footer {
           }
         }
 
-        &> nav > ul > li > a  {
-          text-decoration: none;
-          display: inline-block;
-          color: #F2EEE5; 
+        &.footer-sitemap-container {
+          height: 211px;
+          &> nav > ul > li > a  {
+            text-decoration: none;
+            display: inline-block;
+            color: #F2EEE5; 
 
-          &:hover {
-            opacity: 0.8;
-            border-bottom: 1px solid #F2EEE5;
+            &:hover {
+              opacity: 0.8;
+              border-bottom: 2px solid #F2EEE5;
+              margin-bottom: 9px;
+            }
           }
         }
 
