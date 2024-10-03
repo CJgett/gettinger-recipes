@@ -124,11 +124,11 @@ header {
   }
 
   .sticky-menu {
+    visibility: visible;
+
     @media only screen and (max-width: 768px) { 
       visibility: hidden;
-  }
-
-    visibility: visible;
+    }
 
     &:not(:has(.visible)) {
       visibility: hidden;
@@ -153,7 +153,6 @@ header {
         }
         .mouth > path {
           stroke-dashoffset: 526.877;
-
         }
       }
 
@@ -162,7 +161,7 @@ header {
         visibility: visible;
         transition: bottom ease-in-out .3s;
 
-        path {
+        .mouth > path {
           stroke-dashoffset: 0;
         }
 
@@ -197,15 +196,8 @@ header {
         }
       }
 
-      a {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-
-        &:hover {
+      a:hover {
           border: none;
-        }
       }
 
       .eyes {
