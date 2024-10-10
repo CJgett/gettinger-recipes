@@ -7,11 +7,12 @@ import Ingredients from '../components/form-components/Ingredients.jsx'
 import Directions from '../components/form-components/Directions.jsx'
 import Notes from '../components/form-components/Notes.jsx'
 import Sources from '../components/form-components/Sources.jsx'
+import Tags from '../constants/Tags.jsx'
 import { formatIngredientsAsJSON, formatSourcesAsJSON } from '../components/form-components/form-functions.js'
 import { saveFile } from '../components/form-components/form-server-functions.js'
 
 export default function AddRecipePage() {
-  
+
   async function addRecipeToDB(formData) {
   "use server"
 
@@ -32,6 +33,9 @@ export default function AddRecipePage() {
     const sources = formatSourcesAsJSON(formData.getAll("source-link"), formData.getAll("source-title"));
 
     const isFamilyRecipe = (formData.get("family_recipe") === "yes");
+    const tags = formData.getAll("tags");
+    console.log("tags");
+    console.log(tags);
 
     console.log("TEST RESULTS - SUBMIT");
 
@@ -41,6 +45,7 @@ export default function AddRecipePage() {
     saveFile(formData.get("recipe_pic"), postResult[0].id);
     console.log("submitted");
 
+    //TODO auto refresh page so you can see the new recipe
     //revalidatePath("/recipes");
   }
 
@@ -111,6 +116,21 @@ export default function AddRecipePage() {
 
         <div className="form-question sources">
           <Sources />  
+        </div>
+
+        <div className="form-question">
+          
+          <fieldset>
+            <legend>
+            Please select the appropriate tag(s)
+            </legend>
+            {Tags.map((tag, index) => (
+              <div key={index}>
+                <input type="checkbox" id={tag} name="tags" value={tag} />
+                <label htmlFor={tag}>{tag}</label>
+              </div>
+            ))}
+          </fieldset>
         </div>
 
         <div className="form-question">
