@@ -4,25 +4,44 @@
     &> .recipe-box-tabs {
       padding-top: var(--padding-horizontal);
       text-align: left;
+      position: relative;
+      z-index: 1;
 
-     &> .recipe-box-tab {
-       border-bottom: 0px;
-       border-radius: 8px;
-       border-bottom-right-radius: 0px;
-       border-bottom-left-radius: 0px;
-       margin-right: 5px;
-     }
-   }
+      &> .recipe-box-tab {
+        border: 3px solid var(--c-text);
+        border-bottom: none;
+        border-radius: 8px 8px 0 0;
+        margin-right: 5px;
+        cursor: pointer;
+        padding: 10px 15px;
+        background-color: var(--c-bg);
+
+        &.active {
+          background-color: var(--c-text);
+          color: var(--c-bg);
+          padding-top: 15px;
+          height: calc(100% + 5px);
+        }
+
+        &:hover:not(.active) {
+          background-color: var(--c-bg-secondary);
+        }
+      }
+    }
 
     &> .recipe-box {
-    padding: 50px 20px 50px 20px;
-    border: 3px solid var(--c-text);
-    border-radius: 8px;
-    border-top-left-radius: 0px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 50px;
+      position: relative;
+      z-index: 1;
+      margin-top: -3px;
+      padding: 50px 20px 50px 20px;
+      border: 3px solid var(--c-text);
+      border-radius: 8px;
+      border-top-left-radius: 0px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 50px;
+      background-color: var(--c-bg);
 
       & .recipe-card {
         width: 30%;
