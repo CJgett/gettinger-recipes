@@ -1,5 +1,5 @@
 import FieldType from '../../constants/FieldType.jsx'
-import IngredientField from './NewIngredientField.jsx'
+import IngredientField from './IngredientField.jsx'
 import NumberedTextField from './NumberedTextField.jsx'
 import SourceField from './SourceField.jsx'
 

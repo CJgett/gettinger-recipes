@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import FieldType from '../../constants/FieldType.jsx'
-import IngredientField from './NewIngredientField.jsx'
+import IngredientField from './IngredientField.jsx'
 import {addNewField, deleteThisField} from './form-functions.js'
 
 export default function Ingredients() {

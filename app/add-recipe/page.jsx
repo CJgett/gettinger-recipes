@@ -60,7 +60,7 @@ export default function AddRecipePage() {
           </div>
           <div className="form-question">
             <label htmlFor="name_en">English Name: </label>
-            <input name="name_en" id="name_en" />
+            <input name="name_en" id="name_en" required />
           </div>
           <div className="form-question">
             <label htmlFor="name_kr">Korean Name: </label>
@@ -70,27 +70,27 @@ export default function AddRecipePage() {
         <div className="form-group pic">
           <div className="form-question">
             <label htmlFor="pic">Picture of finished dish: </label>
-            <input type="file" name="recipe_pic" id="pic" accept="image/*">
+            <input type="file" name="recipe_pic" id="pic" accept="image/*" required>
             </input>
           </div>
           <div className="form-question">
             <label htmlFor="pic_alt" type="textarea">Alternative text for recipe picture: </label>
-            <textarea id="pic_alt" name="pic_alt" />
+            <textarea id="pic_alt" name="pic_alt" required />
           </div>
         </div>
         <div className="form-group details">
           <div className="form-question">
             <label htmlFor="prep_time">Prep time: </label>
-           <DurationInputField fieldID="prep_time" /> 
+           <DurationInputField fieldID="prep_time" required /> 
           </div>
           <div className="form-question">
             <label htmlFor="cook_time">Cook time: </label>
-           <DurationInputField fieldID="cook_time" /> 
+           <DurationInputField fieldID="cook_time" required /> 
           </div>
           <div className="form-question">
             <label htmlFor="servings">Servings: </label>
             <span>ex: "4"(don't include "people") OR "makes 20 cookies"</span>
-            <input id="servings" name="servings" />
+            <input id="servings" name="servings" required />
           </div>
         </div>
 
@@ -137,9 +137,9 @@ export default function AddRecipePage() {
           <fieldset>
             <legend>Is this a Family Recipe?</legend>
             <div>
-              <input id="family_recipe_yes" name="family_recipe" value="yes" type="radio" />
+              <input id="family_recipe_yes" name="family_recipe" value="yes" type="radio" required />
               <label htmlFor="family_recipe_yes">yes </label>
-              <input id="family_recipe_no" name="family_recipe" value="no" type="radio" />
+              <input id="family_recipe_no" name="family_recipe" value="no" type="radio" required />
               <label htmlFor="family_recipe_no">no </label>
             </div>
           </fieldset>
