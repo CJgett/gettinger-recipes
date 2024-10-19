@@ -50,16 +50,23 @@ export function formatIngredientsAsJSON(names, metricMeasurements, metricUnits, 
   let metricUnit;
   for (let i = 0; i < names.length; i++ ) {
     name = names[i];
-    metricMeasurement = metricMeasurements[i] + " " + metricUnits[i];
-    metricUnit = metricUnits[i];
-    if (metricMeasurements[i] > 1 && (metricUnit !== "small" && metricUnit !== "medium" && metricUnit !== "large" && metricUnit !== "whole")) {
+    metricMeasurement = metricMeasurements[i];
+    imperialMeasurement = imperialMeasurements[i];
+    if (metricUnits !== false) {
+      metricMeasurement = metricMeasurement + " " + metricUnits[i];
+      metricUnit = metricUnits[i];
+      if (metricMeasurements[i] > 1 && (metricUnit !== "small" && metricUnit !== "medium" && metricUnit !== "large" && metricUnit !== "whole")) {
       metricMeasurement = metricMeasurement + "s";
     }
     if (imperialMeasurements[i] === "") {
       imperialMeasurement = "";
     } else {
-      imperialMeasurement = imperialMeasurements[i] + " " + imperialUnits[i];
+      imperialMeasurement = imperialMeasurement + " " + imperialUnits[i];
+      if (imperialMeasurements[i] > 1) {
+        imperialMeasurement = imperialMeasurement + "s";
+      }
     }
+   }
     ingredients.push({'ingredient_name_en': name,'metric_measurement': metricMeasurement, 'imperial_measurement': imperialMeasurement});
   }
 
