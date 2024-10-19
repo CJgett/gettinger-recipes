@@ -1,6 +1,5 @@
 "use server"
 import fs from 'fs'
-import path from "path"
 
 export async function saveFile(file, recipeID) {
   if (file.name === 'undefined') {
@@ -13,18 +12,13 @@ export async function saveFile(file, recipeID) {
   const buffer = new Uint8Array(arrayBuffer);
   console.log("file details in uploadFile function");
   console.log(fileToUpload);
-  console.log(recipeID);
+  console.log(fileName);
 
   let filePath = 'public/recipe_pics' + '/' + fileName;
 
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-  };
-
-  await fs.writeFile(filePath, buffer, (err) => {
+  fs.writeFile(filePath, buffer, (err) => {
     if (err) throw err;
     console.log('file saved!');
   });
+  return fileName;
 }

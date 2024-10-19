@@ -5,7 +5,6 @@
       padding-top: var(--padding-horizontal);
       text-align: left;
       position: relative;
-      z-index: 1;
 
       &> .recipe-box-tab {
         border: 3px solid var(--c-text);

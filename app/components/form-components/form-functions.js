@@ -47,10 +47,12 @@ export function formatIngredientsAsJSON(names, metricMeasurements, metricUnits, 
   let name;
   let metricMeasurement;
   let imperialMeasurement;
+  let metricUnit;
   for (let i = 0; i < names.length; i++ ) {
     name = names[i];
     metricMeasurement = metricMeasurements[i] + " " + metricUnits[i];
-    if (metricMeasurements[i] > 1) {
+    metricUnit = metricUnits[i];
+    if (metricMeasurements[i] > 1 && (metricUnit !== "small" && metricUnit !== "medium" && metricUnit !== "large" && metricUnit !== "whole")) {
       metricMeasurement = metricMeasurement + "s";
     }
     if (imperialMeasurements[i] === "") {

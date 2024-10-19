@@ -8,7 +8,7 @@ import { dbFetch } from '../../utils/postgres.js'
 
 export default async function Recipe(recipeID) {
   console.log(recipeID);
-let fetchedRecipe = await dbFetch('SELECT * FROM test_table WHERE id = $1', [recipeID.recipeID]);
+let fetchedRecipe = await dbFetch('SELECT * FROM all_recipes WHERE id = $1', [recipeID.recipeID]);
   fetchedRecipe = fetchedRecipe[0];
 
   return (
@@ -19,7 +19,7 @@ let fetchedRecipe = await dbFetch('SELECT * FROM test_table WHERE id = $1', [rec
           <h3>{fetchedRecipe.name_kr}</h3>
         </div>
         <div className="recipe-pic">
-          <img src={fetchedRecipe.pic} alt={fetchedRecipe.pic_alt}/>
+          <img src={`/recipe_pics/${fetchedRecipe.pic}`} alt={fetchedRecipe.pic_alt}/>
         </div>
       </div>
       <div className="card-section recipe-details">

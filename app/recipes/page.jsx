@@ -19,9 +19,8 @@ export default async function RecipePage() {
           {allRecipes.map((recipe) => (
             <div key={recipe.id} className="recipe-card"> 
               <Link href={`/recipes/${recipe.id}`}>
-                <img src={recipe.pic} />
+                <img src={`/recipe_pics/${recipe.pic}`} alt={recipe.pic_alt} />
                 <h3>{recipe.name_en}</h3>
-                <p>main</p>
               </Link>
             </div>
           ))}  

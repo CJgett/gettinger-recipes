@@ -15,6 +15,10 @@ export default function IngredientField(ingredientKey) {
              <option value="milliliter">mL</option>
              <option value="liter">L</option>
              <option value="gram">g</option>
+             <option value="small">small</option>
+             <option value="medium">medium</option>
+             <option value="large">large</option>
+             <option value="whole">whole</option>
         </select>
       </div>
       <div>
