@@ -1,4 +1,4 @@
-export default function NumberedTextField(fieldKey, isDirection) {
+export default function NumberedTextField({fieldKey, isDirection, defaultTextAreaValue}) {
   let fieldType;
   if (isDirection === true) {
     fieldType = "direction";
@@ -9,7 +9,7 @@ export default function NumberedTextField(fieldKey, isDirection) {
   return (
     <div className={`${fieldType}-field-${fieldKey} form-group`}>
       <label htmlFor={`${fieldType}-${fieldKey}`} type="textarea">{isDirection ? "Direction Text:" : "Note Text:"}</label>
-      <textarea id={`${fieldType}-${fieldKey}`} name={`${fieldType}_text`} required={isDirection ? true : false} />
+      <textarea id={`${fieldType}-${fieldKey}`} name={`${fieldType}_text`} defaultValue={defaultTextAreaValue} required={isDirection ? true : false} />
     </div>
   );
 }

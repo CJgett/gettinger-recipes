@@ -42,9 +42,7 @@ export default function AddRecipePage() {
 
     console.log("DB result: " + postResult);
     const picFileName = await saveFile(formData.get("recipe_pic"), postResult[0].id);
-    console.log("picFileName: " + picFileName);
-    const updatePicName = await dbFetch(`UPDATE all_recipes SET pic = $1 WHERE id = $2;`, [picFileName, postResult[0].id]);
-    console.log("submitted");
+    await dbFetch(`UPDATE all_recipes SET pic = $1 WHERE id = $2;`, [picFileName, postResult[0].id]);
 
     //TODO auto refresh page so you can see the new recipe
     //revalidatePath("/recipes");
@@ -95,25 +93,17 @@ export default function AddRecipePage() {
           </div>
         </div>
 
-        {/* INGREDIENTS */}       
-
         <div id="ingredients" className="form-question ingredients">
           <Ingredients />
         </div>
-
-        {/* DIRECTIONS */}
 
         <div className="form-question directions"> 
           <Directions />
         </div>
              
-        {/* NOTES */}
-
         <div className="form-question notes">
           <Notes />
         </div>
-
-        {/* SOURCES */}
 
         <div className="form-question sources">
           <Sources />  

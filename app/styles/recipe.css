@@ -150,6 +150,11 @@
 
   &> .ingredients-directions {
     &> .ingredient-list{
+      .ingredient-editing-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+      }
       &>li {
         &> input[type="checkbox"] {
           margin-right: 8px;
@@ -179,6 +184,9 @@
     background-color: var(--c-bg-secondary);
     border: dashed 10px var(--c-bg);
     border-radius: 0px;
+    &.hide {
+      display: none;
+    }
   }
 
   .sources {
@@ -186,6 +194,9 @@
     padding-top: 10px;
     ul {
       padding-left: 0px;
+    }
+    &.hide {
+      display: none;
     }
   }
 
