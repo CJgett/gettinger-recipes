@@ -36,14 +36,25 @@ export default function AddRecipePage() {
     const tags = formData.getAll("tags");
 
     console.log("TEST RESULTS - SUBMIT");
-
-    const postResult = await dbFetch(`INSERT INTO all_recipes (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, tags, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`,
+    try {
+      const postResult = await dbFetch(`INSERT INTO all_recipes (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, tags, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`,
        [recipeAuthor, nameEN, nameKR, nameEN, picAltText, prepTime, cookTime, servings, ingredients, directions, notes, sources, tags, isFamilyRecipe]);
-
-    console.log("DB result: " + postResult);
-    const picFileName = await saveFile(formData.get("recipe_pic"), postResult[0].id);
-    await dbFetch(`UPDATE all_recipes SET pic = $1 WHERE id = $2;`, [picFileName, postResult[0].id]);
-
+      try {
+        const picFileName = await saveFile(formData.get("recipe_pic"), postResult[0].id);
+        try {
+          const updatedResult = await dbFetch(`UPDATE all_recipes SET pic = $1 WHERE id = $2;`, [picFileName, postResult[0].id]);
+          console.log("DB result: " + updatedResult);
+        } catch (error) {
+          console.error("Error updating recipe with picture file name " + error);
+        }
+      } catch (error) {
+        console.error("Error saving picture file " + error);
+      }
+    } catch (error) {
+      console.error("Error adding recipe to DB: " + error);
+    }
+    
+    
     //TODO auto refresh page so you can see the new recipe
     //revalidatePath("/recipes");
   }
