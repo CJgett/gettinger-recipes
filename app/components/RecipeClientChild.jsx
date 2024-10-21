@@ -39,7 +39,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
     }
     return (
         <form action={handleSave} name="edit recipe">
-            <section className="recipe-detailed">
+            <section className={`recipe-detailed ${isEditing ? 'editing' : ''}`}>
                 <div className="recipe-title-edit">
                     <div className="recipe-title">
                         {isEditing ? (

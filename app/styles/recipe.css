@@ -70,11 +70,18 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  &> div {
+    width: 70%;
+    @media (max-width: 1200px) {
+      width: 90%;
+    }
+  }
 
   &> .recipe-title-edit {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 20px;
   }
 
@@ -101,18 +108,17 @@
   }
 
   .recipe-pic {
-    width: 70%;
     img {
       width: 100%;
       object-fit: cover;
       object-position: center;
       border-radius: 14px;
+      max-height: 500px;
     }
   }
 
   &> .card-section {
     background-color: var(--c-bg);
-    width: 70%;
     min-width: 320px;
     padding: 40px;
     border-radius: 14px;
@@ -172,10 +178,16 @@
   }
 
   &> .ingredients-directions {
+    ul {
+      @media (min-width: 1024px) {
+        columns: 2;
+      }
+    }
     &> .ingredient-list{
       .ingredient-editing-container {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         gap: 10px;
       }
       &>li {
@@ -222,6 +234,90 @@
       display: none;
     }
   }
+}
 
-  
+.recipe-detailed.editing {
+  .recipe-title-edit {
+    justify-content: space-around;
+    margin-bottom: 30px;
+
+    .recipe-title {
+
+      input {
+        margin-right: 10px;
+        padding: 5px;
+        font-size: 30px;
+        border: none;
+        background-color: var(--c-bg);
+        color: var(--c-text);
+      }
+    }
+  }
+
+  .card-section {
+
+    h3 {
+      margin-bottom: 15px;
+    }
+
+    input, textarea {
+      padding: 5px;
+      margin-bottom: 10px;
+      border: none;
+      background-color: var(--c-bg-secondary);
+      color: var(--c-text);
+    }
+
+    input {
+      font-size: 16px;
+    }
+
+    textarea {
+      font-size: 25px;
+    }
+  }
+
+  .ingredients-directions {
+    .ingredient-list {
+      .ingredient-editing-container {
+        margin-bottom: 15px;    
+
+        @media (max-width: 1024px) {
+          flex-direction: column;
+          padding-bottom: 15px;
+          margin-bottom: 15px;
+        
+          &:not(:last-child) {
+            border-bottom: 1px dashed rgba(var(--c-text-rgb), 0.5);
+          }
+        }
+
+        input {
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .custom-list {
+      textarea {
+        width: 100%;
+      }
+    }
+  }
+
+  .notes, .sources {
+    display: block;
+
+    textarea {
+      width: 100%;
+      background-color: var(--c-bg);
+    }
+
+    .source {
+      input {
+        background-color: var(--c-bg);
+        margin-right: 10px;
+      }
+    }
+  }
 }
