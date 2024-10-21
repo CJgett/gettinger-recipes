@@ -1,16 +1,4 @@
-"use client"
-
-import React, { useState } from 'react';
-
-export function RecipeTabs({ categories, children }) {
-  const [activeTab, setActiveTab] = useState(categories[0]);
-
-  function handleTabClick(tab) {
-    if (activeTab !== tab) {
-      setActiveTab(tab);
-    }
-  };
-
+export function RecipeTabs({ categories, activeTab, onTabChange }) {
   return (
     <div className="recipe-box-tabs">
       {categories.map((tab, index) => (
@@ -18,13 +6,11 @@ export function RecipeTabs({ categories, children }) {
           role="tab" 
           className={`recipe-box-tab ${activeTab === tab ? 'active' : ''}`}
           key={index}
-          onClick={() => handleTabClick(tab)}
+          onClick={() => onTabChange(tab)}
         >        
           {tab}
         </button>
       ))}
-      {children}
     </div>
   );
 }
-
