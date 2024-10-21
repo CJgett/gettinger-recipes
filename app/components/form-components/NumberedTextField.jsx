@@ -1,11 +1,8 @@
 export default function NumberedTextField({fieldKey, isDirection, defaultTextAreaValue=""}) {
   let fieldType;
-  console.log("triggered");
   if (isDirection === true) {
-    console.log("this ones direction 2");
     fieldType = "direction";
   } else {
-    console.log("this ones note");
     fieldType = "note";
   }
 

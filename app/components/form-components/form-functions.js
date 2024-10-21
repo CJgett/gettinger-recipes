@@ -12,7 +12,6 @@ export function addNewField(e, fieldType, idCounter, counterSettingFunction, fie
     fieldName = 'ingredientField'; 
   } else if (fieldType === FieldType.Direction) {
     objectToBeAdded = { fieldKey: idCounter + 1, isDirection: true }
-    console.log("this ones direction")
     fieldName = 'directionField';
   } else if (fieldType === FieldType.Note) {
     objectToBeAdded = { fieldKey: idCounter + 1, isDirection: false };
