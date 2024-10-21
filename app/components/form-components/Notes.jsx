@@ -10,7 +10,7 @@ export default function Notes() {
 
   /* setup NOTES */
   const [noteIDCounter, setNoteIDCounter] = useState(0);
-  const initialNoteField = new NumberedTextField(noteIDCounter, false);
+  const initialNoteField = { fieldKey: noteIDCounter, isDirection: false };
   const [noteArray, setNoteArray] = useState([{'key': noteIDCounter, 'noteField': initialNoteField}]);
 
   return (
@@ -25,7 +25,7 @@ export default function Notes() {
               {index + 1}
             </span>
             <div className="note">
-              {note.noteField}
+              <NumberedTextField fieldKey={note.key} isDirection={false} />
               <button className="delete-field-button" onClick={(e) => {deleteThisField(e, note.key, noteArray, setNoteArray)}} title="delete this note">
                 -
               </button>

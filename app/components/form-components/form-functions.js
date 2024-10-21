@@ -8,16 +8,18 @@ export function addNewField(e, fieldType, idCounter, counterSettingFunction, fie
   let objectToBeAdded, fieldName;
 
   if (fieldType === FieldType.Ingredient) {
-    objectToBeAdded = new IngredientField(idCounter + 1)
+    objectToBeAdded = { fieldKey: idCounter + 1 }
     fieldName = 'ingredientField'; 
   } else if (fieldType === FieldType.Direction) {
-    objectToBeAdded = new NumberedTextField(idCounter + 1, true)
+    objectToBeAdded = { fieldKey: idCounter + 1, isDirection: true }
+    console.log("this ones direction")
     fieldName = 'directionField';
   } else if (fieldType === FieldType.Note) {
-    objectToBeAdded = new NumberedTextField(idCounter + 1, false);
+    objectToBeAdded = { fieldKey: idCounter + 1, isDirection: false };
     fieldName = 'noteField';
   } else if (fieldType === FieldType.Source) {
-    objectToBeAdded = new SourceField(idCounter + 1);    fieldName = 'sourceField';
+    objectToBeAdded = { fieldKey: idCounter + 1 }
+    fieldName = 'sourceField';
   } else {
     return;
   }

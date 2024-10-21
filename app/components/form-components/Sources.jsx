@@ -10,7 +10,7 @@ export default function Sources() {
 
   /* setup SOURCES */
   const [sourceIDCounter, setSourceIDCounter] = useState(0);
-  const initialSourceField = new SourceField(sourceIDCounter);
+  const initialSourceField = { fieldKey: sourceIDCounter };
   const [sourceArray, setSourceArray] = useState([{'key': sourceIDCounter, 'sourceField': initialSourceField}]);
 
 
@@ -22,7 +22,7 @@ export default function Sources() {
       </button>
       {sourceArray.map((source) => ( 
         <div key={source.key}>
-          {source.sourceField}
+          <SourceField fieldKey={source.key} />
           <button className="delete-field-button" onClick={(e) => {deleteThisField(e, source.key, sourceArray, setSourceArray)}} title="delete this source">
               -
           </button>

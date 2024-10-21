@@ -9,7 +9,7 @@ import {addNewField, deleteThisField} from './form-functions.js'
 export default function Ingredients() {
   /* setup INGREDIENTS */
   const [ingredientIDCounter, setIngredientIDCounter] = useState(0);
-  const initialIngredientField = new IngredientField(ingredientIDCounter);
+  const initialIngredientField = { fieldKey: ingredientIDCounter };
   const [ingredientArray, setIngredientArray] = useState([{'key': ingredientIDCounter, 'ingredientField': initialIngredientField}]);
 
   return (
@@ -20,7 +20,7 @@ export default function Ingredients() {
       </div>
       {ingredientArray.map((ingredient) => (
           <div className="ingredient-group" key={ingredient.key}>
-            {ingredient.ingredientField}
+            <IngredientField fieldKey={ingredient.key} />
             <button className="delete-field-button" onClick={(e) => {deleteThisField(e, ingredient.key, ingredientArray, setIngredientArray)}} title="delete this ingredient">-</button>
           </div>
         ))}
