@@ -35,7 +35,7 @@ export async function updateRecipeInDB(formData, originalRecipe) {
   const updatedDirections = JSON.stringify(formData.getAll("direction_text"));
   const updatedNotes = JSON.stringify(formData.getAll("note_text"));
   const updatedSources = formatSourcesAsJSON(formData.getAll("source-link"), formData.getAll("source-title"));
-  const result = await dbFetch(`UPDATE all_recipes SET name_en = $1, name_kr = $2, pic = $3, pic_alt = $4, prep_time = $5, cook_time = $6, servings = $7, ingredients = $8, directions = $9, notes = $10, sources = $11, tags = $12 WHERE id = $13;`, 
+  const result = await dbFetch(`UPDATE all_recipes SET name_en = $1, name_kr = $2, pic = $3, pic_alt = $4, prep_time = $5, cook_time = $6, servings = $7, ingredients = $8, directions = $9, notes = $10, sources = $11, tags = $12 WHERE id = $13 RETURNING *;`, 
     [updatedNameEN, updatedNameKR, originalRecipe.pic, originalRecipe.pic_alt, updatedPrepTime, updatedCookTime, updatedServings, updatedIngredients, updatedDirections, updatedNotes, updatedSources, originalRecipe.tags, originalRecipe.id]);
-  return result;
+  return result[0];
 }

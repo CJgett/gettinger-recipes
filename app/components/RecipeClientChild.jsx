@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import DecorativeArches from './DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
@@ -8,9 +8,18 @@ import SourceList from './SourceList.jsx'
 import Toggle from './Toggle.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
 
-export default function RecipeClientChild({recipeDetails}) {
+export default function RecipeClientChild({recipeDetails: initialRecipeDetails}) {
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [recipeDetails, setRecipeDetails] = useState(initialRecipeDetails);
+    const [updatedRecipe, setUpdatedRecipe] = useState(null);
+
+    useEffect(() => {
+        if (updatedRecipe) {
+            setRecipeDetails(updatedRecipe);
+            setUpdatedRecipe(null);
+        }
+    }, [updatedRecipe]);
 
     function handleEdit() {
         setIsEditing(isEditing => !isEditing);
@@ -21,10 +30,11 @@ export default function RecipeClientChild({recipeDetails}) {
         setIsSaving(true);
         try {
             const result = await updateRecipeInDB(formData, recipeDetails);
-            console.log(result);
+            setUpdatedRecipe(result);
+            console.log("Recipe updated:", result);
         }
         catch (err){
-            console.error(err);
+            console.error("Error saving recipe:", err);
         }
         setIsSaving(false);
         setIsEditing(false);
