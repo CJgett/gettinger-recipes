@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 import DecorativeArches from './DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
@@ -12,16 +13,11 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [recipeDetails, setRecipeDetails] = useState(initialRecipeDetails);
-    const [updatedRecipe, setUpdatedRecipe] = useState(null);
 
-    useEffect(() => {
-        if (updatedRecipe) {
-            setRecipeDetails(updatedRecipe);
-            setUpdatedRecipe(null);
-        }
-    }, [updatedRecipe]);
+    const iconDimensions = 30;
 
-    function handleEdit() {
+    function handleEdit(e) {
+        e.preventDefault();
         setIsEditing(isEditing => !isEditing);
         console.log("edit clicked");
     }
@@ -30,7 +26,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
         setIsSaving(true);
         try {
             const result = await updateRecipeInDB(formData, recipeDetails);
-            setUpdatedRecipe(result);
+            setRecipeDetails(result);
             console.log("Recipe updated:", result);
         }
         catch (err){
@@ -44,7 +40,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
     return (
         <form action={handleSave} name="edit recipe">
             <section className="recipe-detailed">
-                <div className="recipe-title-pic">
+                <div className="recipe-title-edit">
                     <div className="recipe-title">
                         {isEditing ? (
                             <>
@@ -66,17 +62,41 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                             </>
                         )}
                         </div>
-                        <div className="recipe-pic">
+                        
+                    <div className="edit-buttons">
+                        {isEditing ? (
+                            <>
+                            <button onClick={handleEdit} disabled={isSaving} aria-label="Discard Changes">
+                                <Image
+                                    src="/icons/delete-svgrepo-com.svg"
+                                    alt="an outline of a trash can"
+                                    width={iconDimensions}
+                                    height={iconDimensions}
+                                />
+                            </button>
+                            <button type="submit" disabled={isSaving} aria-label="Save Changes">
+                                <Image
+                                    src="/icons/save-svgrepo-com.svg"
+                                    alt="an outline of a floppy disk"
+                                    width={iconDimensions}
+                                    height={iconDimensions}
+                                />
+                            </button>
+                            </>
+                        ) : (
+                            <button onClick={handleEdit} aria-label="Edit Recipe">
+                                <Image
+                                    src="/icons/editoutline-svgrepo-com.svg"
+                                    alt="an outline of a pencil"
+                                    width={iconDimensions}
+                                    height={iconDimensions}
+                                />
+                            </button>
+                        )}
+                    </div>
+                    </div>
+                    <div className="recipe-pic">
                         <img src={`/recipe_pics/${recipeDetails.pic}`} alt={recipeDetails.pic_alt}/>
-                        </div>
-                    {isEditing ? (
-                        <>
-                        <button type="submit" disabled={isSaving}>Save Changes</button>
-                        <button onClick={handleEdit} disabled={isSaving}>Discard Changes</button>
-                        </>
-                    ) : (
-                        <button onClick={handleEdit}>Edit Recipe</button>
-                    )}
                     </div>
                     <div className="card-section recipe-details">
                         <DecorativeArches additionalClasses={'top'}/>
@@ -125,11 +145,11 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                     <h3>Directions</h3>
                     <CustomList listItems={recipeDetails.directions} isEditing={isEditing} defaultTextAreaValue={recipeDetails.directions} isDirection={true} />
                 </div>
-                <div className={`card-section notes ${recipeDetails.notes[0] !== "" ? "show" : "hide"}`}>
+                <div className={`card-section notes ${recipeDetails.notes[0] !== "" && !isEditing ? "show" : "hide"}`}>
                     <h3>Notes</h3>
                     <CustomList listItems={recipeDetails.notes} isEditing={isEditing} defaultTextAreaValue={recipeDetails.notes} isDirection={false} />
                 </div>
-                <div className={`card-section sources ${recipeDetails.sources[0].source_link !== "" ? "show" : "hide"}`}>
+                <div className={`card-section sources ${recipeDetails.sources[0].source_link !== "" && !isEditing ? "show" : "hide"}`}>
                     <h3>Sources / Inspiration</h3>
                     <SourceList listItems={recipeDetails.sources} isEditing={isEditing} defaultTextAreaValue={recipeDetails.sources} isDirection={false} />
                 </div>

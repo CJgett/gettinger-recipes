@@ -71,19 +71,42 @@
   align-items: center;
   flex-direction: column;
 
-  &> .recipe-title-pic {
+  &> .recipe-title-edit {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 20px;
+  }
 
-    &> .recipe-pic {
-      align-self: flex-end;
-
-      &> img {
-        height: 100px;
-        width: 100px;
-        border-radius: 14px;
+  .edit-buttons {
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      margin: 0 5px;
+      height: 40px;
+      img {
+        filter: var(--c-text-filter);
       }
+      &:hover {
+        background-color: var(--c-bg);
+        border-radius: 50%;
+      }
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .recipe-pic {
+    width: 70%;
+    img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 14px;
     }
   }
 

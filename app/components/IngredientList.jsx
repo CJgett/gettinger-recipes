@@ -14,7 +14,7 @@ export default function IngredientList({ingredients, isEditing}) {
             </div>
             <div>
               <label htmlFor={"imperial_measurement_" + index}>Imperial: </label>
-              <input name="imperial_measurement" id={"imperial_measurement_" + index} defaultValue={ingredient.imperial_measurement} required />
+              <input name="imperial_measurement" id={"imperial_measurement_" + index} defaultValue={ingredient.imperial_measurement} />
             </div>
           </div>
         ))}

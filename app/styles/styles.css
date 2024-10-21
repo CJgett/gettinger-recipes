@@ -31,6 +31,7 @@
     --c-bg-secondary: #331F29;
     /* creamy white */
     --c-text: #F2EEE5;
+    --c-text-filter: invert(95%) sepia(11%) saturate(337%) hue-rotate(324deg) brightness(104%) contrast(90%);
     --c-text-rgb: 242, 238, 229;
     /* light blue */
     --c-accent-primary: #C8D7DE;
@@ -49,6 +50,8 @@
     --c-bg-secondary: #C8D7DE;
     /* daaark gray */
     --c-text: #1C1B1B;
+    /*for svgs imported through nextjs image component */
+    --c-text-filter: invert(6%) sepia(4%) saturate(479%) hue-rotate(314deg) brightness(92%) contrast(89%);
     --c-text-rgb: 28,27,27;
     /* light gray */
     --c-accent-primary: #3E3C3C;
@@ -63,6 +66,7 @@
   --c-bg-rgb: 28,27,27;
   --c-bg-secondary: #331F29;
   --c-text: #F2EEE5;
+  --c-text-filter: invert(95%) sepia(11%) saturate(337%) hue-rotate(324deg) brightness(104%) contrast(90%);
   --c-text-rgb: 242, 238, 229;
   --c-accent-primary: #C8D7DE;
   --c-accent-secondary: #3E3C3C;
@@ -74,6 +78,7 @@
   --c-bg-rgb: 242, 238, 229;
   --c-bg-secondary: #C8D7DE;
   --c-text: #1C1B1B;
+  --c-text-filter: invert(6%) sepia(4%) saturate(479%) hue-rotate(314deg) brightness(92%) contrast(89%);
   --c-text-rgb: 28,27,27;
   --c-accent-primary: #3E3C3C;
   --c-accent-secondary: #35605A;
