@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import '../styles/toggle.css'
 
 export default function ThemeToggle() {
 
   // true = use dark mode
-  const [theme, setTheme] = React.useState("null");
+  const [theme, setTheme] = useState("null");
 
   function toggleThemePreference() {
     let themeAsBool = theme;
@@ -46,7 +46,7 @@ export default function ThemeToggle() {
     }
   },[]);
 
-  React.useEffect(()=>{
+  useEffect(()=>{
     window.localStorage.setItem('themePreference', theme)
   },[theme])
 
