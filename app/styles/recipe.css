@@ -1,10 +1,52 @@
 .recipes {
   text-align: center;
   &> .recipes-container {
-    &> .recipe-box-tabs {
+    &> .recipe-tabs-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .scroll-arrow {
+        position: absolute;
+        top: 60%;
+        background-color: var(--c-bg);
+        border: 2px solid var(--c-text);
+        color: var(--c-text);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer; 
+        filter: blur(0.05px);
+
+        &:hover {
+          background-color: var(--c-bg-secondary);
+        }
+
+        &.left {
+          left: -35px;
+        }
+
+        &.right {
+          right: -35px;
+        }
+      }
+    }
+
+    & .recipe-box-tabs {
       padding-top: var(--padding-horizontal);
       text-align: left;
       position: relative;
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+      white-space: nowrap;
+      -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+      &::-webkit-scrollbar { 
+        display: none;  /* WebKit */
+      }
 
       &> .recipe-box-tab {
         border: 3px solid var(--c-text);
@@ -19,7 +61,6 @@
           background-color: var(--c-text);
           color: var(--c-bg);
           padding-top: 15px;
-          height: calc(100% + 5px);
         }
 
         &:hover:not(.active) {
@@ -30,12 +71,10 @@
 
     &> .recipe-box {
       position: relative;
-      z-index: 1;
       margin-top: -3px;
       padding: 50px 20px 50px 20px;
       border: 3px solid var(--c-text);
-      border-radius: 8px;
-      border-top-left-radius: 0px;
+      border-radius: 0px 0px 8px 8px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -72,7 +111,6 @@
     } 
   }
 }
-
 
 .recipe-detailed {
   display: flex;
