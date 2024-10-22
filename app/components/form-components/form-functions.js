@@ -1,7 +1,4 @@
 import FieldType from '../../constants/FieldType.jsx'
-import IngredientField from './IngredientField.jsx'
-import NumberedTextField from './NumberedTextField.jsx'
-import SourceField from './SourceField.jsx'
 
 export function addNewField(e, fieldType, idCounter, counterSettingFunction, fieldArray, arraySettingFunction) {
   e.preventDefault();

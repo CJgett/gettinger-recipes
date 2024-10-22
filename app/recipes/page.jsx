@@ -45,7 +45,7 @@ export default function AllRecipePage() {
         <div className="recipe-box">
           {filteredRecipes.map((recipe) => (
             <div key={recipe.id} className="recipe-card">
-              <Link href={`/recipes/${recipe.id}`}>
+              <Link href={`/recipes/${recipe.name_en.replace(/\s+/g, '_')}-${recipe.id}`}>
                 <img src={`/recipe_pics/${recipe.pic}`} alt={recipe.pic_alt} />
                 <h3>{recipe.name_en}</h3>
               </Link>
