@@ -3,9 +3,10 @@ import fs from 'fs'
 import { dbFetch } from '../../../utils/postgres.js'
 import { formatIngredientsAsJSON, formatSourcesAsJSON } from './form-functions.js'
 
-export async function saveFile(file, recipeID) {
+export async function saveFile(formData, recipeID) {
+  const file = formData.get("recipe_pic");
   if (file.name === 'undefined') {
-    return '';
+    return new Error("No recipe picture file provided");
   }
   let indexOfLastPeriod = file.name.lastIndexOf('.');
   let fileName = recipeID + file.name.substring(indexOfLastPeriod);
@@ -17,6 +18,12 @@ export async function saveFile(file, recipeID) {
   console.log(fileName);
 
   let filePath = 'public/recipe_pics' + '/' + fileName;
+
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  };
 
   fs.writeFile(filePath, buffer, (err) => {
     if (err) throw err;
@@ -38,4 +45,39 @@ export async function updateRecipeInDB(formData, originalRecipe) {
   const result = await dbFetch(`UPDATE all_recipes SET name_en = $1, name_kr = $2, pic = $3, pic_alt = $4, prep_time = $5, cook_time = $6, servings = $7, ingredients = $8, directions = $9, notes = $10, sources = $11, tags = $12 WHERE id = $13 RETURNING *;`, 
     [updatedNameEN, updatedNameKR, originalRecipe.pic, originalRecipe.pic_alt, updatedPrepTime, updatedCookTime, updatedServings, updatedIngredients, updatedDirections, updatedNotes, updatedSources, originalRecipe.tags, originalRecipe.id]);
   return result[0];
+}
+export async function updatePicFileName(recipeID, picFileName) {
+  const result = await dbFetch(`UPDATE all_recipes SET pic = $1 WHERE id = $2 RETURNING *;`, [picFileName, recipeID]);
+  return result[0];
+}
+
+export async function addRecipeToDB(formData) {
+  console.log(formData);
+  const recipeAuthor = formData.get("recipe_author");
+  const nameEN = formData.get("name_en");
+  const nameKR = formData.get("name_kr");
+
+  //TODO restrict size and type of file
+  const picAltText = formData.get("pic_alt");
+
+  const prepTime = formData.get("prep_time_hrs") + "hrs " + formData.get("prep_time_mins") + "mins";
+  const cookTime = formData.get("cook_time_hrs") + "hrs " + formData.get("cook_time_mins") + "mins";
+  const servings = formData.get("servings");
+
+  const ingredients = formatIngredientsAsJSON(formData.getAll("ingredient_name"), formData.getAll("metric_measurement"), formData.getAll("metric_measurement_unit"), formData.getAll("imperial_measurement"), formData.getAll("imperial_measurement_unit"));
+  const directions = JSON.stringify(formData.getAll("direction_text"));
+  const notes = JSON.stringify(formData.getAll("note_text"));
+  const sources = formatSourcesAsJSON(formData.getAll("source_link"), formData.getAll("source_title"));
+
+  const isFamilyRecipe = (formData.get("family_recipe") === "yes");
+  const tags = formData.getAll("tags");
+
+  try {
+    const postResult = await dbFetch(`INSERT INTO all_recipes (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, tags, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`,
+      [recipeAuthor, nameEN, nameKR, nameEN, picAltText, prepTime, cookTime, servings, ingredients, directions, notes, sources, tags, isFamilyRecipe]);
+    return postResult[0];
+  } catch (error) {
+    console.error("Error adding recipe to DB: " + error);
+    return false;
+  }
 }

@@ -1,6 +1,6 @@
-import '../styles/admin.css'
+"use client";
 
-import { dbFetch } from '../../utils/postgres.js'
+import '../styles/admin.css'
 
 import DurationInputField from '../components/form-components/DurationInputField.jsx'
 import Ingredients from '../components/form-components/Ingredients.jsx'
@@ -8,65 +8,53 @@ import Directions from '../components/form-components/Directions.jsx'
 import Notes from '../components/form-components/Notes.jsx'
 import Sources from '../components/form-components/Sources.jsx'
 import Tags from '../constants/Tags.jsx'
-import { formatIngredientsAsJSON, formatSourcesAsJSON } from '../components/form-components/form-functions.js'
-import { saveFile } from '../components/form-components/form-server-functions.js'
+import { saveFile, addRecipeToDB, updatePicFileName } from '../components/form-components/form-server-functions.js'
+
+import { useEffect, useRef, useState } from 'react';
 
 export default function AddRecipePage() {
+  const formRef = useRef(null);
+  const [recipeSubmitted, setRecipeSubmitted] = useState(false);
 
-  async function addRecipeToDB(formData) {
-  "use server"
+  useEffect(() => {
+    if (recipeSubmitted) {
+      formRef.current.reset();
+      alert("Recipe added successfully!");
+      // Optionally, you can add a success message or trigger other actions here
+    }
+  }, [recipeSubmitted]);
 
-    const recipeAuthor = formData.get("recipe-author");
-    const nameEN = formData.get("name_en");
-    const nameKR = formData.get("name_kr");
-
-    //TODO restrict size and type of file
-    const picAltText = formData.get("pic_alt");
-
-    const prepTime = formData.get("prep_time_hrs") + "hrs " + formData.get("prep_time_mins") + "mins";
-    const cookTime = formData.get("cook_time_hrs") + "hrs " + formData.get("cook_time_mins") + "mins";
-    const servings = formData.get("servings");
-
-    const ingredients = formatIngredientsAsJSON(formData.getAll("ingredient_name"), formData.getAll("metric_measurement"), formData.getAll("metric_measurement_unit"), formData.getAll("imperial_measurement"), formData.getAll("imperial_measurement_unit"));
-    const directions = JSON.stringify(formData.getAll("direction_text"));
-    const notes = JSON.stringify(formData.getAll("note_text"));
-    const sources = formatSourcesAsJSON(formData.getAll("source-link"), formData.getAll("source-title"));
-
-    const isFamilyRecipe = (formData.get("family_recipe") === "yes");
-    const tags = formData.getAll("tags");
-
+  async function submitRecipe(formData) {
     console.log("TEST RESULTS - SUBMIT");
+    const postResult = await addRecipeToDB(formData);
+    if (postResult === false) {
+      return;
+    }
+    const postResultID = postResult.id;
     try {
-      const postResult = await dbFetch(`INSERT INTO all_recipes (author, name_en, name_kr, pic, pic_alt, prep_time, cook_time, servings, ingredients, directions, notes, sources, tags, is_family_recipe) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`,
-       [recipeAuthor, nameEN, nameKR, nameEN, picAltText, prepTime, cookTime, servings, ingredients, directions, notes, sources, tags, isFamilyRecipe]);
+      const picFileName = await saveFile(formData, postResultID);
       try {
-        const picFileName = await saveFile(formData.get("recipe_pic"), postResult[0].id);
-        try {
-          const updatedResult = await dbFetch(`UPDATE all_recipes SET pic = $1 WHERE id = $2;`, [picFileName, postResult[0].id]);
-          console.log("DB result: " + updatedResult);
-        } catch (error) {
-          console.error("Error updating recipe with picture file name " + error);
-        }
+        const updatedResult = await updatePicFileName(postResultID, picFileName);
+        console.log("DB result: " + updatedResult);
       } catch (error) {
-        console.error("Error saving picture file " + error);
+        console.error("Error updating recipe with picture file name " + error);
+        return;
       }
     } catch (error) {
-      console.error("Error adding recipe to DB: " + error);
+      console.error("Error saving picture file " + error);
+      return;
     }
-    
-    
-    //TODO auto refresh page so you can see the new recipe
-    //revalidatePath("/recipes");
+    setRecipeSubmitted(true);
   }
 
   return (
     <section className="add-recipe-page">
       <h2>Add New Recipe</h2>
-      <form action={addRecipeToDB} name="add new recipe">
+      <form ref={formRef} action={submitRecipe} name="add new recipe">
         <div className="form-group">
           <div className="form-question">
-            <label htmlFor="recipe-author">Recipe Author: </label>
-            <input name="recipe-author" id="recipe-author" />
+            <label htmlFor="recipe_author">Recipe Author: </label>
+            <input name="recipe_author" id="recipe_author" />
           </div>
           <div className="form-question">
             <label htmlFor="name_en">English Name: </label>
@@ -121,7 +109,6 @@ export default function AddRecipePage() {
         </div>
 
         <div className="form-question">
-          
           <fieldset>
             <legend>
             Please select the appropriate tag(s)
@@ -147,11 +134,11 @@ export default function AddRecipePage() {
           </fieldset>
         </div>
         <div className="form-question">
-          <button type="submit" >
+          <button type="submit">
             add recipe
           </button>
         </div>
       </form>
     </section>
   );
- }
+}
