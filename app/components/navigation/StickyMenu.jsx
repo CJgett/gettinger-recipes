@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import Smile from './Smile'
+import Smile from '../decorations/Smile'
 import MenuNav from './MenuNav'
 
 export default function StickyMenu() {

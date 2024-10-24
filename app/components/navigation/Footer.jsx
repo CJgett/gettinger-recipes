@@ -1,11 +1,11 @@
 "use client"
 
-import { useInView, InView } from 'react-intersection-observer'
+import { InView } from 'react-intersection-observer'
 
-import '../styles/footer.css'
+import '../../styles/footer.css'
 import Link from 'next/link'
 import MenuNav from './MenuNav.jsx'
-import Squiggle from './Squiggle.jsx'
+import Squiggle from '../decorations/Squiggle.jsx'
 
 
 export default function Footer() {

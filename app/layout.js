@@ -1,8 +1,8 @@
 // These styles apply to every route in the application
 import './styles/reset.css'
 import './styles/styles.css'
-import MainMenu from './components/MainMenu.jsx'
-import Footer from './components/Footer.jsx'
+import MainMenu from './components/navigation/MainMenu'
+import Footer from './components/navigation/Footer'
 import localFont from 'next/font/local'
 
 export const metadata = {

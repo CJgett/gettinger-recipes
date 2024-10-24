@@ -1,7 +1,7 @@
-import '../styles/mobilemenu.css'
+import '../../styles/mobilemenu.css'
 
 import MenuNav from './MenuNav.jsx'
-import ThemeToggle from './ThemeToggle.jsx'
+import ThemeToggle from '../ThemeToggle.jsx'
 import Link from 'next/link'
 
 export default function OffCanvasMenu() {

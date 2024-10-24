@@ -1,18 +1,18 @@
 "use client"
 
 import React, { useEffect } from 'react'
-import { useInView, InView } from 'react-intersection-observer'
+import { InView } from 'react-intersection-observer'
 
-import '../styles/mainmenu.css'
+import '../../styles/mainmenu.css'
 
 import Link from 'next/link'
-import Eyes from './Eyes.jsx'
-import ThemeToggle from './ThemeToggle.jsx'
+import Eyes from '../decorations/Eyes.jsx'
+import ThemeToggle from '../ThemeToggle.jsx'
 import MenuNav from './MenuNav.jsx'
 import OffCanvasMenu from './OffCanvasMenu.jsx'
 import Hamburger from './Hamburger'
 import StickyMenu from './StickyMenu'
-import Mouth from './Mouth'
+import Mouth from '../decorations/Mouth.jsx'
 
 export default function MainMenu() {
 
