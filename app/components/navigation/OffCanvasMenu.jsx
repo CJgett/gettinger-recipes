@@ -8,7 +8,7 @@ export default function OffCanvasMenu() {
   return(
     <div className="off-canvas-menu hide">
 
-      <Link href="/"><h1>A Pinch of 한미</h1></Link>
+      <Link href="/"><h1>Gettinger Recipes</h1></Link>
       <MenuNav />
       <div>TODO: add search bar here too</div>
       <svg width="1241.519pt" height="1040.383pt" viewBox="-1745.602 -1693.785 1241.519 1040.383">

@@ -43,13 +43,11 @@ footer {
       }
 
       &> .footer-subcontainer {
-
-        &> .footer-sm-icons > svg {
-          width: 30px;
-          height: 30px;
-
-            &> path, circle {
-              stroke: #F2EEE5;
+        &.socials {
+          width: 100px;
+          p {
+            line-height: 25px;
+            font-size: 25px;
           }
         }
 
