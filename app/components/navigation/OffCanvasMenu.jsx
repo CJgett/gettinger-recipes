@@ -2,6 +2,7 @@ import '../../styles/mobilemenu.css'
 
 import MenuNav from './MenuNav.jsx'
 import ThemeToggle from '../ThemeToggle.jsx'
+import SearchBar from '../elements/SearchBar.jsx'
 import Link from 'next/link'
 
 export default function OffCanvasMenu() {
@@ -10,7 +11,7 @@ export default function OffCanvasMenu() {
 
       <Link href="/"><h1>Gettinger Recipes</h1></Link>
       <MenuNav />
-      <div>TODO: add search bar here too</div>
+      <SearchBar isExpandable={false} />
       <svg width="1241.519pt" height="1040.383pt" viewBox="-1745.602 -1693.785 1241.519 1040.383">
         <g id="New_Layer_4" opacity="1.000">
           <path id="STROKE_192d475b-0e0a-49bd-98c1-045e491196ae" opacity="1.000" fill="none" strokeWidth="37.371" strokeOpacity="1.000" strokeLinecap="round" strokeLinejoin="round" d="M -1589.223 -1170.219 Q -1583.270 -1164.605 -1564.188 -1147.007 Q -1545.106 -1129.409 -1516.108 -1105.967 Q -1487.110 -1082.525 -1462.812 -1067.749 Q -1438.514 -1052.974 -1389.385 -1034.871 Q -1340.255 -1016.769 -1310.171 -1011.585 Q -1280.086 -1006.402 -1258.412 -1005.068 Q -1236.738 -1003.734 -1210.393 -1004.707 Q -1184.047 -1005.680 -1118.883 -1018.199 Q -1053.718 -1030.719 -1013.207 -1044.698 Q -972.697 -1058.678 -948.561 -1069.444 Q -924.425 -1080.209 -896.964 -1094.771 Q -869.502 -1109.332 -814.917 -1146.885 Q -760.333 -1184.438 -747.062 -1195.052 Q -733.791 -1205.667 -723.900 -1213.969 Q -714.010 -1222.270 -703.935 -1231.367 Q -693.860 -1240.464 -684.921 -1248.931 L -669.779 -1262.033 "></path>

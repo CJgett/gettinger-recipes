@@ -10,3 +10,14 @@ export async function getRecipes() {
         return [];
     }
 }
+
+export async function searchDB(searchTerm) {
+    const results = await dbFetch(
+        `SELECT * FROM all_recipes WHERE name_en ILIKE $1 
+            OR author ILIKE $1
+            OR ingredients::text ILIKE $1
+        `,
+        [`%${searchTerm}%`]
+    );
+    return results;
+}

@@ -2,11 +2,10 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-import DecorativeArches from './DecorativeArches.jsx'
+import DecorativeArches from './decorations/DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
 import CustomList from './CustomList.jsx'
 import SourceList from './SourceList.jsx'
-import Toggle from './Toggle.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
 
 export default function RecipeClientChild({recipeDetails: initialRecipeDetails}) {
@@ -135,7 +134,6 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                         <div className="details-clickables">
                             <button>print</button>
                             <button>Pinterest</button>
-                            <Toggle />
                     </div>
                     <DecorativeArches additionalClasses={'bottom'}/>
                 </div>

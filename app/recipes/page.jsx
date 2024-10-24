@@ -1,8 +1,8 @@
 "use client"
 import { useState, useEffect, useMemo } from 'react'
-import Link from 'next/link'
 import { Tags } from '../constants/Tags'
 import { RecipeTabs } from '../components/RecipeTabs'
+import RecipeCard from '../components/RecipeCard'
 
 import '../styles/recipe.css'
 import { getRecipes } from '../components/component-server-functions.js'
@@ -36,7 +36,7 @@ export default function AllRecipePage() {
     <section className="recipes">
       <div className="recipes-container">
         <h2>Recipes</h2>
-        <p>Go ahead and peruse to your heart's content the recipes featured in A Pinch of Hanmi, as well as a few suuuuper secret family recipes (shhh! don't tell anyone!!)</p>
+        <p>Go ahead and peruse to your heart's content the recipes collected by our family, including a few suuuuper secret family recipes (shhh! don't tell anyone!!)</p>
         <RecipeTabs 
           categories={tabCategories} 
           activeTab={activeTab} 
@@ -44,12 +44,7 @@ export default function AllRecipePage() {
         />
         <div className="recipe-box">
           {filteredRecipes.map((recipe) => (
-            <div key={recipe.id} className="recipe-card">
-              <Link href={`/recipes/${recipe.name_en.replace(/\s+/g, '_')}-${recipe.id}`}>
-                <img src={`/recipe_pics/${recipe.pic}`} alt={recipe.pic_alt} />
-                <h3>{recipe.name_en}</h3>
-              </Link>
-            </div>
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       </div>

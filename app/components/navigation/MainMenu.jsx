@@ -13,6 +13,7 @@ import OffCanvasMenu from './OffCanvasMenu.jsx'
 import Hamburger from './Hamburger'
 import StickyMenu from './StickyMenu'
 import Mouth from '../decorations/Mouth.jsx'
+import SearchBar from '../elements/SearchBar.jsx'
 
 export default function MainMenu() {
 
@@ -36,12 +37,17 @@ export default function MainMenu() {
     <header>
       <Eyes />
       <div className="sticky-part">
-        <Link href="/"><h1>A Pinch of 한미</h1></Link>
+        <Link href="/"><h1>Gettinger Recipes</h1></Link>
         <MenuNav /> 
       </div>
       <Mouth optionalID={'main-mouth'}/>
-      <ThemeToggle />
-      <Hamburger />
+      <div className="nav-top-right-fixed">
+        <div className="nav-top-right-flex">
+          <SearchBar isExpandable={true} />
+          <ThemeToggle />
+          <Hamburger />
+        </div>
+      </div>
       <OffCanvasMenu />
       <StickyMenu />
     </header>

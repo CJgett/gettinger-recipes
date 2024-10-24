@@ -6,8 +6,8 @@ import Footer from './components/navigation/Footer'
 import localFont from 'next/font/local'
 
 export const metadata = {
-  title: 'A Pinch of 한미',
-  description: 'Discover delicious Korean and American vegetarian recipes on A Pinch of 한미. Perfect for food lovers, our site features easy-to-follow recipes and video tutorials straight from our YouTube channel. Join us and enjoy cooking flavorful meals without needing professional skills.',
+  title: 'Gettinger Recipes',
+  description: 'Discover delicious family recipes on Gettinger Recipes. Perfect for food lovers, our site features curated recipes from our family. Join us and enjoy cooking flavorful meals without needing professional skills.',
 }
 
 const Dongle = localFont ({
