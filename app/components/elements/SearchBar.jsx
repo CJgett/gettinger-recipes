@@ -1,5 +1,5 @@
 "use client"
-import searchStyles from '../../styles/search.css'
+import '../../styles/search.css'
 import Image from 'next/image'
 import {useRouter} from 'next/navigation'
 import {useState, useRef} from 'react'

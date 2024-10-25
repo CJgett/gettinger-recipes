@@ -1,8 +1,8 @@
 import { searchDB } from '../../components/component-server-functions'
 import RecipeCard from '../../components/RecipeCard'
 import SearchBar from '../../components/elements/SearchBar'
-import styles from '../../styles/recipe.css'
-import searchStyles from '../../styles/search.css'
+import '../../styles/recipe.css'
+import '../../styles/search.css'
 
 export default async function SearchResults({ params }) {
     const searchTerm = decodeURIComponent(params.id);
