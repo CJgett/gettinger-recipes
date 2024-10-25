@@ -2,13 +2,13 @@
 
 import '../styles/admin.css'
 
-import DurationInputField from '../../../components/form-components/DurationInputField.jsx'
-import Ingredients from '../../../components/form-components/Ingredients.jsx'
-import Directions from '../../../components/form-components/Directions.jsx'
-import Notes from '../../../components/form-components/Notes.jsx'
-import Sources from '../../../components/form-components/Sources.jsx'
-import Tags from '../../../constants/Tags.jsx'
-import { saveFile, addRecipeToDB, updatePicFileName } from '../../../components/form-components/form-server-functions.js'
+import DurationInputField from '../../components/form-components/DurationInputField.jsx'
+import Ingredients from '../../components/form-components/Ingredients.jsx'
+import Directions from '../../components/form-components/Directions.jsx'
+import Notes from '../../components/form-components/Notes.jsx'
+import Sources from '../../components/form-components/Sources.jsx'
+import Tags from '../../constants/Tags.jsx'
+import { saveFile, addRecipeToDB, updatePicFileName } from '../../components/form-components/form-server-functions.js'
 
 import { useEffect, useRef, useState } from 'react';
 
