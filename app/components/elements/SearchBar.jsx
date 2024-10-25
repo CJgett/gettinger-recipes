@@ -31,13 +31,16 @@ export default function SearchBar({isExpandable = false}) {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyPress={handleKeyPress}
             />
-            {isExpandable && <Image
-                src={'/icons/search-svgrepo-com.svg'}
-                alt="Search"
-                width={25}
-                height={25}
-                onClick={handleImageClick}
-            />}
+            {isExpandable && 
+            <div className="search-icon-container">
+                <Image
+                    src={'/icons/search-svgrepo-com.svg'}
+                    alt="Search"
+                    width={25}
+                    height={25}
+                    onClick={handleImageClick}
+                />
+            </div>}
         </div>
     )
 }

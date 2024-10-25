@@ -18,15 +18,21 @@
         transform-origin: right; /* Expand from the left */
     }
 
-    img {
+    .search-icon-container {
         cursor: pointer; /* Indicate clickable */
         padding: 5px;
         border-radius: 5px;
-        filter: var(--c-text-filter);
         transition: border-radius 0.3s ease;
+        height: 25px;
+        width: 25px;
 
         &:hover {
-            background-color: #d4d3d2;
+            background-color: var(--c-accent-secondary);
+        }
+
+        img {
+            filter: var(--c-text-filter);
+            background-color: transparent;
         }
     }
 
@@ -34,10 +40,14 @@
         input {
             transform: scaleX(1); /* Expand to full width */
             opacity: 1; /* Make visible */
+            &:focus-visible {
+                &+img {
+                    outline: 3px solid var(--c-accent-primary);
+                }
+            }
         }
 
-        img {
-            background-color: #d4d3d2;
+        .search-icon-container {
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
             border-top-left-radius: 0;
