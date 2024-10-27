@@ -7,13 +7,33 @@ import IngredientList from './IngredientList.jsx'
 import CustomList from './CustomList.jsx'
 import SourceList from './SourceList.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
+import { verifyToken } from './component-server-functions.js'
 
 export default function RecipeClientChild({recipeDetails: initialRecipeDetails}) {
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [recipeDetails, setRecipeDetails] = useState(initialRecipeDetails);
-
+    const [isAdmin, setIsAdmin] = useState(false);
     const iconDimensions = 30;
+
+    useEffect(() => {
+        const token = localStorage.getItem('adminToken');
+        if(!token){
+            setIsAdmin(false);
+            return;
+        } else {
+            console.log("token found");
+        }
+        try {
+           verifyToken(token) 
+        } catch (error) {
+            console.log(error);
+            localStorage.removeItem('adminToken');
+            setIsAdmin(false);
+            return;
+        }
+        setIsAdmin(true);
+    }, []);
 
     function handleEdit(e) {
         e.preventDefault();
@@ -36,6 +56,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
         console.log("save clicked");
 
     }
+
     return (
         <form action={handleSave} name="edit recipe">
             <section className={`recipe-detailed ${isEditing ? 'editing' : ''}`}>
@@ -61,7 +82,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                             </>
                         )}
                         </div>
-                        
+                        {isAdmin && (
                     <div className="edit-buttons">
                         {isEditing ? (
                             <>
@@ -93,6 +114,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                             </button>
                         )}
                     </div>
+)}
                     </div>
                     <div className="recipe-pic">
                         <img src={`/recipe_pics/${recipeDetails.pic}`} alt={recipeDetails.pic_alt}/>

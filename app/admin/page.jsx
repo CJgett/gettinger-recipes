@@ -18,7 +18,8 @@ export default function AdminLogin() {
     
     if (result.success) {
       localStorage.setItem('adminToken', result.token);
-      router.push('/');
+      router.push('/recipes');
+      console.log("token was set");
     } else {
       setError(result.message || 'Login failed');
     }

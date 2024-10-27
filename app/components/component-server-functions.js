@@ -1,7 +1,7 @@
 "use server"
 import { dbFetch } from '../../utils/postgres.js'
 import { compare } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 export async function getRecipes() {
     try {
@@ -27,6 +27,11 @@ export async function searchDB(searchTerm) {
 export async function getAdminByUsername(username) {
     const admin = await dbFetch(`SELECT * FROM admins WHERE username = $1`, [username]);
     return admin[0];
+}
+
+export async function verifyToken(token) {
+    const verifiedTokenResult = verify(token, process.env.JWT_SECRET);
+    return verifiedTokenResult;
 }
 
 export async function handleLogin(username, password) {
