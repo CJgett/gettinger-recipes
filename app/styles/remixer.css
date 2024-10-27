@@ -40,24 +40,22 @@
       flex: 3;
       border-right: 4px solid var(--c-accent-secondary);
       padding: 25px 0px 25px 0px;
-      transition: flex-grow .25s linear, opacity .15s linear 5s;
+      transition: flex-grow .25s linear, opacity .15s linear .2s;
       opacity: 1;
       overflow: hidden;
 
       > * {
         padding: 0px 25px 0px 25px;
         opacity: 1;
-        transition: opacity .15s linear 5s;
       }
 
       &.collapsed {
         flex-grow: 0;
         transition: flex-grow .25s linear;
         border:none;
+        opacity: 0;
         > * {
           display:none;
-          opacity: 0;
-          transition: opacity .15s linear 5s;
         }
       }
 
@@ -139,9 +137,6 @@
               align-self: flex-start;
 
               &:last-child {
-                > * {
-              
-                }
                 .in-view {
                   .slide-in{
                     display: inline-block;
