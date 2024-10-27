@@ -1,6 +1,6 @@
 "use client"
-import React, { useState, useRef, useEffect } from 'react'
-import { useInView, InView } from 'react-intersection-observer'
+import { useState, useRef, useEffect } from 'react'
+import { InView } from 'react-intersection-observer'
 import { accessToken } from '../../ignore/huggingface_accesstoken'
 
 export default function Remixer() {
@@ -15,7 +15,6 @@ export default function Remixer() {
   /* setup array of chat arrays (Saved Recipes) */
   const initMessage = {"botOrUser":"bot", "botAnimText": "hello!", "messageText":"how can i help you remix your recipe? :)"};
   const [allChatsArray, setAllChatsArray] = useState(new Array(new Array (initMessage)));
-
   const [currentChatID, setCurrentChatID] = useState(0);
 
 
@@ -40,11 +39,13 @@ export default function Remixer() {
   },[]);
 
   function updateAllChatsArray(newMessage) {
-    let newAllChatsArray = allChatsArray.slice();
-    newAllChatsArray[currentChatID] = [...newAllChatsArray[currentChatID], newMessage];
-    setAllChatsArray(newAllChatsArray);
-    window.localStorage.setItem('chatsFromLocalStorage', JSON.stringify(newAllChatsArray));
-    window.localStorage.setItem('lastChatID', currentChatID);
+    setAllChatsArray(prevChats => {
+        const newAllChatsArray = prevChats.slice();
+        newAllChatsArray[currentChatID] = [...newAllChatsArray[currentChatID], newMessage];
+        window.localStorage.setItem('chatsFromLocalStorage', JSON.stringify(newAllChatsArray));
+        window.localStorage.setItem('lastChatID', currentChatID);
+        return newAllChatsArray; 
+    });
   }
 
   const textareaRef = useRef(null);
@@ -68,14 +69,6 @@ export default function Remixer() {
     }
   }
 
-  function concatAllChats() {
-    let allChats = "";
-    allChatsArray[currentChatID].forEach((message) => {
-      allChats = allChats + " " + message.messageText;
-    });
-    return allChats;
-  }
-    
   /* what to do when a user sends a message 
    * (update the chats array, reset textarea, focus text area)*/
   async function queryAndUpdate(textareaValue) {
@@ -83,25 +76,44 @@ export default function Remixer() {
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const toSend = "Hi! It's nice talking to you :) what is your response to the folllowing message? please dont say you don't know how to: " + textareaValue;
-    const response = await fetch(
-        "https://api-inference.huggingface.co/models/mistralai/Mistral-Nemo-Instruct-2407",
-        {
-            headers: myHeaders,
-            method: "POST",
-            body: JSON.stringify({inputs: toSend}),
-        }
-    );
-    const result = await response.json();
-    updateAllChatsArray({"botOrUser":"bot", "botAnimText":"Here's my response: " ,"messageText":result[0].generated_text});
+    
+    try {
+        const response = await fetch(
+            "https://api-inference.huggingface.co/models/mistralai/Mistral-Nemo-Instruct-2407",
+            {
+                headers: myHeaders,
+                method: "POST",
+                body: JSON.stringify({inputs: toSend}),
+            }
+        );
+        const result = await response.json();
+        // Instead of directly updating, return the response
+        console.log(result[0].generated_text);
+        return result[0].generated_text;
+    } catch (error) {
+        console.error('Error:', error);
+        return "Sorry, I encountered an error processing your request.";
+    }
   }
 
 
-  function sendMessage (e) { 
+  async function sendMessage(e) { 
     e.preventDefault();
-    updateAllChatsArray({"botOrUser":"user", "messageText":textareaValue});
-    queryAndUpdate(textareaValue);
+    
+    // Save the current textarea value and clear it
+    const currentMessage = textareaValue;
     setTextareaValue("");
     textareaRef.current.focus();
+    
+    // Add user message
+    updateAllChatsArray({"botOrUser":"user", "messageText": currentMessage});
+    
+    // Get the bot's response
+    const botResponse = await queryAndUpdate(currentMessage);
+    
+    // Add bot message
+    updateAllChatsArray({"botOrUser":"bot", "botAnimText": botResponse, "messageText": ""});
+    
     window.localStorage.setItem('lastChatID', currentChatID);
   }
   
