@@ -174,3 +174,24 @@
 }
   }
 }
+
+.admin-login {
+  text-align: center;
+
+  .form-container {
+    margin-bottom: 20px;
+
+    .form-group {
+      margin-bottom: 10px;
+
+      input {
+        color: var(--c-text);
+        background-color: var(--c-bg);
+        caret-color: var(--c-text);
+        border: none;
+        padding: 5px;
+        font-size: 16px;
+      }
+    }
+  }
+}
