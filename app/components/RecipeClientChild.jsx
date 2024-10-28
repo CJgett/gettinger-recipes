@@ -15,6 +15,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
     const [recipeDetails, setRecipeDetails] = useState(initialRecipeDetails);
     const [isAdmin, setIsAdmin] = useState(false);
     const iconDimensions = 30;
+    const [unitSystem, setUnitSystem] = useState('metric');
 
     useEffect(() => {
         const token = localStorage.getItem('adminToken');
@@ -160,8 +161,30 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                     <DecorativeArches additionalClasses={'bottom'}/>
                 </div>
                 <div className="card-section ingredients-directions">
-                    <h3>Ingredients:</h3>
-                    <IngredientList ingredients={recipeDetails.ingredients} isEditing={isEditing}/>
+                    <div className="ingredients-unit-toggle-container">
+                        <h3>Ingredients:</h3>
+                        <div className="unit-toggle">
+                            <button 
+                                type="button"
+                                className={unitSystem === 'metric' ? 'active' : ''}
+                                onClick={() => setUnitSystem('metric')}
+                            >
+                                Metric
+                            </button>
+                            <button 
+                                type="button"
+                                className={unitSystem === 'imperial' ? 'active' : ''}
+                                onClick={() => setUnitSystem('imperial')}
+                            >
+                                Imperial
+                            </button>
+                        </div>
+                    </div>
+                    <IngredientList 
+                        ingredients={recipeDetails.ingredients} 
+                        isEditing={isEditing}
+                        unitSystem={unitSystem}
+                    />
                     <h3>Directions</h3>
                     <CustomList listItems={recipeDetails.directions} isEditing={isEditing} defaultTextAreaValue={recipeDetails.directions} isDirection={true} />
                 </div>

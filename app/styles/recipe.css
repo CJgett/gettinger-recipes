@@ -246,7 +246,7 @@
           &:checked {
             &+ label {
               text-decoration: underline;
-              text-underline-offset: -15%;
+              text-underline-offset: -25%;
               text-decoration-skip-ink: none;
 
             }
@@ -363,6 +363,46 @@
       input {
         background-color: var(--c-bg);
         margin-right: 10px;
+      }
+    }
+  }
+}
+
+.ingredients-unit-toggle-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  .unit-toggle {
+    display: flex;
+    line-height: 40px;
+    align-items: center;
+
+    button {
+      border: 3px solid var(--c-text);
+      background: var(--c-bg);
+      color: var(--c-text);
+
+      &.active {
+        background: var(--c-text);
+        color: var(--c-bg);
+      }
+
+      &:hover:not(.active) {
+        background: var(--c-bg-secondary);
+      }
+
+      &:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+
+      &:last-child {
+        border-radius: 0 4px 4px 0;
       }
     }
   }

@@ -1,4 +1,4 @@
-export default function IngredientList({ingredients, isEditing}) {
+export default function IngredientList({ingredients, isEditing, unitSystem}) {
   if (isEditing) {
     return (
       <div className="ingredient-list">
@@ -26,7 +26,11 @@ export default function IngredientList({ingredients, isEditing}) {
       {ingredients.map((ingredient, index) => (
         <li key={index}>
           <input type="checkbox" id={ingredient.ingredient_name_en} />
-          <label htmlFor={ingredient.ingredient_name_en}>{ingredient.metric_measurement} {ingredient.ingredient_name_en}</label>
+          <label htmlFor={ingredient.ingredient_name_en}>
+            {unitSystem === 'metric' 
+              ? ingredient.metric_measurement 
+              : (ingredient.imperial_measurement === '' ? ingredient.metric_measurement : ingredient.imperial_measurement)} {ingredient.ingredient_name_en}
+          </label>
         </li>
       ))}
     </ul>
