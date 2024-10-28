@@ -120,18 +120,45 @@ export default function Remixer() {
   function toggleSidebar() {
     const sidebarClasses = document.querySelector(".remixer-sidebar").classList;
     const sidebarToggle = document.querySelector(".expand-sidebar");
+    const remixerElement = document.querySelector(".remixer");
+    console.log(sidebarClasses);
 
     if(sidebarClasses.contains("collapsed")) {
-      sidebarClasses.remove("collapsed") 
-      sidebarToggle.classList.remove("collapsed"); 
-      sidebarToggle.title = "collapse sidebar";
-
+      console.log("collapsed");
+        sidebarClasses.remove("collapsed");
+        sidebarToggle.classList.remove("collapsed");
+        sidebarToggle.title = "collapse sidebar";
+        // Add overlay class for mobile
+        remixerElement.classList.add("sidebar-open");
     } else {
-      sidebarClasses.add("collapsed"); 
-      sidebarToggle.classList.add("collapsed"); 
+      sidebarClasses.add("collapsed");
+      sidebarToggle.classList.add("collapsed");
       sidebarToggle.title = "expand sidebar";
+      remixerElement.classList.remove("sidebar-open");
     }
   }
+
+  // Add click handler for closing sidebar when clicking outside
+  function handleOutsideClick(e) {
+    const sidebar = document.querySelector(".remixer-sidebar");
+    const toggleButton = document.querySelector(".expand-sidebar");
+    
+    // If we're on mobile and clicking outside the sidebar
+    if (window.innerWidth <= 768 && 
+        !sidebar.contains(e.target) && 
+        !toggleButton.contains(e.target) && 
+        !sidebar.classList.contains("collapsed")) {
+        toggleSidebar();
+    }
+  }
+
+  // Add the click handler to the component
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+        document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div className="remixer-container">
@@ -147,6 +174,13 @@ export default function Remixer() {
               }
             )}
           </ul>
+          <button 
+            className="close-sidebar-mobile" 
+            onClick={toggleSidebar}
+            aria-label="Close sidebar"
+            >
+             Close 
+            </button>
         </div>
         <div className="remixer-chatbox">
           <div className="remixer-display-container">
