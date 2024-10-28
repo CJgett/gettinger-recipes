@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { InView } from 'react-intersection-observer'
 import { accessToken } from '../../ignore/huggingface_accesstoken'
+import RecipeDropdown from './form-components/RecipeDropdown'
 
 export default function Remixer() {
 
@@ -203,7 +204,16 @@ export default function Remixer() {
           </div>
           <div>
             <form className="remixer-input" onSubmit={sendMessage}>
-              <textarea value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="start chatting with the remixer here"></textarea>
+              {allChatsArray[currentChatID].length <= 1 ? 
+                <div className="remixer-first-input-container">
+                  <div className="recipe-dropdown-container">
+                    <RecipeDropdown />
+                  </div>
+                  <textarea className="remixer-first-input" value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="please describe how you want to remix this recipe" placeholder="How should I remix this recipe?"></textarea>
+                </div> 
+                : 
+                <textarea value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="start chatting with the remixer here"></textarea>
+              }              
               <button type="submit" onClick={sendMessage} disabled={(textareaValue === "") ? true : false}>&crarr;</button>
             </form>
             <div className="remixer-warning">

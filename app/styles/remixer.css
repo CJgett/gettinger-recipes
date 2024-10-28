@@ -206,6 +206,8 @@
         background-color: var(--c-bg-secondary); 
         border-radius: 14px;
         padding: 10px;
+        display: flex;
+        justify-content: space-between;
 
         textarea {
           background-color: inherit;
@@ -218,6 +220,117 @@
 
           &:focus-visible {
             outline: none;
+          }
+        }
+
+        .remixer-first-input-container {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 20px;
+          width: 90%;
+          margin-bottom: 10px;
+
+          .recipe-dropdown {
+            position: relative;
+            width: 100%;
+            min-width: 200px;
+
+            .recipe-dropdown-input-container {
+              position: relative;
+              display: flex;
+              align-items: center;
+
+              .recipe-dropdown-input {
+                width: 100%;
+                padding: 8px;
+                padding-right: 30px;
+                border: 2px solid var(--c-accent-secondary);
+                border-radius: 8px;
+                background-color: var(--c-bg);
+                color: var(--c-text);
+              }
+
+              .recipe-dropdown-toggle {
+                position: absolute;
+                right: 8px;
+                border: none;
+                background: none;
+                color: var(--c-text);
+                cursor: pointer;
+                padding: 0 4px;
+              }
+            }
+
+            .recipe-dropdown-list {
+              position: absolute;
+              z-index: 10;
+              max-width: 200px;
+              min-width: 200px;
+              max-height: 240px;
+              overflow-x: scroll;
+              margin-top: 4px;
+              background-color: var(--c-bg);
+              border: 2px solid var(--c-accent-secondary);
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              padding-left: 0px;
+
+              .recipe-dropdown-item {
+                padding: 8px 16px;
+                cursor: pointer;
+                font-size: 25px;
+
+                &:hover {
+                  background-color: rgba(255, 255, 255, 0.3);
+                }
+
+                .recipe-dropdown-empty {
+                  padding: 8px 16px;
+                  color: var(--c-text);
+                  font-style: italic;
+                }
+              }
+            }
+          }
+          
+          .remixer-first-input {
+            border: 2px solid var(--c-accent-secondary);
+            border-radius: 8px;
+          }
+
+          /* Add these styles if you want to style the scrollbar */
+          .recipe-dropdown-list::-webkit-scrollbar {
+            width: 8px;
+          }
+
+          .recipe-dropdown-list::-webkit-scrollbar-track {
+            background: var(--c-bg);
+            border-radius: 4px;
+          }
+
+          .recipe-dropdown-list::-webkit-scrollbar-thumb {
+            background: var(--c-accent-secondary);
+            border-radius: 4px;
+          }
+
+          .recipe-dropdown-list::-webkit-scrollbar-thumb:hover {
+            background: var(--c-accent-primary);
+          }
+
+          .recipe-dropdown-container {
+            display: flex;
+            gap: 10px;
+          }
+
+          textarea {
+            width: 100%;
+            border: 2px solid var(--c-accent-secondary);
+            border-radius: 8px;
+            background-color: var(--c-bg);
+            padding-top: 5px;
+            margin-bottom: 10px
           }
         }
 
@@ -349,3 +462,5 @@
   text-align: center;
   margin-bottom: 25px;
 }
+
+
