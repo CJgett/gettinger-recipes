@@ -8,7 +8,7 @@ export default function StickyMenu() {
     <div className="sticky-menu">
       <Smile />
       <div className="sticky-part">
-        <Link href="/"><h1>A Pinch of 한미</h1></Link>
+        <Link href="/"><h1>Gettinger Recipes</h1></Link>
         <MenuNav />
       </div>
     </div>
