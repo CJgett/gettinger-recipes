@@ -43,7 +43,9 @@ export function firstPrompt(recipe, userPreferences) {
             Explain the major modifications and why they were made based on the user preferences in a concise paragraph. 
         </explanation>
 
-Remember to maintain the essence of the original dish while accommodating the user's preferences as much as possible. If a preference cannot be accommodated without significantly altering the nature of the dish, mention this in the explanation.`
+Remember to maintain the essence of the original dish while accommodating the user's preferences as much as possible. If a preference cannot be accommodated without significantly altering the nature of the dish, mention this in the explanation.
+
+Please use the customized recipe format in your response, but do not mention it otherwise.`
 }
 
 export default firstPrompt;

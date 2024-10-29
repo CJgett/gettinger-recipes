@@ -60,7 +60,7 @@ export async function handleLogin(username, password) {
     }
 }
 
-export async function queryAI(message) {
+export async function queryAI(message, conversationHistory = []) {
     const anthropic = new Anthropic({
         apiKey: process.env.CLAUDE_API_KEY,
     });
@@ -68,7 +68,7 @@ export async function queryAI(message) {
         let msg = await anthropic.messages.create({
             model: "claude-3-haiku-20240307",
             max_tokens: 1024,
-            messages: [{ role: "user", content: message }],
+            messages: [...conversationHistory, { role: "user", content: message }],
         });
         try {
             msg = DOMPurify.sanitize(msg);

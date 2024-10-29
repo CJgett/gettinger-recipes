@@ -42,6 +42,14 @@
   }
 }
 
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  40% { transform: rotate(170deg); }
+  50% { transform: rotate(180deg); }
+  60% { transform: rotate(190deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .remixer-container {
   display: flex;
   flex-direction: column;
@@ -156,6 +164,47 @@
           flex-direction: column;
           padding: 0px 10px 0px 5px;
           max-height: calc(100% - 3em);
+
+          .loading-symbol-bot {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px;
+            margin-bottom: 20px;
+
+            .travelling-smile {
+              width: 30px; 
+              height: 30px;
+              animation: rotate 2s linear infinite;
+
+              .eyes {
+                display: flex;
+                height: 20px;
+                color: var(--c-text);
+              }
+              
+              /* Style the SVG elements inside the smile */
+              svg {
+                width: 100%;
+                height: 100%;
+                fill: var(--c-text);
+
+                path {
+                  stroke: var(--c-text);
+                }
+
+                fill {
+                  fill: var(--c-text);
+                }
+              }
+
+              /* Remove the link styling/behavior since it's just decorative here */
+              a {
+                text-decoration: none;
+                cursor: default;
+                pointer-events: none;
+              }
+            }
+          }
 
           .remixer-message {
             display: block;

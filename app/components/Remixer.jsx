@@ -1,9 +1,12 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
 import { InView } from 'react-intersection-observer'
+
 import RecipeDropdown from './form-components/RecipeDropdown'
 import { firstPrompt } from '../constants/FirstPrompt'
+import { nextPrompt } from '../constants/NextPrompt'
 import { queryAI } from './component-server-functions'
+import Smile from './decorations/Smile'
 
 export default function Remixer() {
 
@@ -16,11 +19,11 @@ export default function Remixer() {
   }
 
   /* setup array of chat arrays (Saved Recipes) */
-  const initMessage = {"botOrUser":"bot", "botAnimText": "Hello! ", "messageText":"How can I help you remix your recipe? :)"};
+  const initMessage = {"botOrUser":"bot", "botAnimText": "<span>Hello!&nbsp;</span>", "messageText":"How can I help you remix your recipe? :)"};
   const [allChatsArray, setAllChatsArray] = useState(new Array(new Array (initMessage)));
   const [currentChatID, setCurrentChatID] = useState(0);
-  const [chatTitles, setChatTitles] = useState([]);
-
+  const [chatTitles, setChatTitles] = useState(["New Recipe Remix!"]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // use to get data from local storage only once.
   let setupDone = false;
@@ -30,13 +33,14 @@ export default function Remixer() {
     if(document.readyState === 'complete' && setupDone == false) {
       setupDone = true;
       const chatsFromLocalStorage = JSON.parse(window.localStorage.getItem('chatsFromLocalStorage'));
-
+      const chatTitlesFromLocalStorage = JSON.parse(window.localStorage.getItem('chatTitles'));
       let lastChatID = JSON.parse(window.localStorage.getItem('lastChatID')); 
       if (chatsFromLocalStorage !== 'undefined' && chatsFromLocalStorage !== null ) {
         if(lastChatID > chatsFromLocalStorage.length) {
           lastChatID = 0;
         }
         setAllChatsArray(chatsFromLocalStorage);
+        setChatTitles(chatTitlesFromLocalStorage);
         setCurrentChatID(lastChatID);
       }
     }
@@ -46,6 +50,7 @@ export default function Remixer() {
     setAllChatsArray(prevChats => {
         const newAllChatsArray = prevChats.slice();
         newAllChatsArray[currentChatID] = [...newAllChatsArray[currentChatID], newMessage];
+        window.localStorage.setItem('chatTitles', JSON.stringify(chatTitles));
         window.localStorage.setItem('chatsFromLocalStorage', JSON.stringify(newAllChatsArray));
         window.localStorage.setItem('lastChatID', currentChatID);
         return newAllChatsArray; 
@@ -53,7 +58,7 @@ export default function Remixer() {
   }
 
   function findChatTitle(message) {
-    let title = "Remixed Recipe";
+    let title = "New Recipe Remix!";
     if (message.includes("<h3>")) {
       title = message.substring(
         message.indexOf("<h3>") + 4,
@@ -73,7 +78,7 @@ export default function Remixer() {
     setAllChatsArray([...allChatsArray, new Array(initMessage)]); 
     const newChatID = allChatsArray.length;
     setCurrentChatID(newChatID);
-    setChatTitles(prevTitles => [...prevTitles, "Remixed Recipe"]);
+    setChatTitles(prevTitles => [...prevTitles, "New Recipe Remix!"]);
     textareaRef.current.focus();
   }
 
@@ -89,34 +94,59 @@ export default function Remixer() {
     }
   }
 
+  useEffect(() => {
+    const messagesContainer = document.querySelector('.remixer-messages');
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  }, [allChatsArray[currentChatID], isLoading]);
+
   async function handleUserInput(e) { 
     e.preventDefault();
+    setIsLoading(true);
+    try {
+        const currentChatLength = allChatsArray[currentChatID].length;
+        let currentMessage = textareaValue;
+        let messageToAI = currentMessage;
+        setTextareaValue("");
 
-    const currentChatLength = allChatsArray[currentChatID].length;
+        // Create conversation history
+        const conversationHistory = allChatsArray[currentChatID].map(msg => ({
+            role: msg.botOrUser === "bot" ? "assistant" : "user",
+            content: msg.botOrUser === "bot" ? msg.botAnimText + msg.messageText : msg.messageText
+        }));
 
-    let currentMessage = textareaValue;
-    let messageToAI = textareaValue;
+        // Save the current textarea value and clear it
+        if (currentChatLength <= 1) {
+            const recipe = document.getElementById('recipe-dropdown-selected').value;
+            currentMessage = `The recipe I'd like to remix is: ${recipe}.\n${currentMessage}`;
+            messageToAI = firstPrompt(recipe, currentMessage);
+        } else {
+            messageToAI = nextPrompt(currentMessage);
+        }
+        
+        // Add user message
+        updateAllChatsArray({"botOrUser":"user", "messageText": currentMessage});
 
-    // Save the current textarea value and clear it
-    if (currentChatLength <= 1) {
-      const recipe = document.getElementById('recipe-dropdown-selected').value;
-      currentMessage = `The recipe I'd like to remix is: ${recipe}.\n${currentMessage}`;
-      messageToAI = firstPrompt(recipe, currentMessage);
+        // Get the bot's response
+        const botResponse = await queryAI(messageToAI, conversationHistory);
+        
+        // Update the existing chat title if it's the first bot response
+        if(currentChatLength <= 1) {
+            setChatTitles(prevTitles => {
+                const newTitles = [...prevTitles];
+                newTitles[currentChatID] = findChatTitle(botResponse);
+                return newTitles;
+            });
+        }
+        // Add bot message
+        updateAllChatsArray({"botOrUser":"bot", "botAnimText": botResponse, "messageText": ""});
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        setIsLoading(false);
+        setTextareaValue("");
     }
-    
-    // Add user message
-    updateAllChatsArray({"botOrUser":"user", "messageText": currentMessage});
-    // Get the bot's response
-    const botResponse = await queryAI(messageToAI);
-    // Add the new chat title if it's the first bot response
-    if(currentChatLength <= 1) {
-      console.log("setting new chat title");
-      setChatTitles(prevTitles => [...prevTitles, findChatTitle(botResponse)]);
-    }
-    // Add bot message
-    updateAllChatsArray({"botOrUser":"bot", "botAnimText": botResponse, "messageText": ""});
-    window.localStorage.setItem('lastChatID', currentChatID);
-    setTextareaValue("");
   }
   
   function toggleSidebar() {
@@ -162,6 +192,7 @@ export default function Remixer() {
     };
   }, []);
 
+
   return (
     <div className="remixer-container">
       <div className="remixer">
@@ -171,7 +202,7 @@ export default function Remixer() {
             {allChatsArray.map(
               function(currentChat, index) {
                 return(
-                 <li className={`${index == currentChatID ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick} tabIndex="0">{chatTitles[index]}</li> 
+                 <li className={`${currentChatID == index ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick} tabIndex="0">{chatTitles[index]}</li> 
                 );
               }
             )}
@@ -188,7 +219,7 @@ export default function Remixer() {
           <div className="remixer-display-container">
             <div className="remixer-controls">
               <button title="collapse sidebar" className="expand-sidebar" onClick={toggleSidebar} >&lt;</button>
-              <h3>Saved Recipe #{parseFloat(currentChatID) + 1}</h3>
+              <h3>{chatTitles[currentChatID]}</h3>
               <button title="start new remix!" className="new-remix-button"  onClick={startNewRemix} disabled={allChatsArray[currentChatID].length === 1 ? true : false}>&#43;</button>
             </div>
             <div className="remixer-messages">
@@ -206,6 +237,11 @@ export default function Remixer() {
                     </div>
                   );
                 }
+              )}
+              {isLoading && (
+                  <div className="loading-symbol-bot">
+                     <Smile />
+                  </div>
               )}
             </div>
           </div>
