@@ -170,6 +170,22 @@
               margin-right: 30px;
               align-self: flex-start;
 
+              customized_recipe {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+
+                name {
+                  font-weight: bold;
+                }
+              }
+
+              ol,ul {
+                list-style: revert;
+              }
+
               &:last-child {
                 .in-view {
                   .slide-in {

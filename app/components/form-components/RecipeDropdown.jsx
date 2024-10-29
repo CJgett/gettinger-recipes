@@ -42,8 +42,10 @@ export default function RecipeDropdown({ selectedRecipe }) {
       <div className="recipe-dropdown-input-container">
         <input
           type="text"
+          id="recipe-dropdown-selected"
           className="recipe-dropdown-input"
           value={query}
+          name="recipe"
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsOpen(true)}
           placeholder="Recipe to remix"

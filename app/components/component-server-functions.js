@@ -2,6 +2,8 @@
 import { dbFetch } from '../../utils/postgres.js'
 import { compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
+import Anthropic from '@anthropic-ai/sdk';
+import DOMPurify from 'dompurify';
 
 export async function getRecipes() {
     try {
@@ -55,5 +57,28 @@ export async function handleLogin(username, password) {
     } catch (error) {
         console.error(error);
         return { success: false, message: 'Internal server error' };
+    }
+}
+
+export async function queryAI(message) {
+    const anthropic = new Anthropic({
+        apiKey: process.env.CLAUDE_API_KEY,
+    });
+    try {
+        let msg = await anthropic.messages.create({
+            model: "claude-3-haiku-20240307",
+            max_tokens: 1024,
+            messages: [{ role: "user", content: message }],
+        });
+        try {
+            msg = DOMPurify.sanitize(msg);
+        } catch (error) {
+            console.error('Error sanitizing message:', error);
+        }
+        console.log(msg);
+        return msg.content[0].text;
+    } catch (error) {
+        console.error('Error:', error);
+        return "Sorry, I encountered an error processing your request.";
     }
 }

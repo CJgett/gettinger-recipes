@@ -1,22 +1,25 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
 import { InView } from 'react-intersection-observer'
-import { accessToken } from '../../ignore/huggingface_accesstoken'
 import RecipeDropdown from './form-components/RecipeDropdown'
+import { firstPrompt } from '../constants/FirstPrompt'
+import { queryAI } from './component-server-functions'
 
 export default function Remixer() {
 
   /* setup textarea input */ 
   const [textareaValue, setTextareaValue] = useState("");
+  const textareaRef = useRef(null);
 
   function handleTextareaChange(event) {
     setTextareaValue(event.target.value);
   }
 
   /* setup array of chat arrays (Saved Recipes) */
-  const initMessage = {"botOrUser":"bot", "botAnimText": "hello!", "messageText":"how can i help you remix your recipe? :)"};
+  const initMessage = {"botOrUser":"bot", "botAnimText": "Hello! ", "messageText":"How can I help you remix your recipe? :)"};
   const [allChatsArray, setAllChatsArray] = useState(new Array(new Array (initMessage)));
   const [currentChatID, setCurrentChatID] = useState(0);
+  const [chatTitles, setChatTitles] = useState([]);
 
 
   // use to get data from local storage only once.
@@ -49,16 +52,32 @@ export default function Remixer() {
     });
   }
 
-  const textareaRef = useRef(null);
+  function findChatTitle(message) {
+    let title = "Remixed Recipe";
+    if (message.includes("<h3>")) {
+      title = message.substring(
+        message.indexOf("<h3>") + 4,
+        message.indexOf("</h3>")
+      );
+    } else if (message.includes("<name>")) {
+      title = message.substring(
+        message.indexOf("<name>") + 6,
+        message.indexOf("</name>")
+      );
+    }
+    return title;
+  }
 
   /*plus button functionality (start a new chat)*/
   function startNewRemix() {
     setAllChatsArray([...allChatsArray, new Array(initMessage)]); 
     const newChatID = allChatsArray.length;
     setCurrentChatID(newChatID);
+    setChatTitles(prevTitles => [...prevTitles, "Remixed Recipe"]);
     textareaRef.current.focus();
   }
 
+  /* when user clicks an old chat, load it*/
   function handleSavedRecipeClick(e) {
     const newCurrentChatID = e.target.dataset.key;
     const oldCurrentChatID = currentChatID;
@@ -70,52 +89,34 @@ export default function Remixer() {
     }
   }
 
-  /* what to do when a user sends a message 
-   * (update the chats array, reset textarea, focus text area)*/
-  async function queryAndUpdate(textareaValue) {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Authorization', `Bearer ${accessToken}`);
-    const toSend = "Hi! It's nice talking to you :) what is your response to the folllowing message? please dont say you don't know how to: " + textareaValue;
-    
-    try {
-        const response = await fetch(
-            "https://api-inference.huggingface.co/models/mistralai/Mistral-Nemo-Instruct-2407",
-            {
-                headers: myHeaders,
-                method: "POST",
-                body: JSON.stringify({inputs: toSend}),
-            }
-        );
-        const result = await response.json();
-        // Instead of directly updating, return the response
-        console.log(result[0].generated_text);
-        return result[0].generated_text;
-    } catch (error) {
-        console.error('Error:', error);
-        return "Sorry, I encountered an error processing your request.";
-    }
-  }
-
-
-  async function sendMessage(e) { 
+  async function handleUserInput(e) { 
     e.preventDefault();
-    
+
+    const currentChatLength = allChatsArray[currentChatID].length;
+
+    let currentMessage = textareaValue;
+    let messageToAI = textareaValue;
+
     // Save the current textarea value and clear it
-    const currentMessage = textareaValue;
-    setTextareaValue("");
-    textareaRef.current.focus();
+    if (currentChatLength <= 1) {
+      const recipe = document.getElementById('recipe-dropdown-selected').value;
+      currentMessage = `The recipe I'd like to remix is: ${recipe}.\n${currentMessage}`;
+      messageToAI = firstPrompt(recipe, currentMessage);
+    }
     
     // Add user message
     updateAllChatsArray({"botOrUser":"user", "messageText": currentMessage});
-    
     // Get the bot's response
-    const botResponse = await queryAndUpdate(currentMessage);
-    
+    const botResponse = await queryAI(messageToAI);
+    // Add the new chat title if it's the first bot response
+    if(currentChatLength <= 1) {
+      console.log("setting new chat title");
+      setChatTitles(prevTitles => [...prevTitles, findChatTitle(botResponse)]);
+    }
     // Add bot message
     updateAllChatsArray({"botOrUser":"bot", "botAnimText": botResponse, "messageText": ""});
-    
     window.localStorage.setItem('lastChatID', currentChatID);
+    setTextareaValue("");
   }
   
   function toggleSidebar() {
@@ -170,7 +171,7 @@ export default function Remixer() {
             {allChatsArray.map(
               function(currentChat, index) {
                 return(
-                 <li className={`${index == currentChatID ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick} tabIndex="0">Saved Recipe #{index + 1}</li> 
+                 <li className={`${index == currentChatID ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick} tabIndex="0">{chatTitles[index]}</li> 
                 );
               }
             )}
@@ -195,7 +196,13 @@ export default function Remixer() {
                 function(message,index) {
                   return(
                     <div  key={index} className={`remixer-message ${message.botOrUser}`}> 
-                    {message.botOrUser == "bot" ? (<InView as="div" triggerOnce="true">{({ inView, ref }) => (<div ref={ref} className={inView ? "in-view" : ""}> <p className="slide-in">{message.botAnimText}</p> <p className="slide-over">{message.messageText}</p></div>)}</InView>) : <span>{message.messageText}</span>}
+                    {message.botOrUser == "bot" ? 
+                      (<InView as="div" triggerOnce="true">{({ inView, ref }) => 
+                        (<div ref={ref} className={inView ? "in-view" : ""}> 
+                          <p className="slide-in" dangerouslySetInnerHTML={{ __html: message.botAnimText }}></p> 
+                          <p className="slide-over">{message.messageText}</p>
+                        </div>)}</InView>) : 
+                      <span>{message.messageText}</span>}
                     </div>
                   );
                 }
@@ -203,19 +210,19 @@ export default function Remixer() {
             </div>
           </div>
           <div>
-            <form className="remixer-input" onSubmit={sendMessage}>
+            <div className="remixer-input">
               {allChatsArray[currentChatID].length <= 1 ? 
                 <div className="remixer-first-input-container">
                   <div className="recipe-dropdown-container">
                     <RecipeDropdown />
                   </div>
-                  <textarea className="remixer-first-input" value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="please describe how you want to remix this recipe" placeholder="How should I remix this recipe?"></textarea>
+                  <textarea name="user-preferences" className="remixer-first-input" value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="please describe how you want to remix this recipe" placeholder="How should I remix this recipe?"></textarea>
                 </div> 
                 : 
                 <textarea value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="start chatting with the remixer here"></textarea>
               }              
-              <button type="submit" onClick={sendMessage} disabled={(textareaValue === "") ? true : false}>&crarr;</button>
-            </form>
+              <button type="submit" onClick={handleUserInput} disabled={(textareaValue === "") ? true : false}>&crarr;</button>
+            </div>
             <div className="remixer-warning">
             All chatbots can make mistakes. Please use responsibly.
             </div>
