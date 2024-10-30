@@ -99,11 +99,10 @@ export default function Remixer() {
     if (messagesContainer) {
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-  }, [allChatsArray[currentChatID], isLoading]);
+  }, [isLoading]);
 
   async function handleUserInput(e) { 
     e.preventDefault();
-    setIsLoading(true);
     try {
         const currentChatLength = allChatsArray[currentChatID].length;
         let currentMessage = textareaValue;
@@ -127,7 +126,7 @@ export default function Remixer() {
         
         // Add user message
         updateAllChatsArray({"botOrUser":"user", "messageText": currentMessage});
-
+        setIsLoading(true);
         // Get the bot's response
         const botResponse = await queryAI(messageToAI, conversationHistory);
         
