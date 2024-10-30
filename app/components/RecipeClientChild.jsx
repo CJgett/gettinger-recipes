@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import DecorativeArches from './decorations/DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
@@ -187,6 +188,12 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                     />
                     <h3>Directions</h3>
                     <CustomList listItems={recipeDetails.directions} isEditing={isEditing} defaultTextAreaValue={recipeDetails.directions} isDirection={true} />
+                    <div className="remixer-button-container">
+                        <p>Need to tweak this recipe? Try remixing it!</p>
+                        <Link href={`/remixer?recipeId=${recipeDetails.id}`}>
+                            <button type="button">To the Remixer!</button>
+                        </Link>
+                    </div>
                 </div>
                 <div className={`card-section notes ${recipeDetails.notes[0] !== "" && !isEditing ? "show" : "hide"}`}>
                     <h3>Notes</h3>

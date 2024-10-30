@@ -1,5 +1,6 @@
 "use client"
 import { useState, useRef, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { InView } from 'react-intersection-observer'
 
 import RecipeDropdown from './form-components/RecipeDropdown'
@@ -25,24 +26,26 @@ export default function Remixer() {
   const [chatTitles, setChatTitles] = useState(["New Recipe Remix!"]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // use to get data from local storage only once.
-  let setupDone = false;
+  /* setup variables from local storage, handle if recipeID is provided */
+  const recipeID = useSearchParams().get('recipeId');
 
-  /* setup variables from local storage */
   useEffect(() => {
-    if(document.readyState === 'complete' && setupDone == false) {
-      setupDone = true;
-      const chatsFromLocalStorage = JSON.parse(window.localStorage.getItem('chatsFromLocalStorage'));
-      const chatTitlesFromLocalStorage = JSON.parse(window.localStorage.getItem('chatTitles'));
-      let lastChatID = JSON.parse(window.localStorage.getItem('lastChatID')); 
-      if (chatsFromLocalStorage !== 'undefined' && chatsFromLocalStorage !== null ) {
-        if(lastChatID > chatsFromLocalStorage.length) {
-          lastChatID = 0;
-        }
-        setAllChatsArray(chatsFromLocalStorage);
-        setChatTitles(chatTitlesFromLocalStorage);
-        setCurrentChatID(lastChatID);
+    const chatsFromLocalStorage = JSON.parse(window.localStorage.getItem('chatsFromLocalStorage'));
+    const chatTitlesFromLocalStorage = JSON.parse(window.localStorage.getItem('chatTitles'));
+    let lastChatID = JSON.parse(window.localStorage.getItem('lastChatID')); 
+    if (chatsFromLocalStorage !== 'undefined' && chatsFromLocalStorage !== null ) {
+      if(lastChatID > chatsFromLocalStorage.length) {
+        lastChatID = 0;
       }
+      setAllChatsArray(chatsFromLocalStorage);
+      setChatTitles(chatTitlesFromLocalStorage);
+      setCurrentChatID(lastChatID);
+    }
+    console.log("recipeID", recipeID);
+    console.log("lastChatID", lastChatID);
+    if (recipeID !== null && lastChatID > 0) {
+      console.log("recipeID found, starting new remix");
+      startNewRemix();
     }
   },[]);
 
@@ -249,7 +252,7 @@ export default function Remixer() {
               {allChatsArray[currentChatID].length <= 1 ? 
                 <div className="remixer-first-input-container">
                   <div className="recipe-dropdown-container">
-                    <RecipeDropdown />
+                    <RecipeDropdown selectedRecipe={recipeID} />
                   </div>
                   <textarea name="user-preferences" className="remixer-first-input" value={textareaValue} ref={textareaRef} onChange={handleTextareaChange} aria-label="please describe how you want to remix this recipe" placeholder="How should I remix this recipe?"></textarea>
                 </div> 

@@ -254,6 +254,12 @@
         }
       }
     }
+
+    .remixer-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   .custom-list {
@@ -348,6 +354,10 @@
       textarea {
         width: 100%;
       }
+    }
+
+    .remixer-button-container {
+      display: none;
     }
   }
 

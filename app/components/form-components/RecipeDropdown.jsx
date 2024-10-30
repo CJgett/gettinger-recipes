@@ -14,8 +14,19 @@ export default function RecipeDropdown({ selectedRecipe }) {
       const recipes = await getRecipes();
       setFilteredRecipes(recipes);
       setInitialRecipes(recipes);
+      console.log("selectedRecipe", selectedRecipe);
+      if (selectedRecipe) {
+        for (let i = 0; i < recipes.length; i++) {
+          console.log("recipe ids", recipes[i].id);
+          if (recipes[i].id == selectedRecipe) {
+            console.log("selected recipe found");
+            setQuery(recipes[i].name_en);
+            break;
+          }
+        }
+      }
     }
-    fetchRecipes()
+    fetchRecipes();
   }, [])
 
   useEffect(() => {
