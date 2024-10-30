@@ -59,6 +59,11 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
 
     }
 
+    function handlePrint(e) {
+        e.preventDefault();
+        window.print();
+    }
+
     return (
         <form action={handleSave} name="edit recipe">
             <section className={`recipe-detailed ${isEditing ? 'editing' : ''}`}>
@@ -155,9 +160,16 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                             </>
                         )}
                         </div>
-                        <div className="details-clickables">
-                            <button>print</button>
-                            <button>Pinterest</button>
+                        <div className="print-button">
+                            <button onClick={handlePrint} type="button">
+                                <span>Print</span>
+                                <Image
+                                    src="/icons/print-svgrepo-com.svg"
+                                    alt="an outline of a printer"
+                                    width={iconDimensions}
+                                    height={iconDimensions}
+                                />
+                            </button>
                     </div>
                     <DecorativeArches additionalClasses={'bottom'}/>
                 </div>

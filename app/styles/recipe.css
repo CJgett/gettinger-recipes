@@ -215,11 +215,23 @@
       flex-wrap: wrap;
     }
 
-    &> .details-clickables {
+    &> .print-button {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      margin-top: 20px;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        span {
+          line-height: 30px;
+        }
+        img {
+          filter: var(--c-text-filter);
+          margin-bottom: 5px;
+        }
+      }
     }
   }
 
@@ -416,4 +428,21 @@
       }
     }
   }
+}
+
+@media print {
+    /* Hide elements you don't want to print */
+    .edit-buttons,
+    .unit-toggle,
+    .remixer-button-container,
+    button, footer, header, .decorative-arches {
+        display: none !important;
+    }
+
+    /* Ensure the recipe content spans the full page */
+    .recipe-detailed {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }
