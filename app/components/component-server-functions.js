@@ -3,7 +3,7 @@ import { dbFetch } from '../../utils/postgres.js'
 import { compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
 import Anthropic from '@anthropic-ai/sdk';
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 
 export async function getRecipes() {
     try {
@@ -70,13 +70,9 @@ export async function queryAI(message, conversationHistory = []) {
             max_tokens: 1024,
             messages: [...conversationHistory, { role: "user", content: message }],
         });
-        try {
-            msg = DOMPurify.sanitize(msg);
-        } catch (error) {
-            console.error('Error sanitizing message:', error);
-        }
+        msg = DOMPurify.sanitize(msg.content[0].text);
         console.log(msg);
-        return msg.content[0].text;
+        return msg;
     } catch (error) {
         console.error('Error:', error);
         return "Sorry, I encountered an error processing your request.";
