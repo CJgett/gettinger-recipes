@@ -10,6 +10,17 @@ import SourceList from './SourceList.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
 import { verifyToken } from './component-server-functions.js'
 
+function parseTimeString(timeStr, forTotal = false) {
+    const hrs = timeStr.match(/(\d+)\s*hrs?/);
+    const mins = timeStr.match(/(\d+)\s*mins?/);
+    if (forTotal) {
+        return (hrs ? parseInt(hrs[1]) * 60 : 0) + (mins ? parseInt(mins[1]) : 0);
+    } else {
+        console.log(hrs, mins);
+        return (hrs[1] > 0 ? hrs[0] : '') + (mins[1] > 0 ? mins[0] : '');
+    }
+}
+
 export default function RecipeClientChild({recipeDetails: initialRecipeDetails}) {
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
@@ -153,9 +164,16 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                             </>
                         ) : (
                             <>
-                            <span>Prep Time: {recipeDetails.prep_time}</span>
-                            <span>Cook Time: {recipeDetails.cook_time}</span>
-                            <span>Total Time: {recipeDetails.prep_time + recipeDetails.cook_time}</span>
+                            <span>Prep Time: {parseTimeString(recipeDetails.prep_time)}</span>
+                            <span>Cook Time: {parseTimeString(recipeDetails.cook_time)}</span>
+                            <span>Total Time: {(() => {
+                                const prepMins = parseTimeString(recipeDetails.prep_time, true);
+                                const cookMins = parseTimeString(recipeDetails.cook_time, true);
+                                const totalMins = prepMins + cookMins;
+                                const hours = Math.floor(totalMins / 60);
+                                const minutes = totalMins % 60;
+                                return `${hours ? `${hours}hrs ` : ''}${minutes}mins`;
+                            })()}</span>
                             <span>Servings: {recipeDetails.servings}</span>
                             </>
                         )}
