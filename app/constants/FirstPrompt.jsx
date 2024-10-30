@@ -3,6 +3,7 @@ export function firstPrompt(recipe, userPreferences) {
 
 1. First, you will be presented with an original recipe:
         Recipe = ${recipe}
+    If you aren't provided with a recipe, please respond with "I'm sorry, but I don't see that you've provided a recipe."
 
 2. Then, you will receive user preferences:
         User preferences = ${userPreferences}
