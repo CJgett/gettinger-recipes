@@ -40,12 +40,10 @@ export default function Remixer() {
       setAllChatsArray(chatsFromLocalStorage);
       setChatTitles(chatTitlesFromLocalStorage);
       setCurrentChatID(lastChatID);
-    }
-    console.log("recipeID", recipeID);
-    console.log("lastChatID", lastChatID);
-    if (recipeID !== null && lastChatID > 0) {
-      console.log("recipeID found, starting new remix");
-      startNewRemix();
+      if (recipeID !== null) {
+        console.log("recipeID found, starting new remix");
+        startNewRemix();
+      }
     }
   },[]);
 
