@@ -21,6 +21,10 @@
       display: flex;
       gap: 20px;
 
+      @media only screen and (max-width: 768px) {
+        flex-direction: column;
+      }
+
         .form-question {
           display: flex;
           flex-direction: column;
@@ -63,6 +67,15 @@
         & input[type="number"] {
           max-width: 30px;
         }
+
+          @media (max-width: 768px) {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+
+            &:not(:last-child) {
+              border-bottom: 1px dashed rgba(var(--c-text-rgb), 0.5);
+            }
+          }
       }
 
       & .new-field-button, .delete-field-button {
