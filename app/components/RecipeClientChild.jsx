@@ -13,10 +13,12 @@ import { verifyToken } from './component-server-functions.js'
 function parseTimeString(timeStr, forTotal = false) {
     const hrs = timeStr.match(/(\d+)\s*hrs?/);
     const mins = timeStr.match(/(\d+)\s*mins?/);
+    if (hrs === null) {
+        return 0;
+        }
     if (forTotal) {
         return (hrs ? parseInt(hrs[1]) * 60 : 0) + (mins ? parseInt(mins[1]) : 0);
     } else {
-        console.log(hrs, mins);
         return (hrs[1] > 0 ? hrs[0] : '') + (mins[1] > 0 ? mins[0] : '');
     }
 }
@@ -40,7 +42,8 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
         try {
            verifyToken(token) 
         } catch (error) {
-            console.log(error);
+            console.log("error")
+            console.error(error);
             localStorage.removeItem('adminToken');
             setIsAdmin(false);
             return;
@@ -229,7 +232,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                     <h3>Notes</h3>
                     <CustomList listItems={recipeDetails.notes} isEditing={isEditing} defaultTextAreaValue={recipeDetails.notes} isDirection={false} />
                 </div>
-                <div className={`card-section sources ${recipeDetails.sources[0].source_link !== "" && !isEditing ? "show" : "hide"}`}>
+                <div className={`card-section sources ${(recipeDetails.sources.length === 0 || recipeDetails.sources[0]?.source_link === "") && !isEditing ? "hide" : "show"}`}>
                     <h3>Sources / Inspiration</h3>
                     <SourceList listItems={recipeDetails.sources} isEditing={isEditing} defaultTextAreaValue={recipeDetails.sources} isDirection={false} />
                 </div>
