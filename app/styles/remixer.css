@@ -44,9 +44,6 @@
 
 @keyframes rotate {
   0% { transform: rotate(0deg); }
-  40% { transform: rotate(170deg); }
-  50% { transform: rotate(180deg); }
-  60% { transform: rotate(190deg); }
   100% { transform: rotate(360deg); }
 }
 
@@ -141,6 +138,16 @@
           align-items: center;
           margin-bottom: 20px;
           padding: 5px;
+          text-align: center;
+
+          h3 {
+            height: 1em;
+            overflow-y: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 300px;
+            font-size: 40px;
+          }
 
           button {
             border: none;
