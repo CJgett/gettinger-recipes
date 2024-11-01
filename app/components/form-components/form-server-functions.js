@@ -41,9 +41,9 @@ export async function updateRecipeInDB(formData, originalRecipe) {
   const updatedIngredients = formatIngredientsAsJSON(formData.getAll("ingredient_name_en"), formData.getAll("metric_measurement"), false, formData.getAll("imperial_measurement"), false);
   const updatedDirections = JSON.stringify(formData.getAll("direction_text"));
   const updatedNotes = JSON.stringify(formData.getAll("note_text"));
-  const updatedSources = formatSourcesAsJSON(formData.getAll("source-link"), formData.getAll("source-title"));
-  const result = await dbFetch(`UPDATE all_recipes SET name_en = $1, name_kr = $2, pic = $3, pic_alt = $4, prep_time = $5, cook_time = $6, servings = $7, ingredients = $8, directions = $9, notes = $10, sources = $11, tags = $12 WHERE id = $13 RETURNING *;`, 
-    [updatedNameEN, updatedNameKR, originalRecipe.pic, originalRecipe.pic_alt, updatedPrepTime, updatedCookTime, updatedServings, updatedIngredients, updatedDirections, updatedNotes, updatedSources, originalRecipe.tags, originalRecipe.id]);
+  const updatedSources = formatSourcesAsJSON(formData.getAll("source_link"), formData.getAll("source_title"));
+  const result = await dbFetch(`UPDATE all_recipes SET name_en = $1, name_kr = $2, prep_time = $3, cook_time = $4, servings = $5, ingredients = $6, directions = $7, notes = $8, sources = $9 WHERE id = $10 RETURNING *;`, 
+    [updatedNameEN, updatedNameKR, updatedPrepTime, updatedCookTime, updatedServings, updatedIngredients, updatedDirections, updatedNotes, updatedSources, originalRecipe.id]);
   return result[0];
 }
 export async function updatePicFileName(recipeID, picFileName) {
@@ -52,7 +52,6 @@ export async function updatePicFileName(recipeID, picFileName) {
 }
 
 export async function addRecipeToDB(formData) {
-  console.log(formData);
   const recipeAuthor = formData.get("recipe_author");
   const nameEN = formData.get("name_en");
   const nameKR = formData.get("name_kr");

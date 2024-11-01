@@ -6,13 +6,12 @@ import FieldType from '../../constants/FieldType.jsx'
 import SourceField from './SourceField.jsx'
 import {addNewField, deleteThisField} from './form-functions.js'
 
-export default function Sources() {
+export default function Sources({sources}) {
 
   /* setup SOURCES */
   const [sourceIDCounter, setSourceIDCounter] = useState(0);
   const initialSourceField = { fieldKey: sourceIDCounter };
-  const [sourceArray, setSourceArray] = useState([{'key': sourceIDCounter, 'sourceField': initialSourceField}]);
-
+  const [sourceArray, setSourceArray] = useState(sources !== undefined ? sources : [{'key': sourceIDCounter, 'sourceField': initialSourceField}]);
 
   return (
     <div>
@@ -22,7 +21,7 @@ export default function Sources() {
       </button>
       {sourceArray.map((source) => ( 
         <div key={source.key}>
-          <SourceField fieldKey={source.key} />
+          <SourceField fieldKey={source.key} defaultSource={source} />
           <button className="delete-field-button" onClick={(e) => {deleteThisField(e, source.key, sourceArray, setSourceArray)}} title="delete this source">
               -
           </button>

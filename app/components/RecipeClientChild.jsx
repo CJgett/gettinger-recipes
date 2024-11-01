@@ -7,6 +7,7 @@ import DecorativeArches from './decorations/DecorativeArches.jsx'
 import IngredientList from './IngredientList.jsx'
 import CustomList from './CustomList.jsx'
 import SourceList from './SourceList.jsx'
+import Sources from './form-components/Sources.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
 import { verifyToken } from './component-server-functions.js'
 
@@ -233,8 +234,13 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                     <CustomList listItems={recipeDetails.notes} isEditing={isEditing} defaultTextAreaValue={recipeDetails.notes} isDirection={false} />
                 </div>
                 <div className={`card-section sources ${(recipeDetails.sources.length === 0 || recipeDetails.sources[0]?.source_link === "") && !isEditing ? "hide" : "show"}`}>
-                    <h3>Sources / Inspiration</h3>
-                    <SourceList listItems={recipeDetails.sources} isEditing={isEditing} defaultTextAreaValue={recipeDetails.sources} isDirection={false} />
+                    {isEditing ? 
+                        (<Sources sources={recipeDetails.sources}/>)
+                        : 
+                        (<>
+                            <h3>Sources / Inspiration</h3>
+                            <SourceList listItems={recipeDetails.sources} defaultTextAreaValue={recipeDetails.sources} isDirection={false} /> 
+                        </>)}
                 </div>
             </section>
         </form>

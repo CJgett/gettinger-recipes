@@ -1,15 +1,4 @@
-import SourceField from './form-components/SourceField.jsx';
-
-export default function SourceList({listItems, isEditing}) {
-  if (isEditing) {
-    return (
-      <div>
-      {listItems.map((listItem, index) => (
-        <SourceField key={index} fieldKey={index} defaultSource={listItem} />
-      ))}
-      </div>
-    );
-  }
+export default function SourceList({listItems}) {
   return (
     <ul>
       {listItems.map((listItem, index) => (
