@@ -12,14 +12,15 @@ export default function withAdminAuth(WrappedComponent) {
         router.push('/admin');
         return;
       }
+      async function verifyTokenHere() {
+        await verifyToken(token);
+      }
 
-      try {
-        verifyToken(token);
-      } catch (error) {
+      verifyTokenHere().catch(error => {
         console.error(error);
         localStorage.removeItem('adminToken');
         router.push('/admin');
-      }
+      });
     }, []);
 
     return <WrappedComponent {...props} />;

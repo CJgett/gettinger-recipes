@@ -52,7 +52,7 @@ export async function handleLogin(username, password) {
             throw new Error('JWT_SECRET is not defined');
         }
 
-        const token = sign({ id: admin.id, username: admin.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = sign({ id: admin.id, username: admin.username }, process.env.JWT_SECRET, { expiresIn: '2h' });
         return { success: true, token };
     } catch (error) {
         console.error(error);
