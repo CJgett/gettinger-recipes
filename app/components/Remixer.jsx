@@ -77,9 +77,8 @@ export default function Remixer() {
 
   /*plus button functionality (start a new chat)*/
   function startNewRemix() {
-    setAllChatsArray([...allChatsArray, new Array(initMessage)]); 
-    const newChatID = allChatsArray.length;
-    setCurrentChatID(newChatID);
+    setAllChatsArray(prevChats => [...prevChats, new Array(initMessage)]); 
+    setCurrentChatID(prevChatID => prevChatID + 1);
     setChatTitles(prevTitles => [...prevTitles, "New Recipe Remix!"]);
     textareaRef.current.focus();
   }
