@@ -25,6 +25,7 @@ export default function Remixer() {
   const [currentChatID, setCurrentChatID] = useState(0);
   const [chatTitles, setChatTitles] = useState(["New Recipe Remix!"]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   /* setup variables from local storage, handle if recipeID is provided */
   const recipeID = useSearchParams().get('recipeId');
@@ -150,24 +151,7 @@ export default function Remixer() {
   }
   
   function toggleSidebar() {
-    const sidebarClasses = document.querySelector(".remixer-sidebar").classList;
-    const sidebarToggle = document.querySelector(".expand-sidebar");
-    const remixerElement = document.querySelector(".remixer");
-    console.log(sidebarClasses);
-
-    if(sidebarClasses.contains("collapsed")) {
-      console.log("collapsed");
-        sidebarClasses.remove("collapsed");
-        sidebarToggle.classList.remove("collapsed");
-        sidebarToggle.title = "collapse sidebar";
-        // Add overlay class for mobile
-        remixerElement.classList.add("sidebar-open");
-    } else {
-      sidebarClasses.add("collapsed");
-      sidebarToggle.classList.add("collapsed");
-      sidebarToggle.title = "expand sidebar";
-      remixerElement.classList.remove("sidebar-open");
-    }
+    setIsSidebarCollapsed(prevState => !prevState);
   }
 
   // Add click handler for closing sidebar when clicking outside
@@ -195,8 +179,8 @@ export default function Remixer() {
 
   return (
     <div className="remixer-container">
-      <div className="remixer">
-        <div className="remixer-sidebar">
+      <div className={`remixer ${!isSidebarCollapsed ? "sidebar-open" : ""}`}>
+        <div className={`remixer-sidebar ${isSidebarCollapsed ? "collapsed" : ""}`}>
           <h3>Saved Recipes</h3> 
           <ul className="saved-recipes-list">
             {allChatsArray.map(
@@ -218,7 +202,7 @@ export default function Remixer() {
         <div className="remixer-chatbox">
           <div className="remixer-display-container">
             <div className="remixer-controls">
-              <button title="collapse sidebar" className="expand-sidebar" onClick={toggleSidebar} >&lt;</button>
+              <button title={`${isSidebarCollapsed ? "expand" : "collapse"} sidebar`} className={`toggle-sidebar ${isSidebarCollapsed ? "collapsed" : ""}`} onClick={toggleSidebar} >&lt;</button>
               <h3>{chatTitles[currentChatID]}</h3>
               <button title="start new remix!" className="new-remix-button"  onClick={startNewRemix} disabled={allChatsArray[currentChatID].length === 1 ? true : false}>&#43;</button>
             </div>
