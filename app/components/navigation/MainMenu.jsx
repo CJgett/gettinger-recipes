@@ -18,9 +18,7 @@ import SearchBar from '../elements/SearchBar.jsx'
 export default function MainMenu() {
 
   useEffect(() => {
-    if (document.readyState === 'complete') {
       document.getElementById('main-mouth').firstChild.style.strokeDashoffset = '0';
-    }
   });
   
   function lowerSmile(navIsVisible) {

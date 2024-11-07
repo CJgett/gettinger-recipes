@@ -12,6 +12,5 @@ export default function StickyMenu() {
         <MenuNav />
       </div>
     </div>
-
   );
 }

@@ -125,6 +125,18 @@ section {
   background-color: var(--c-bg-secondary);
 }
 
+.narrow-section {
+  width: 70%;
+
+  @media (max-width: 1200px) {
+    width: 90%;
+  }
+
+  @media (max-width: 320px) {
+    width: 100%;
+  }
+}
+
 button, input[type="file"]::file-selector-button  {
   border: inset 3px var(--c-text);
   border-radius: 14px;
@@ -145,5 +157,34 @@ button, input[type="file"]::file-selector-button  {
     &:hover {
       cursor: not-allowed;
     }
+  }
+}
+
+.image-plus-text {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    img {
+      width: 70%;
+      min-width: 200px;
+      min-height: 200px;
+    }
+  }
+
+  p {
+    white-space: pre-line;
+  }
+
+  img {
+    border-radius: 14px;
+    height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    /* set object-position and height in specific css file! */
   }
 }

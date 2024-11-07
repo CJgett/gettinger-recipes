@@ -26,6 +26,11 @@ export async function searchDB(searchTerm) {
     return results;
 }
 
+export async function getLatestRecipes(numberOfRecipes = 3) {
+    const recipes = await dbFetch(`SELECT * FROM all_recipes ORDER BY id DESC LIMIT ${numberOfRecipes}`);
+    return recipes;
+}
+
 export async function getAdminByUsername(username) {
     const admin = await dbFetch(`SELECT * FROM admins WHERE username = $1`, [username]);
     return admin[0];

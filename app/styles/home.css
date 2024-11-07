@@ -1,86 +1,64 @@
-.home-content {
-   .home-hanmi {
+.home-wrapper {
+  .home-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    padding-bottom: 100px;
 
     h2 {
-      display: inline;
-      font-size: 100px;
+      margin-bottom: 20px;
     }
 
-    span {
-      margin-left: 20px;
-    }
-
-    .grid-wrapper{
-      display: grid;
-      gap: 10px;
-      grid-auto-rows: minmax(20px, auto);
-      grid-template-columns:minmax(20px, auto); 
-      justify-content: center;
-
-      .grid-one {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      .grid-two {
-        grid-column: 2;
-        grid-row: 1;
-      }
-
-      .grid-three {
-        grid-column: 3;
-        grid-row: 1;
-      }
-
-      .grid-four {
-        grid-column: 4;
-        grid-row: 1;
-      }
-
-      .grid-five {
-        grid-column: 5;
-        grid-row: 1;
-      }
-
-      .grid-six {
-        grid-column: 1;
-        grid-row: 2;
-      }
-
-      .grid-seven {
-        grid-column: 3;
-        grid-row: 2;
-      }
-
-      .grid-eight {
-        grid-column: 5;
-        grid-row: 2;
+    .image-plus-text {
+      margin-bottom: var(--padding-horizontal);
+      img {
+        height: 400px;
+        object-position: center center;
       }
     }
-    
-    .hanmi-details {
+
+    .recipe-cards-wrapper {
       display: flex;
-      flex-direction: row;
+      gap: 50px;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 100px;
+    }
+
+    .view-all-recipes-button {
       margin-top: 50px;
+      height: 70px;
+      width: 175px;
+    }
 
-      @media screen and (max-width: 765px) {
-        flex-direction: column;
-        gap: 50px;
-        align-items: center;
+    .view-all-recipes-button-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
 
+      button {
+        position: relative;
+        z-index: 2;
       }
 
-      .profile-container {
-        .profile-text {
-          max-width: 500px;
-          font-weight: 300;
+      .breeze-svg {
+        position: absolute;
+        height: 400px;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.05;
+        z-index: 1;
+        
+        path {
+          stroke-dasharray: 1331.764 1331.764;
+          transition: stroke-dashoffset 1.5s ease;
         }
       }
-    } 
+    }
   }
+
   .banner-img {
     background-image: url("../../assets/img/placeholders/wow-authentic-home-pic.png");
     height: 300px;
@@ -98,7 +76,6 @@
       height: 40px;
       rotate: 20deg;
       stroke: red;
-
     }
   }
 }

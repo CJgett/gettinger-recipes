@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import '../styles/recipe-card.css'
 
 export default function RecipeCard({ recipe }) {
     return (
