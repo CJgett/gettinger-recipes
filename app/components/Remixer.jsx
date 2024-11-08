@@ -35,9 +35,13 @@ export default function Remixer() {
     const chatTitlesFromLocalStorage = JSON.parse(window.localStorage.getItem('chatTitles'));
     let lastChatID = JSON.parse(window.localStorage.getItem('lastChatID')); 
     if (chatsFromLocalStorage !== 'undefined' && chatsFromLocalStorage !== null ) {
-      if(lastChatID > chatsFromLocalStorage.length) {
+      if (lastChatID === null || lastChatID === undefined || lastChatID >= chatsFromLocalStorage.length) {
         lastChatID = 0;
       }
+      console.log("lastChatID", lastChatID);
+      console.log("chatsFromLocalStorage.length", chatsFromLocalStorage.length);
+      console.log("chatsFromLocalStorage", chatsFromLocalStorage);
+
       setAllChatsArray(chatsFromLocalStorage);
       setChatTitles(chatTitlesFromLocalStorage);
       setCurrentChatID(lastChatID);
@@ -46,7 +50,7 @@ export default function Remixer() {
         startNewRemix();
       }
     }
-  },[]);
+      },[]);
 
   function updateAllChatsArray(newMessage) {
     setAllChatsArray(prevChats => {
@@ -85,13 +89,20 @@ export default function Remixer() {
 
   /* when user clicks an old chat, load it*/
   function handleSavedRecipeClick(e) {
-    const newCurrentChatID = e.target.dataset.key;
+    const newCurrentChatID = parseInt(e.target.dataset.key);
     const oldCurrentChatID = currentChatID;
     setCurrentChatID(newCurrentChatID);
     window.localStorage.setItem('lastChatID', newCurrentChatID);
 
-    if (allChatsArray[oldCurrentChatID].length == 1) {
-      allChatsArray.pop();
+    // Remove empty chats when switching
+    if (allChatsArray[oldCurrentChatID] !== undefined && allChatsArray[oldCurrentChatID].length == 1) {
+        setAllChatsArray(prevChats => 
+            prevChats.filter((_, index) => index !== oldCurrentChatID)
+        );
+        
+        setChatTitles(prevTitles => 
+            prevTitles.filter((_, index) => index !== oldCurrentChatID)
+        );
     }
   }
 
@@ -136,6 +147,7 @@ export default function Remixer() {
             setChatTitles(prevTitles => {
                 const newTitles = [...prevTitles];
                 newTitles[currentChatID] = findChatTitle(botResponse);
+                window.localStorage.setItem('chatTitles', JSON.stringify(newTitles));
                 return newTitles;
             });
         }
@@ -156,7 +168,8 @@ export default function Remixer() {
   // Add click handler for closing sidebar when clicking outside
   function handleOutsideClick(e) {
     const sidebar = document.querySelector(".remixer-sidebar");
-    const toggleButton = document.querySelector(".expand-sidebar");
+    const toggleButton = document.querySelector(".toggle-sidebar");
+    console.log("toggleButton", toggleButton);
     
     // If we're on mobile and clicking outside the sidebar
     if (window.innerWidth <= 768 && 
