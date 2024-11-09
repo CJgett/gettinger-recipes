@@ -38,15 +38,11 @@ export default function Remixer() {
       if (lastChatID === null || lastChatID === undefined || lastChatID >= chatsFromLocalStorage.length) {
         lastChatID = 0;
       }
-      console.log("lastChatID", lastChatID);
-      console.log("chatsFromLocalStorage.length", chatsFromLocalStorage.length);
-      console.log("chatsFromLocalStorage", chatsFromLocalStorage);
 
       setAllChatsArray(chatsFromLocalStorage);
       setChatTitles(chatTitlesFromLocalStorage);
       setCurrentChatID(lastChatID);
       if (recipeID !== null) {
-        console.log("recipeID found, starting new remix");
         startNewRemix();
       }
     }
@@ -169,7 +165,6 @@ export default function Remixer() {
   function handleOutsideClick(e) {
     const sidebar = document.querySelector(".remixer-sidebar");
     const toggleButton = document.querySelector(".toggle-sidebar");
-    console.log("toggleButton", toggleButton);
     
     // If we're on mobile and clicking outside the sidebar
     if (window.innerWidth <= 768 && 
