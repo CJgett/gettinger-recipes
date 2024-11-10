@@ -94,8 +94,7 @@
 body {
   background-color: var(--c-bg);
   color: var(--c-text);
-  font-size: 30px;
-  color-scheme: light dark;
+  font-size: 18px;
 }
 
 h1 {
@@ -108,12 +107,6 @@ h2 {
 
 h3 {
   font-size: 60px;
-}
-
-textarea {
-  font-family: var(--f-dongle);
-  font-size: 25px;
-  line-height: 20px;
 }
 
 nav > ul {

@@ -184,7 +184,7 @@
           display: flex;
           flex-direction: column;
           padding: 0px 10px 0px 5px;
-          max-height: calc(100% - 3em);
+          max-height: calc(100% - 4.5em);
 
           .loading-symbol-bot {
             display: flex;
@@ -290,7 +290,7 @@
 
       .remixer-input {
         width: 95%;
-        height: 1.5em;
+        height: 2em;
         background-color: var(--c-bg-secondary); 
         border-radius: 14px;
         padding: 10px;
@@ -332,8 +332,7 @@
 
               .recipe-dropdown-input {
                 width: 100%;
-                padding: 8px;
-                padding-right: 30px;
+                padding: 5px 30px 5px 8px;
                 border: 2px solid var(--c-accent-secondary);
                 border-radius: 8px;
                 background-color: var(--c-bg);
@@ -347,7 +346,7 @@
                 background: none;
                 color: var(--c-text);
                 cursor: pointer;
-                padding: 0 4px;
+                padding: 4px 4px 0px 4px;
               }
             }
 
@@ -366,19 +365,18 @@
               padding-left: 0px;
 
               .recipe-dropdown-item {
-                padding: 8px 16px;
+                padding: 8px;
                 cursor: pointer;
-                font-size: 25px;
 
                 &:hover {
                   background-color: rgba(255, 255, 255, 0.3);
                 }
+              }
 
-                .recipe-dropdown-empty {
-                  padding: 8px 16px;
-                  color: var(--c-text);
-                  font-style: italic;
-                }
+              .recipe-dropdown-empty {
+                padding: 8px;
+                color: var(--c-text);
+                font-style: italic;
               }
             }
           }
@@ -388,23 +386,22 @@
             border-radius: 8px;
           }
 
-          /* Add these styles if you want to style the scrollbar */
-          .recipe-dropdown-list::-webkit-scrollbar {
-            width: 8px;
-          }
-
-          .recipe-dropdown-list::-webkit-scrollbar-track {
-            background: var(--c-bg);
-            border-radius: 4px;
-          }
-
-          .recipe-dropdown-list::-webkit-scrollbar-thumb {
-            background: var(--c-accent-secondary);
-            border-radius: 4px;
-          }
-
-          .recipe-dropdown-list::-webkit-scrollbar-thumb:hover {
-            background: var(--c-accent-primary);
+          /* TODO all scrollbars! Add these styles to style the scrollbar */
+          .recipe-dropdown-list {
+            &::-webkit-scrollbar {
+              width: 8px;
+            }
+            &::-webkit-scrollbar-track {
+              background: var(--c-bg);
+              border-radius: 4px;
+            }
+            &::-webkit-scrollbar-thumb {
+              background: var(--c-accent-secondary);
+              border-radius: 4px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+              background: var(--c-accent-primary);
+            }
           }
 
           .recipe-dropdown-container {
@@ -418,7 +415,7 @@
             border-radius: 8px;
             background-color: var(--c-bg);
             padding-top: 5px;
-            margin-bottom: 10px
+            padding-bottom: 5px;
           }
         }
 
@@ -431,7 +428,7 @@
 
       .remixer-warning {
         margin-top: 15px;
-        font-size: 20pt;
+        font-size: 10pt;
       }
     }
   }
@@ -564,7 +561,7 @@
           }
 
           &.remixer-input:has(.recipe-dropdown) {
-            height: 3em;
+            height: 3.5em;
           }
 
           .remixer-first-input-container {
@@ -573,7 +570,7 @@
             justify-content: space-between;
             width: 80%;
             .remixer-first-input {
-              min-height: 30px;
+              min-height: 27px;
             }
 
             .recipe-dropdown {
@@ -589,7 +586,6 @@
         }
 
         .remixer-warning {
-          font-size: 14pt;
           margin-top: 10px;
         }
       }

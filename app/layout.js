@@ -32,9 +32,26 @@ const Dongle = localFont ({
   variable: '--font-dongle',
 })
 
+const NanumGothic = localFont({
+  src: [
+    {
+      path: '../assets/fonts/Nanum_Gothic/NanumGothic-Regular.woff2',
+      weight: 'normal',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/Nanum_Gothic/NanumGothic-Bold.woff2',
+      weight: 'bold',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-nanumgothic',
+})
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={Dongle.variable}>
+    <html lang="en" className={`${Dongle.variable} ${NanumGothic.variable}`}>
       <body>
         <MainMenu /> 
         {children}

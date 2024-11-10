@@ -16,8 +16,9 @@ header {
 
     &:not(:has(h1)) {
       display: inline-block;
-      height: 35px;
+      height: 33px;
       line-height: 45px;
+      font-weight: bold;
     }
 
     &:hover {
@@ -30,6 +31,8 @@ header {
 
     &> h1 {
       display:inline-block;
+      height: 125px;
+
     }
   }
 
@@ -181,7 +184,7 @@ header {
           display: flex;
           position: fixed;
           top: -150px;
-          width: calc(100vw);
+          width: 100vw;
           padding: 15px 50px 35px 200px;
           justify-content: space-between;
           align-items: center;

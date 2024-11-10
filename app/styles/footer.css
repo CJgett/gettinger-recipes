@@ -44,11 +44,7 @@ footer {
 
       &> .footer-subcontainer {
         &.socials {
-          width: 100px;
-          p {
-            line-height: 25px;
-            font-size: 25px;
-          }
+          width: 120px;
         }
 
         &.footer-sitemap-container {

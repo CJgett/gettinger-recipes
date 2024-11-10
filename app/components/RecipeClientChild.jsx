@@ -184,7 +184,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                         </div>
                         <div className="print-button">
                             <button onClick={handlePrint} type="button">
-                                <span>Print</span>
+                                Print
                                 <Image
                                     src="/icons/print-svgrepo-com.svg"
                                     alt="an outline of a printer"

@@ -44,13 +44,13 @@ export default function HomePage() {
             imageWidth={600} 
             imageHeight={1000} 
             altText="a hand reaches down to pinch Carly's head"
-            pText={`As every other person from the US, I like food, and I like lots of it... same as my entire family. I started making food with my mom as a kid, and we still cook together when I visit - our strategy for pies, where I make the crust and she makes the filling, has never once failed us ;)
+            pText={`As every other person from the US, I like food, and I like lots of it... same as my entire family. I started making food with my mom as a kid, and we still cook together when I visit - our strategy for pies, where I make the crust and she makes the filling, has never once failed us :)
 
             If you're on this site and you're not part of the family, well, you are now! 
 
-            (PS: pls don't tell Buna¹; that we put her recipes on the world wide web - if you do tell her, tell her it definitely wasn't Carly, thank you!)
+            (PS: pls don't tell Buna* that we put her recipes on the world wide web - if you do tell her, tell her it definitely wasn't Carly, thank you!)
 
-            ¹(Romanian for "grandma")`} />
+            *(Romanian for "grandma")`} />
           </div> 
           <h2>Latest Recipes</h2>
           <div className="recipe-cards-wrapper">
