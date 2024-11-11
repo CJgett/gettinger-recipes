@@ -8,6 +8,15 @@ import localFont from 'next/font/local'
 export const metadata = {
   title: 'Gettinger Recipes',
   description: 'Discover delicious family recipes on Gettinger Recipes. Perfect for food lovers, our site features curated recipes from our family. Join us and enjoy cooking flavorful meals without needing professional skills.',
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  }
 }
 
 const Dongle = localFont ({
