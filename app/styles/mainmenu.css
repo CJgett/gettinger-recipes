@@ -262,7 +262,7 @@ header {
         }
 
         @media only screen and (max-width: 1024px) {
-          left: calc(50% - 60px);
+          left: calc(50vw - 50px);
           transition: left linear .3s , bottom linear .3s;
         }
       }
