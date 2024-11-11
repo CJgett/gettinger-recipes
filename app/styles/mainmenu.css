@@ -31,8 +31,6 @@ header {
 
     &> h1 {
       display:inline-block;
-      height: 125px;
-
     }
   }
 
@@ -239,7 +237,7 @@ header {
       }
     
       &.in-footer {
-        bottom: 100px;
+        bottom: 150px;
         transition: bottom ease-in-out .3s;
 
         &~ .sticky-part {
@@ -263,7 +261,7 @@ header {
           }
         }
 
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 1024px) {
           left: calc(50% - 60px);
           transition: left linear .3s , bottom linear .3s;
         }
