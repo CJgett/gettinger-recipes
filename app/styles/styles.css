@@ -192,3 +192,15 @@ button, input[type="file"]::file-selector-button  {
     /* set object-position and height in specific css file! */
   }
 }
+
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 10px;
+  background: transparent;
+  z-index: 9999;
+  background: linear-gradient(90deg, var(--c-accent-primary), var(--c-accent-secondary));
+  transition: width 200ms ease-in-out;
+}
