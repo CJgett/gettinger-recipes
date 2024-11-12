@@ -4,6 +4,7 @@ import './styles/styles.css'
 import MainMenu from './components/navigation/MainMenu'
 import Footer from './components/navigation/Footer'
 import localFont from 'next/font/local'
+import { AuthProvider } from './components/AuthProvider'
 
 export const metadata = {
   title: 'Gettinger Recipes',
@@ -65,9 +66,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${Dongle.variable} ${NanumGothic.variable}`}>
       <body>
-        <MainMenu /> 
-        {children}
-        <Footer /> 
+        <AuthProvider>
+          <MainMenu /> 
+          {children}
+          <Footer /> 
+        </AuthProvider>
       </body>
     </html>
   )

@@ -2,7 +2,6 @@
 
 import '../../styles/admin.css'
 
-import withAdminAuth from '../../components/withAdminAuth.js';
 import DurationInputField from '../../components/form-components/DurationInputField.jsx'
 import Ingredients from '../../components/form-components/Ingredients.jsx'
 import Directions from '../../components/form-components/Directions.jsx'
@@ -13,7 +12,7 @@ import { saveFile, addRecipeToDB, updatePicFileName } from '../../components/for
 
 import { useEffect, useRef, useState } from 'react';
 
-function AddRecipePage() {
+export default function AddRecipePage() {
   const formRef = useRef(null);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
 
@@ -143,5 +142,3 @@ function AddRecipePage() {
     </section>
   );
 }
-
-export default withAdminAuth(AddRecipePage, '/admin/add-recipe');

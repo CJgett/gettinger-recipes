@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -28,29 +29,11 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [recipeDetails, setRecipeDetails] = useState(initialRecipeDetails);
-    const [isAdmin, setIsAdmin] = useState(false);
     const iconDimensions = 30;
     const [unitSystem, setUnitSystem] = useState('metric');
+    const { data: session } = useSession()
 
-    useEffect(() => {
-        const token = localStorage.getItem('adminToken');
-        if(!token){
-            setIsAdmin(false);
-            return;
-        } else {
-            console.log("token found");
-        }
-        try {
-           verifyToken(token) 
-        } catch (error) {
-            console.log("error")
-            console.error(error);
-            localStorage.removeItem('adminToken');
-            setIsAdmin(false);
-            return;
-        }
-        setIsAdmin(true);
-    }, []);
+    const isAdmin = session?.user?.role === 'admin'
 
     function handleEdit(e) {
         e.preventDefault();

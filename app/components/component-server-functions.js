@@ -1,7 +1,5 @@
 "use server"
 import { dbFetch } from '../../utils/postgres.js'
-import { compare } from 'bcryptjs';
-import { sign, verify } from 'jsonwebtoken';
 import Anthropic from '@anthropic-ai/sdk';
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -34,35 +32,6 @@ export async function getLatestRecipes(numberOfRecipes = 3) {
 export async function getAdminByUsername(username) {
     const admin = await dbFetch(`SELECT * FROM admins WHERE username = $1`, [username]);
     return admin[0];
-}
-
-export async function verifyToken(token) {
-    const verifiedTokenResult = verify(token, process.env.JWT_SECRET);
-    return verifiedTokenResult;
-}
-
-export async function handleLogin(username, password) {
-    try {
-        const admin = await getAdminByUsername(username);
-        if (!admin) {
-            return { success: false, message: 'Username not found' };
-        }
-
-        const isPasswordValid = await compare(password, admin.password);
-        if (!isPasswordValid) {
-            return { success: false, message: 'Invalid password' };
-        }
-
-        if (!process.env.JWT_SECRET) {
-            throw new Error('JWT_SECRET is not defined');
-        }
-
-        const token = sign({ id: admin.id, username: admin.username }, process.env.JWT_SECRET, { expiresIn: '2h' });
-        return { success: true, token };
-    } catch (error) {
-        console.error(error);
-        return { success: false, message: 'Internal server error' };
-    }
 }
 
 export async function queryAI(message, conversationHistory = []) {

@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import '../styles/admin.css';
-import { handleLogin } from '../components/component-server-functions';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -14,14 +14,17 @@ export default function AdminLogin() {
     e.preventDefault();
     setError('');
     
-    const result = await handleLogin(username, password);
+    const result = await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+    });
     
-    if (result.success) {
-      localStorage.setItem('adminToken', result.token);
-      router.push('/recipes');
-      console.log("token was set");
+    if (result?.error) {
+      setError(result.error);
     } else {
-      setError(result.message || 'Login failed');
+      router.push('/recipes');
+      router.refresh();
     }
   };
 
@@ -33,13 +36,13 @@ export default function AdminLogin() {
         <div className="form-container">
           <div className="form-group">
             <label htmlFor="username">Username: </label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password: </label>
