@@ -1,9 +1,9 @@
 'use client'
 
+import { useEffect, useState, Suspense } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
-export default function LoadingBar() {
+function LoadingBarInner() {
   const [progress, setProgress] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const pathname = usePathname()
@@ -19,9 +19,9 @@ export default function LoadingBar() {
           clearInterval(interval);
           return 90;
         }
-        return oldProgress + 10;
-      })
-    }, 50)
+        return oldProgress + 5;
+      });
+    }, 50);
 
     const timeout = setTimeout(() => {
       clearInterval(interval);
@@ -35,8 +35,8 @@ export default function LoadingBar() {
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
-    }
-  }, [pathname, searchParams])
+    };
+  }, [pathname, searchParams]);
 
   if (!isLoading) return null;
 
@@ -47,5 +47,13 @@ export default function LoadingBar() {
         width: `${progress}%`,
       }} 
     />
-  )
+  );
+}
+
+export default function LoadingBar() {
+  return (
+    <Suspense>
+      <LoadingBarInner />
+    </Suspense>
+  );
 } 

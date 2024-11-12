@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { InView } from 'react-intersection-observer'
 
@@ -9,7 +9,7 @@ import { nextPrompt } from '../constants/NextPrompt'
 import { queryAI } from './component-server-functions'
 import Smile from './decorations/Smile'
 
-export default function Remixer() {
+export function RemixerInner() {
 
   /* setup textarea input */ 
   const [textareaValue, setTextareaValue] = useState("");
@@ -257,5 +257,23 @@ export default function Remixer() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Remixer() {
+  return (
+    <Suspense fallback={
+      <div className="remixer-container">
+        <div className="remixer">
+          <div className="remixer-chatbox">
+            <div className="loading-symbol-bot">
+              <Smile />
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <RemixerInner />
+    </Suspense>
   );
 }
