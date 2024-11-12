@@ -112,6 +112,11 @@ h3 {
   line-height: 50px;
 }
 
+h4 {
+  font-size: 40px;
+  line-height: 30px;
+}
+
 nav > ul {
   padding-left: 0;
 }
