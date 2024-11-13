@@ -5,7 +5,7 @@ import DOMPurify from 'isomorphic-dompurify';
 
 export async function getRecipes() {
     try {
-        const recipes = await dbFetch("SELECT * FROM all_recipes");
+        const recipes = await dbFetch("SELECT id, name_en, pic, pic_alt FROM all_recipes");
         return recipes;
     } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -25,7 +25,7 @@ export async function searchDB(searchTerm) {
 }
 
 export async function getLatestRecipes(numberOfRecipes = 3) {
-    const recipes = await dbFetch(`SELECT * FROM all_recipes ORDER BY id DESC LIMIT ${numberOfRecipes}`);
+    const recipes = await dbFetch(`SELECT id, name_en, pic, pic_alt FROM all_recipes ORDER BY id DESC LIMIT ${numberOfRecipes}`);
     return recipes;
 }
 
@@ -45,7 +45,6 @@ export async function queryAI(message, conversationHistory = []) {
             messages: [...conversationHistory, { role: "user", content: message }],
         });
         msg = DOMPurify.sanitize(msg.content[0].text);
-        console.log(msg);
         return msg;
     } catch (error) {
         console.error('Error:', error);

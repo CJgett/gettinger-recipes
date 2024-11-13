@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useInView } from 'react-intersection-observer';
 
 import './styles/home.css'
 
@@ -10,16 +9,6 @@ import RecipeCard from './components/RecipeCard';
 import ImagePlusText from './components/elements/ImagePlusText';
 import { getLatestRecipes } from './components/component-server-functions';
 import Breeze from './components/decorations/Breeze';
-
-//import Soup from '../assets/img/handrawn-cooking/85365-hot-soup-bowl-hand-drawn-food.svg'
-/*import bread from '../assets/img/handrawn-cooking/100604-bread-baguette-outline.svg'
-import iceCream from '../assets/img/handrawn-cooking/107043-melting-hand-drawn-ice-cream-cone.svg'
-import hotPot from '../assets/img/handrawn-cooking/117464-soup-spoon-hand-drawn-tool-with-hot-food.svg'
-import watermelon from '../assets/img/handrawn-cooking/66663-watermelon-slice.svg'
-import banana from '../assets/img/handrawn-cooking/81261-banana-fruit.svg'
-import lemon from '../assets/img/handrawn-cooking/77691-half-lemon.svg'
-import Sandwich from '../assets/img/handrawn-cooking/26521-thick-sandwich.svg'
-import pizza from '../assets/img/handrawn-cooking/2291-pizza-slice.svg'*/
 
 export default function HomePage() {
   const [latestRecipes, setLatestRecipes] = useState([]);
