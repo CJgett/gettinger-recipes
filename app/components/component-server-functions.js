@@ -5,7 +5,7 @@ import DOMPurify from 'isomorphic-dompurify';
 
 export async function getRecipes() {
     try {
-        const recipes = await dbFetch("SELECT id, name_en, pic, pic_alt FROM all_recipes");
+        const recipes = await dbFetch("SELECT id, name_en, pic, pic_alt, tags, is_family_recipe FROM all_recipes");
         return recipes;
     } catch (error) {
         console.error("Error fetching recipes:", error);
