@@ -52,7 +52,6 @@ export default function HomePage() {
             <Link href="/recipes">
               <button className="view-all-recipes-button">View All Recipes</button>
             </Link>
-            <Breeze />
           </div>
         </section>
       <section className="banner-img">

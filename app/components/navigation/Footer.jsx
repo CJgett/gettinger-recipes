@@ -44,7 +44,14 @@ export default function Footer() {
         </div>
         <div className="footer-subcontainer">
           <h2 className="footer-header">Contact</h2>
-          <button>email me!</button>
+          <a 
+            href="mailto:cjgettinger@gmail.com?subject=Gettinger%20Recipes%20Request"
+            className="email-button"
+            role="button"
+            aria-label="Send email to Gettinger Recipes maintainer"
+          >
+            email me!
+          </a>
         </div>
       </div>
       </div>

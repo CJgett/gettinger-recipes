@@ -141,7 +141,7 @@ section {
   }
 }
 
-button, input[type="file"]::file-selector-button  {
+button, input[type="file"]::file-selector-button, .email-button {
   border: inset 3px var(--c-text);
   border-radius: 14px;
   background-color: var(--c-bg);
