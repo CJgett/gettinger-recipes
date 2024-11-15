@@ -124,7 +124,7 @@ nav > ul {
 section {
   padding: 50px;
   background-color: var(--c-bg-secondary);
-  @media (max-width: 500px) {
+  @media (max-width: 576px) {
     padding: 20px;
   }
 }
