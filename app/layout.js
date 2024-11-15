@@ -27,6 +27,7 @@ const Dongle = localFont ({
       path: '../assets/fonts/Dongle/Dongle-Regular.woff2',
       weight: 'normal',
       style: 'normal',
+      preload: true,
     },
     {
       path: '../assets/fonts/Dongle/Dongle-Bold.woff2',
@@ -41,6 +42,7 @@ const Dongle = localFont ({
       preload: false,
     },
   ],
+  preload: false,
   display: 'swap',
   variable: '--font-dongle',
 })
@@ -51,6 +53,7 @@ const NanumGothic = localFont({
       path: '../assets/fonts/Nanum_Gothic/NanumGothic-Regular.woff2',
       weight: 'normal',
       style: 'normal',
+      preload: true,
     },
     {
       path: '../assets/fonts/Nanum_Gothic/NanumGothic-Bold.woff2',
@@ -59,6 +62,7 @@ const NanumGothic = localFont({
       preload: false,
     },
   ],
+  preload: false,
   display: 'swap',
   variable: '--font-nanumgothic',
 })
