@@ -30,6 +30,7 @@ export default function SearchBar({isExpandable = false}) {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyPress={handleKeyPress}
+                aria-labelledby="search recipes"
             />
             {isExpandable && 
             <div className="search-icon-container">

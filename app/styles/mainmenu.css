@@ -79,6 +79,10 @@ header {
       align-items: center;
       .search-bar {
         margin-right: 60px;
+        input {
+          font-weight: bold;
+          color: white;
+        }
       }
     }
   }

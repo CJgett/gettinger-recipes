@@ -4,8 +4,6 @@
     align-items: center;
     position: relative;
 
-    
-
     input {
         background-color: var(--c-accent-secondary);
         width: 100%; /* Full width for scaling */

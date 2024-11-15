@@ -36,6 +36,14 @@
    font-size: 70px; 
   }
 
+  .search-bar {
+    input {
+      font-weight: bold;
+      color: white;
+      background-color: var(--c-accent-primary);
+    }
+  }
+
   .theme-toggle {
     display: inline-block;
     top: unset;
