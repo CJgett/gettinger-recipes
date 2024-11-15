@@ -4,10 +4,10 @@
     &> .recipe-tabs-container {
       position: relative;
       display: flex;
-      align-items: center;
+      align-items: baseline;
+      justify-content: space-between;
 
       .scroll-arrow {
-        position: absolute;
         top: 60%;
         background-color: var(--c-bg);
         border: 2px solid var(--c-text);
@@ -24,14 +24,6 @@
         &:hover {
           background-color: var(--c-bg-secondary);
         }
-
-        &.left {
-          left: -35px;
-        }
-
-        &.right {
-          right: -35px;
-        }
       }
     }
 
@@ -42,6 +34,7 @@
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       white-space: nowrap;
+      width: 75%;
       -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
       &::-webkit-scrollbar { 

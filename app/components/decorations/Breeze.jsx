@@ -9,7 +9,7 @@ export default function Breeze() {
   });
 
   return (
-    <svg className="breeze-svg" ref={refBreeze} strokeDashoffset={breezeInView ? 0 : 1331.764} width="1058.620pt" height="886.804pt" viewBox="-1863.041 -2768.491 1058.620 886.804">
+    <svg className="breeze-svg" ref={refBreeze} strokeDashoffset={breezeInView ? 0 : 1331.764} viewBox="-1863.041 -2768.491 1058.620 886.804">
         <path stroke="currentColor" fill="none" strokeWidth="22.735" strokeLinecap="round" strokeLinejoin="round" 
             d="M -1733.816 -2299.156 Q -1725.277 -2301.873 -1709.488 -2307.093 Q -1693.698 -2312.313 -1672.190 -2317.871 Q 
             -1650.683 -2323.429 -1636.106 -2325.773 Q -1621.529 -2328.118 -1607.479 -2329.054 Q -1593.430 -2329.990 -1581.780
