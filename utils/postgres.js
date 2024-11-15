@@ -1,12 +1,12 @@
 import { Pool } from "pg";
 
 export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  /*host: process.env.DB_HOST,
+  host: process.env.POSTGRES_HOST,
   port: "5432",
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_DATABASE,*/
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
+  ssl: true 
 });
 
 export async function dbFetch(customQueryText, values) {
