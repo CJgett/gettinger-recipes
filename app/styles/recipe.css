@@ -81,6 +81,8 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow-x: hidden;
+
   &> div {
     width: 70%;
     @media (max-width: 1200px) {
@@ -88,7 +90,11 @@
     }
   }
 
-  &> .recipe-title-edit {
+  & .recipe-title {
+    text-align: center;
+  }
+
+  & .recipe-title-edit {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -139,6 +145,9 @@
 
   &> .recipe-details {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     &> .decorative-arches {
       position: absolute;
@@ -170,51 +179,55 @@
       }
     }
 
-    &> h3 {
+    & h3 {
       text-align: center;
     }
 
-    &> .details-container {
+    & .details-container {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
+      column-gap: 20px;
+      text-align: center;
     }
 
     &> .print-button {
-      display: flex;
-      justify-content: center;
       margin-top: 20px;
 
       button {
         display: flex;
         align-items: center;
         gap: 10px;
+
         span {
           line-height: 30px;
         }
+
         img {
           filter: var(--c-text-filter);
-          margin-bottom: 5px;
         }
       }
     }
   }
 
-  &> .ingredients-directions {
+  & .ingredients-directions {
     ul {
       @media (min-width: 1024px) {
         columns: 2;
       }
     }
-    &> .ingredient-list{
+    & .ingredient-list{
+      margin-bottom: 20px;
+
       .ingredient-editing-container {
         display: flex;
         flex-direction: row;
         justify-content: center;
         gap: 10px;
       }
-      &>li {
-        &> input[type="checkbox"] {
+
+      & li {
+        & input[type="checkbox"] {
           margin-right: 8px;
           accent-color: var(--c-accent-secondary);
           height: 20px;
@@ -237,6 +250,8 @@
       flex-direction: column;
       align-items: center;
       margin-top: 20px;
+      gap: 10px;
+      text-align: center;
     }
   }
 
