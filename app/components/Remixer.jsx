@@ -25,7 +25,7 @@ export function RemixerInner() {
   const [currentChatID, setCurrentChatID] = useState(0);
   const [chatTitles, setChatTitles] = useState(["New Recipe Remix!"]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   /* setup variables from local storage, handle if recipeID is provided */
   const recipeID = useSearchParams().get('recipeId');
@@ -103,9 +103,11 @@ export function RemixerInner() {
   }
 
   useEffect(() => {
-    const messagesContainer = document.querySelector('.remixer-messages');
-    if (messagesContainer) {
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    if (isLoading) {  // Only scroll when loading starts
+      const messagesContainer = document.querySelector('.remixer-messages');
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
     }
   }, [isLoading]);
 
@@ -183,6 +185,16 @@ export function RemixerInner() {
     };
   }, []);
 
+  useEffect(() => {
+    setIsSidebarCollapsed(window.innerWidth <= 768);
+    
+    function handleResize() {
+      setIsSidebarCollapsed(window.innerWidth <= 768);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="remixer-container">
