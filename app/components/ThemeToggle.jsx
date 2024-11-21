@@ -8,13 +8,21 @@ export default function ThemeToggle() {
   // true = use dark mode
   const [theme, setTheme] = useState("null");
 
-  function toggleThemePreference() {
-    let themeAsBool = theme;
-    if (typeof themeAsBool === "string") {
-      themeAsBool = (theme === "true");
-    }
-    setTheme(!themeAsBool);
+  function toggleThemePreference(e) {
+    // different theme toggles can be clicked, so we need to get the new theme from the event target
+    // as opposed to the state of this toggle instance
+    const newTheme = e.target.checked;
+    setTheme(newTheme);
     const docClassList = document.documentElement.classList;
+    
+    // Update only theme toggle checkboxes
+    const toggleCheckboxes = document.querySelectorAll(".theme-toggle .toggle-checkbox");
+    toggleCheckboxes.forEach(checkbox => {
+      checkbox.checked = newTheme;
+      console.log("checkbox" + checkbox);
+      console.log(checkbox.checked);
+    });
+
     if (docClassList.contains("dark-mode")) {
       docClassList.remove("dark-mode");
       docClassList.add("light-mode");
@@ -25,21 +33,29 @@ export default function ThemeToggle() {
   }
 
   // set initial state for the checkbox and add the initial theme class based on the user's browser preference
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (document.readyState === 'complete') {
       const docClassList = document.documentElement.classList;
       if(!(docClassList.contains("dark-mode") || docClassList.contains("light-mode"))) { 
         const themePrefLocalStorage = window.localStorage.getItem('themePreference');
-        // set dark mode variables if user preference is set to dark mode in local storage or browser preference
-        // the variable in local storage gets precedence
-        if (themePrefLocalStorage === "true" || ((themePrefLocalStorage === null || themePrefLocalStorage === "null") && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add("dark-mode");
-            const toggleCheckbox = document.querySelector(".toggle-checkbox");
-            toggleCheckbox.checked = true;
-            setTheme(true);
+        
+        // Update initial state of all checkboxes
+        const toggleCheckboxes = document.querySelectorAll(".theme-toggle .toggle-checkbox");
+        const shouldBeDark = themePrefLocalStorage === "true" || 
+          ((themePrefLocalStorage === null || themePrefLocalStorage === "null") && 
+           window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+        toggleCheckboxes.forEach(checkbox => {
+          checkbox.checked = shouldBeDark;
+          console.log("checkbox" + checkbox);
+          console.log(checkbox.checked);
+        });
+
+        if (shouldBeDark) {
+          document.documentElement.classList.add("dark-mode");
+          setTheme(true);
         } else {
           docClassList.add("light-mode");
-          console.log(themePrefLocalStorage);
           setTheme(false);
         }
       }
