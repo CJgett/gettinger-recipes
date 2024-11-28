@@ -187,11 +187,11 @@
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
-      column-gap: 20px;
+      column-gap: 25px;
       text-align: center;
     }
 
-    &> .print-button {
+    & .print-button {
       margin-top: 20px;
 
       button {
