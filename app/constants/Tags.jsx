@@ -3,6 +3,7 @@ export const Tags = new Array(
   "main",
   "side",
   "dessert",
+  "snack",
 )
 
 export default Tags;
