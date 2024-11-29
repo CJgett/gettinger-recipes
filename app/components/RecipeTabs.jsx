@@ -33,7 +33,7 @@ export function RecipeTabs({ categories, activeTab, onTabChange }) {
           &lt;
         </button>
       )}
-      <div className="recipe-box-tabs" ref={tabsRef} onScroll={() => {
+      <div className="recipe-box-tabs" role="tablist" ref={tabsRef} onScroll={() => {
         const { scrollWidth, clientWidth, scrollLeft } = tabsRef.current;
         setShowLeftArrow(scrollLeft > 0);
         setShowRightArrow(scrollLeft + clientWidth < scrollWidth);
