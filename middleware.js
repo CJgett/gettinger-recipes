@@ -11,7 +11,13 @@ export default withAuth(
     response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
     response.headers.set(
       'Content-Security-Policy',
-      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+      [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+        "style-src 'self' 'unsafe-inline'",
+        "connect-src 'self' https://blob.vercel-storage.com",
+        "img-src 'self' https://*.public.blob.vercel-storage.com"
+      ].join('; ')
     )
     
     return response
