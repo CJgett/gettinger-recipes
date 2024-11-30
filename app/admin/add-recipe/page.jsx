@@ -8,7 +8,8 @@ import Directions from '../../components/form-components/Directions.jsx'
 import Notes from '../../components/form-components/Notes.jsx'
 import Sources from '../../components/form-components/Sources.jsx'
 import Tags from '../../constants/Tags.jsx'
-import { saveFile, addRecipeToDB, updatePicFileName } from '../../components/form-components/form-server-functions.js'
+import { addRecipeToDB, updatePicFileName } from '../../components/form-components/form-server-functions.js'
+import { saveFile } from '../../components/form-components/form-functions.js'
 
 import { useEffect, useRef, useState } from 'react';
 
@@ -25,23 +26,27 @@ export default function AddRecipePage() {
   }, [recipeSubmitted]);
 
   async function submitRecipe(formData) {
-    console.log("TEST RESULTS - SUBMIT");
+    console.log("Starting recipe submission");
     const postResult = await addRecipeToDB(formData);
     if (postResult === false) {
+      console.log("Failed to add recipe to DB");
       return;
     }
     const postResultID = postResult.id;
     try {
+      console.log("Attempting to save file...");
       const picFileName = await saveFile(formData, postResultID);
+      console.log("File saved successfully:", picFileName);
       try {
         const updatedResult = await updatePicFileName(postResultID, picFileName);
-        console.log("DB result: " + updatedResult);
+        console.log("DB updated with filename:", updatedResult);
       } catch (error) {
-        console.error("Error updating recipe with picture file name " + error);
+        console.error("Error updating recipe with picture file name:", error);
         return;
       }
     } catch (error) {
-      console.error("Error saving picture file " + error);
+      console.error("Error saving picture file. Full error:", error);
+      console.error("Error stack:", error.stack);
       return;
     }
     setRecipeSubmitted(true);

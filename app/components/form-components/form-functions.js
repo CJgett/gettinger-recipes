@@ -1,4 +1,5 @@
 import FieldType from '../../constants/FieldType.jsx'
+import { upload } from '@vercel/blob/client';
 
 export function addNewField(e, fieldType, idCounter, counterSettingFunction, fieldArray, arraySettingFunction) {
   e.preventDefault();
@@ -67,7 +68,6 @@ export function formatIngredientsAsJSON(names, metricMeasurements, metricUnits, 
    }
     ingredients.push({'ingredient_name_en': name,'metric_measurement': metricMeasurement, 'imperial_measurement': imperialMeasurement});
   }
-
   return JSON.stringify(ingredients); 
 }
 
@@ -81,4 +81,44 @@ export function formatSourcesAsJSON(sourceLinks, sourceTitles) {
     sources.push({'source_link': sourceLink, 'source_title': sourceTitle});
   }
   return JSON.stringify(sources);
+}
+
+export async function saveFile(formData, recipeID) {
+  console.log("Starting file save...");
+  const file = formData.get("recipe_pic");
+  if (!file) {
+    throw new Error("No recipe picture file provided");
+  }
+
+  console.log("File type:", file.type);
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      throw new Error("Unsupported file type. Please use JPEG, PNG, or WebP");
+  }
+
+  let indexOfLastPeriod = file.name.lastIndexOf('.');
+  let fileName = recipeID + file.name.substring(indexOfLastPeriod);
+  
+  try {
+    console.log("Attempting upload...");
+    const result = await upload(fileName, file, {
+      access: 'public',
+      handleUploadUrl: '/api/admin/add-recipe',
+      options: {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    });
+    console.log("Upload result:", result);
+    return fileName;
+  } catch (error) {
+    console.error("Upload error details:", error);
+    console.error("Request URL:", '/api/admin/add-recipe');
+    console.error("File details:", {
+      name: file.name,
+      type: file.type,
+      size: file.size
+    });
+    throw new Error(`Error uploading file: ${error.message}`);
+  }
 }
