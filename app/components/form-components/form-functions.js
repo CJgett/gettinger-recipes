@@ -90,35 +90,29 @@ export async function saveFile(formData, recipeID) {
     throw new Error("No recipe picture file provided");
   }
 
-  console.log("File type:", file.type);
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      throw new Error("Unsupported file type. Please use JPEG, PNG, or WebP");
+    throw new Error("Unsupported file type. Please use JPEG, PNG, or WebP");
   }
 
   let indexOfLastPeriod = file.name.lastIndexOf('.');
   let fileName = recipeID + file.name.substring(indexOfLastPeriod);
   
   try {
-    console.log("Attempting upload...");
     const result = await upload(fileName, file, {
       access: 'public',
       handleUploadUrl: '/api/admin/add-recipe',
       options: {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': file.type,  // Ensure the correct content type is set
         },
       },
     });
-    console.log("Upload result:", result);
-    return fileName;
+    
+    // Return the filename (including the vercel blob added random number!) 
+    const actualFileName = result.url.split('/').pop();
+    return actualFileName;
   } catch (error) {
     console.error("Upload error details:", error);
-    console.error("Request URL:", '/api/admin/add-recipe');
-    console.error("File details:", {
-      name: file.name,
-      type: file.type,
-      size: file.size
-    });
     throw new Error(`Error uploading file: ${error.message}`);
   }
 }
