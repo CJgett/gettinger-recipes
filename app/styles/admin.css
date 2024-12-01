@@ -21,14 +21,13 @@
       display: flex;
       gap: 20px;
 
-      @media only screen and (max-width: 768px) {
+      @media only screen and (max-width: 960px) {
         flex-direction: column;
       }
 
         .form-question {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
         }
     }
 
@@ -63,19 +62,33 @@
 
       & .ingredient-group {
         display: flex;
+        margin-top: 10px;
+
+        div > div {
+          display: flex;
+          align-items: center;
+
+          label:first-of-type {
+            margin-right: 5px;
+          }
+
+          select {
+            height: 100%;
+          }
+        }
 
         & input[type="number"] {
           max-width: 30px;
         }
 
-          @media (max-width: 768px) {
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+        @media (max-width: 960px) {
+          padding-bottom: 15px;
+          margin-bottom: 15px;
 
-            &:not(:last-child) {
-              border-bottom: 1px dashed rgba(var(--c-text-rgb), 0.5);
-            }
+          &:not(:last-child) {
+            border-bottom: 1px dashed rgba(var(--c-text-rgb), 0.5);
           }
+        }
       }
 
       & .new-field-button, .delete-field-button {
@@ -109,54 +122,66 @@
 
       & fieldset {
         padding: 0px;
+
+        legend {
+          padding: 0px;
+        }
+
+        input {
+          margin-right: 5px;
+        }
       }
     }
 
     & .directions, .notes {
      
-      &> div > div {
-        display: flex;
-        align-items: top;
-        gap: 10px;
-
-        span {
-          background: var(--c-bg);
-          width: 30px;
-          height: 30px;
-          border-radius: 30px;
-          line-height: 33px;
-          text-align: center;
+      &> div {
+        button {
+          margin-bottom: 10px;
         }
 
-        .direction, .note {
-          width: 100%;
+        > div {
           display: flex;
-          margin-bottom: 10px;
+          align-items: top;
+          gap: 10px;
 
-          .form-group {
-            flex: 10;
-            display: flex;
-
-            label {
-              min-width: 125px;
-            }
-
-            textarea {
-              width: 97%;
-            }
-
-            @media only screen and (max-width: 768px) {
-              flex-direction: column;
-              gap: 0px;
-            }
+          span {
+            background: var(--c-bg);
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            line-height: 33px;
+            text-align: center;
           }
 
-          @media only screen and (max-width: 768px) {
-            margin-bottom: 0px;
-            
-            button {
-              align-self: flex-start;
-              margin-top: 30px;
+          .direction, .note {
+            width: 100%;
+            display: flex;
+            margin-bottom: 10px;
+
+            .form-group {
+              flex: 10;
+              display: flex;
+
+              label {
+                min-width: 125px;
+              }
+
+              textarea {
+                width: 97%;
+              }
+
+              @media only screen and (max-width: 960px) {
+                flex-direction: column;
+                gap: 0px;
+              }
+            }
+
+            @media only screen and (max-width: 960px) {
+              button {
+                align-self: flex-start;
+                margin-top: 30px;
+              }
             }
           }
         }
@@ -164,27 +189,52 @@
     }
 
     .sources {
-      
-      &>div > div {
-        display: flex;
-        
-        .source {
-          margin-bottom: 10px;
-          width: 100%;
+      &>div {
+        @media only screen and (max-width: 768px) {
+          &>div:not(:last-child) {
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(var(--c-text-rgb), 0.5);
+          }
+        }
 
-          & input {
-           width: calc((100% - 263px)/2); 
-            
-            &:first-of-type {
-              margin-right: 20px;
+        >div {
+          display: flex;
+          align-items: center;
+
+          .source {
+            margin-bottom: 10px;
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+
+            @media only screen and (max-width: 768px) {
+              flex-direction: column;
+              gap: 10px;
+
+              
+
+              
+            }
+
+            .source-link-container, .source-title-container {
+              width: 100%;
+
+              & input {
+                width: calc(100% - 150px);
+                
+                &:first-of-type {
+                  margin-right: 20px;
+                }
+              }
             }
           }
         }
       }
     }
-    input:invalid {
-  box-shadow: 0 0 5px 1px red;
-}
+
+    input:invalid, textarea:invalid {
+      box-shadow: 0 0 5px 1px var(--c-accent-primary);
+    }
   }
 }
 
