@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,7 +10,8 @@ import CustomList from './CustomList.jsx'
 import SourceList from './SourceList.jsx'
 import Sources from './form-components/Sources.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
-import { verifyToken } from './component-server-functions.js'
+
+const publicBlobUrl = process.env.NEXT_PUBLIC_BLOB_URL;
 
 function parseTimeString(timeStr, forTotal = false) {
     const hrs = timeStr.match(/(\d+)\s*hrs?/);
@@ -122,7 +123,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
 )}
                     </div>
                     <div className="recipe-pic">
-                        <img src={`/recipe_pics/${recipeDetails.pic}`} alt={recipeDetails.pic_alt}/>
+                        <img src={`${publicBlobUrl}/${recipeDetails.pic}`} alt={recipeDetails.pic_alt}/>
                     </div>
                     <div className="card-section recipe-details">
                         <DecorativeArches additionalClasses={'top'}/>
