@@ -386,10 +386,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 40px;
 
-    @media (max-width: 560px) {
-      flex-direction: column;
+    @media (max-width: 1024px) {
       gap: 20px;
+      @media (max-width: 560px) {
+        flex-direction: column;
+      }
     }
 
     .unit-toggle, .ingredient-multiplier {
