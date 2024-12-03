@@ -379,33 +379,50 @@
   
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 10px;
   }
 
-  .unit-toggle {
+  .toggles-container {
     display: flex;
-    line-height: 40px;
+    justify-content: space-between;
     align-items: center;
 
-    button {
-      border: 3px solid var(--c-text);
-      background: var(--c-bg);
-      color: var(--c-text);
+    @media (max-width: 560px) {
+      flex-direction: column;
+      gap: 20px;
+    }
 
-      &.active {
-        background: var(--c-text);
-        color: var(--c-bg);
-      }
+    .unit-toggle, .ingredient-multiplier {
+      display: flex;
+      line-height: 40px;
+      align-items: center;
 
-      &:hover:not(.active) {
-        background: var(--c-bg-secondary);
-      }
+      button {
+        border: 3px solid var(--c-text);
+        background: var(--c-bg);
+        color: var(--c-text);
 
-      &:first-child {
-        border-radius: 4px 0 0 4px;
-      }
+        &.active {
+          background: var(--c-text);
+          color: var(--c-bg);
+        }
 
-      &:last-child {
-        border-radius: 0 4px 4px 0;
+        &:hover:not(.active) {
+          background: var(--c-bg-secondary);
+        }
+
+        &:first-child {
+          border-radius: 4px 0 0 4px;
+        }
+
+        &:last-child {
+          border-radius: 0 4px 4px 0;
+        }
+
+        &:not(:first-child):not(:last-child) {
+          border-radius: 0;
+          border-width: 3px 0 3px 0;
+        }
       }
     }
   }

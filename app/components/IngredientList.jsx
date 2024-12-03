@@ -1,4 +1,40 @@
-export default function IngredientList({ingredients, isEditing, unitSystem}) {
+export default function IngredientList({ingredients, isEditing, unitSystem, ingredientMultiplier}) {
+
+  function getMultipliedMeasurement(measurement) {
+    let justANumber =  measurement.replace(/[^0-9\. -]+/g,"");
+    if (justANumber === "") {
+      return measurement;
+    }
+    let unit = measurement.replace(/[0-9\.  -]/g,"");
+    let multipliedMeasurement; 
+
+    // case: ingredient measurement includes a range
+    if (justANumber.includes("-")) {
+      multipliedMeasurement = ingredientMultiplier * justANumber.substring(0, justANumber.indexOf("-")) 
+                            + " - " 
+                            + ingredientMultiplier * justANumber.substring(justANumber.indexOf("-") + 1);
+    } else {
+      multipliedMeasurement = ingredientMultiplier * justANumber;
+    }
+
+    if(multipliedMeasurement > 1 && unit.substring(unit.length - 1) !== 's') {
+      // case: measurement > 1, but unit doesn't need pluralizing 
+      if (unit !== "small" && unit !== "medium" && unit !== "large" && unit !== "whole" && unit !== "") {
+        // english smh
+        if (unit === "pinch") {
+          unit = unit + "e";
+        }
+        unit = unit + 's';
+      }
+    } else if (multipliedMeasurement <= 1 && unit.substring(unit.length - 1) === 's') {
+      unit = unit.substring(0, unit.length - 1);
+      if (unit === "pinche") {
+        unit = unit.substring(0, unit.length - 1);
+      }
+    }
+    return multipliedMeasurement + " " + unit;
+  }
+
   if (isEditing) {
     return (
       <div className="ingredient-list">
@@ -21,6 +57,7 @@ export default function IngredientList({ingredients, isEditing, unitSystem}) {
       </div>
     );
   }
+
   return (
     <ul className="ingredient-list">
       {ingredients.map((ingredient, index) => (
@@ -28,8 +65,8 @@ export default function IngredientList({ingredients, isEditing, unitSystem}) {
           <input type="checkbox" id={ingredient.ingredient_name_en} />
           <label htmlFor={ingredient.ingredient_name_en}>
             {unitSystem === 'metric' 
-              ? ingredient.metric_measurement 
-              : (ingredient.imperial_measurement === '' ? ingredient.metric_measurement : ingredient.imperial_measurement)} {ingredient.ingredient_name_en}
+              ? getMultipliedMeasurement(ingredient.metric_measurement) 
+              : (ingredient.imperial_measurement === '' ? getMultipliedMeasurement(ingredient.metric_measurement) : getMultipliedMeasurement(ingredient.imperial_measurement))} {ingredient.ingredient_name_en}
           </label>
         </li>
       ))}

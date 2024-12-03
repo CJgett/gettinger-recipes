@@ -31,7 +31,8 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
     const [isSaving, setIsSaving] = useState(false);
     const [recipeDetails, setRecipeDetails] = useState(initialRecipeDetails);
     const iconDimensions = 30;
-    const [unitSystem, setUnitSystem] = useState('metric');
+    const [unitSystem, setUnitSystem] = useState('imperial');
+    const [ingredientMultiplier, setIngredientMultiplier] = useState(1);
     const { data: session } = useSession()
 
     const isAdmin = session?.user?.role === 'admin'
@@ -182,27 +183,53 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                 <div className="card-section ingredients-directions">
                     <div className="ingredients-unit-toggle-container">
                         <h3>Ingredients:</h3>
-                        <div className="unit-toggle">
-                            <button 
-                                type="button"
-                                className={unitSystem === 'metric' ? 'active' : ''}
-                                onClick={() => setUnitSystem('metric')}
-                            >
-                                Metric
-                            </button>
-                            <button 
-                                type="button"
-                                className={unitSystem === 'imperial' ? 'active' : ''}
-                                onClick={() => setUnitSystem('imperial')}
-                            >
-                                Imperial
-                            </button>
+                        <div className="toggles-container">
+                            <div className="ingredient-multiplier">
+                                <button 
+                                    type="button"
+                                    className={ingredientMultiplier === 0.5 ? 'active' : ''}
+                                    onClick={() => setIngredientMultiplier(0.5)}
+                                >
+                                    x 1/2
+                                </button>
+                                <button 
+                                    type="button"
+                                    className={ingredientMultiplier === 1 ? 'active' : ''}
+                                    onClick={() => setIngredientMultiplier(1)}
+                                >
+                                    x 1 
+                                </button>
+                                <button 
+                                    type="button"
+                                    className={ingredientMultiplier === 2 ? 'active' : ''}
+                                    onClick={() => setIngredientMultiplier(2)}
+                                >
+                                    x 2 
+                                </button>
+                            </div>
+                            <div className="unit-toggle">
+                                <button 
+                                    type="button"
+                                    className={unitSystem === 'metric' ? 'active' : ''}
+                                    onClick={() => setUnitSystem('metric')}
+                                >
+                                    Metric
+                                </button>
+                                <button 
+                                    type="button"
+                                    className={unitSystem === 'imperial' ? 'active' : ''}
+                                    onClick={() => setUnitSystem('imperial')}
+                                >
+                                    Imperial
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <IngredientList 
                         ingredients={recipeDetails.ingredients} 
                         isEditing={isEditing}
                         unitSystem={unitSystem}
+                        ingredientMultiplier={ingredientMultiplier}
                     />
                     <h3>Directions</h3>
                     <CustomList listItems={recipeDetails.directions} isEditing={isEditing} defaultTextAreaValue={recipeDetails.directions} isDirection={true} />
