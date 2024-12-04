@@ -6,11 +6,11 @@ import '../styles/toggle.css'
 export default function ThemeToggle() {
 
   // true = use dark mode
-  const [theme, setTheme] = useState("null");
+  const [theme, setTheme] = useState(null);
 
   function toggleThemePreference(e) {
     // different theme toggles can be clicked, so we need to get the new theme from the event target
-    // as opposed to the state of this toggle instance
+    // as opposed to the state of this toggle instance. Also theme is initially set to null, so 
     const newTheme = e.target.checked;
     setTheme(newTheme);
     const docClassList = document.documentElement.classList;
@@ -19,8 +19,6 @@ export default function ThemeToggle() {
     const toggleCheckboxes = document.querySelectorAll(".theme-toggle .toggle-checkbox");
     toggleCheckboxes.forEach(checkbox => {
       checkbox.checked = newTheme;
-      console.log("checkbox" + checkbox);
-      console.log(checkbox.checked);
     });
 
     if (docClassList.contains("dark-mode")) {
@@ -38,6 +36,7 @@ export default function ThemeToggle() {
       const docClassList = document.documentElement.classList;
       if(!(docClassList.contains("dark-mode") || docClassList.contains("light-mode"))) { 
         const themePrefLocalStorage = window.localStorage.getItem('themePreference');
+        console.log("initial preference: " + themePrefLocalStorage);
         
         // Update initial state of all checkboxes
         const toggleCheckboxes = document.querySelectorAll(".theme-toggle .toggle-checkbox");
@@ -47,23 +46,22 @@ export default function ThemeToggle() {
 
         toggleCheckboxes.forEach(checkbox => {
           checkbox.checked = shouldBeDark;
-          console.log("checkbox" + checkbox);
-          console.log(checkbox.checked);
         });
 
         if (shouldBeDark) {
-          document.documentElement.classList.add("dark-mode");
-          setTheme(true);
+          docClassList.add("dark-mode");
         } else {
           docClassList.add("light-mode");
-          setTheme(false);
         }
       }
     }
   },[]);
 
   useEffect(()=>{
-    window.localStorage.setItem('themePreference', theme)
+    if (theme !== null) {
+      window.localStorage.setItem('themePreference', theme)
+      console.log("theme pref in local storage: " + theme);
+    }
   },[theme])
 
   return(
