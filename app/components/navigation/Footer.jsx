@@ -33,8 +33,8 @@ export default function Footer() {
           <MenuNav />
           <nav>
             <ul>
-              <li><Link href="/accessibility">Accessibility</Link></li>
-              <li><Link href="/privacy">Privacy</Link></li>
+              <li className='menu-item'><Link href="/accessibility">Accessibility</Link></li>
+              <li className='menu-item'><Link href="/privacy">Privacy</Link></li>
             </ul>
           </nav>
         </div>
