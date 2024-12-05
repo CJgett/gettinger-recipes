@@ -16,11 +16,13 @@ import { useEffect, useRef, useState } from 'react';
 export default function AddRecipePage() {
   const formRef = useRef(null);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (recipeSubmitted) {
       formRef.current.reset();
       alert("Recipe added successfully!");
+      setRecipeSubmitted(false);
       // Optionally, you can add a success message or trigger other actions here
     }
   }, [recipeSubmitted]);
@@ -49,13 +51,26 @@ export default function AddRecipePage() {
       console.error("Error stack:", error.stack);
       return;
     }
-    setRecipeSubmitted(true);
   }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const formData = new FormData(event.target);
+      await submitRecipe(formData);
+    } catch (error) {
+      console.error('Error submitting recipe:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="add-recipe-page">
       <h2>Add New Recipe</h2>
-      <form ref={formRef} action={submitRecipe} name="add new recipe">
+      <form ref={formRef} onSubmit={handleSubmit} name="add new recipe">
         <div className="form-group">
           <div className="form-question">
             <label htmlFor="recipe_author">Recipe Author: </label>
@@ -84,11 +99,11 @@ export default function AddRecipePage() {
         <div className="form-group details">
           <div className="form-question">
             <label htmlFor="prep_time">Prep time: </label>
-           <DurationInputField fieldID="prep_time" required /> 
+            <DurationInputField fieldID="prep_time" required />
           </div>
           <div className="form-question">
             <label htmlFor="cook_time">Cook time: </label>
-           <DurationInputField fieldID="cook_time" required /> 
+            <DurationInputField fieldID="cook_time" required />
           </div>
           <div className="form-question">
             <label htmlFor="servings">Servings: </label>
@@ -101,22 +116,22 @@ export default function AddRecipePage() {
           <Ingredients />
         </div>
 
-        <div className="form-question directions"> 
+        <div className="form-question directions">
           <Directions />
         </div>
-             
+
         <div className="form-question notes">
           <Notes />
         </div>
 
         <div className="form-question sources">
-          <Sources />  
+          <Sources />
         </div>
 
         <div className="form-question">
           <fieldset>
             <legend>
-            Please select the appropriate tag(s)
+              Please select the appropriate tag(s)
             </legend>
             {Tags.map((tag, index) => (
               <div key={index}>
@@ -139,8 +154,8 @@ export default function AddRecipePage() {
           </fieldset>
         </div>
         <div className="form-question">
-          <button type="submit">
-            add recipe
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "adding recipe" : "add recipe"}
           </button>
         </div>
       </form>
