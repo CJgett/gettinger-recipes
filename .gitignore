@@ -10,4 +10,4 @@ ignore/
 utils/createBcryptPW.js
 dbBackups/
 
-public/recipe_pics/
+public/

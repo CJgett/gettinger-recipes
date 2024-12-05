@@ -18,6 +18,8 @@ export default function HomePage() {
       setLatestRecipes(recipes);
     });
   }, []);
+
+  const publicBlobUrl = process.env.NEXT_PUBLIC_BLOB_URL;
  
   return (
     <div className="home-wrapper">
@@ -25,14 +27,14 @@ export default function HomePage() {
         <div className="narrow-section">
           <h2>Welcome to the Gang!</h2>
           <ImagePlusText
-            title="a hand reaches down to pinch Carly's head"
-            imageSrc='/home_pics/flowers.jpg' 
+            title="A woman in a sun hat stands in a field of flowers with some cut flowers in her hand."
+            imageSrc={`${publicBlobUrl}/home/flowers-ae38DnNuSTPdNrYLIQ4MQ7Km1L4ATe.jpg`}
             imageLeft={false} 
             flexText={1} 
             flexImage={1} 
             imageWidth={600} 
             imageHeight={1000} 
-            altText="a hand reaches down to pinch Carly's head"
+            altText="A woman in a sun hat stands in a field of flowers with some cut flowers in her hand."
             pText={`As every other person from the US, I like food, and I like lots of it... same as my entire family. I started making food with my mom as a kid, and we still cook together when I visit - our strategy for pies, where I make the crust and she makes the filling, has never once failed us :)
 
             If you're on this site and you're not part of the family, well, you are now! 
