@@ -21,14 +21,14 @@ export default function IngredientList({ingredients, isEditing, unitSystem, ingr
       // case: measurement > 1, but unit doesn't need pluralizing 
       if (unit !== "small" && unit !== "medium" && unit !== "large" && unit !== "whole" && unit !== "") {
         // english smh
-        if (unit === "pinch") {
+        if (unit === "pinch" || unit === "dash") {
           unit = unit + "e";
         }
         unit = unit + 's';
       }
     } else if (multipliedMeasurement <= 1 && unit.substring(unit.length - 1) === 's') {
       unit = unit.substring(0, unit.length - 1);
-      if (unit === "pinche") {
+      if (unit === "pinche" || unit === "dashe") {
         unit = unit.substring(0, unit.length - 1);
       }
     }
