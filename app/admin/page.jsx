@@ -8,9 +8,11 @@ export default function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
+    setIsLoading(isLoading => true);
     e.preventDefault();
     setError('');
     
@@ -26,6 +28,8 @@ export default function AdminLogin() {
       router.push('/recipes');
       router.refresh();
     }
+
+    setIsLoading(isLoading => false);
   };
 
   return (
@@ -55,7 +59,7 @@ export default function AdminLogin() {
             />
           </div>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>{isLoading ? "Logging in" : "Login"}</button>
       </form>
     </section>
   );
