@@ -15,12 +15,14 @@ export default function Sources({sources}) {
 
   return (
     <div>
-      Sources
-      <button className="new-field-button" onClick={(e) => {addNewField(e, FieldType.Source, sourceIDCounter, setSourceIDCounter, sourceArray, setSourceArray)}} title="add new source">
-        +
-      </button>
+      <div className="card-section-header">
+        <h3>Sources</h3>
+        <button className="new-field-button" onClick={(e) => {addNewField(e, FieldType.Source, sourceIDCounter, setSourceIDCounter, sourceArray, setSourceArray)}} title="add new source">
+          +
+        </button>
+      </div>
       {sourceArray.map((source) => ( 
-        <div key={source.key}>
+        <div className="source-container" key={source.key}>
           <SourceField fieldKey={source.key} defaultSource={source} />
           <button className="delete-field-button" onClick={(e) => {deleteThisField(e, source.key, sourceArray, setSourceArray)}} title="delete this source">
               -

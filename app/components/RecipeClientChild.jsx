@@ -9,6 +9,7 @@ import IngredientList from './IngredientList.jsx'
 import CustomList from './CustomList.jsx'
 import SourceList from './SourceList.jsx'
 import Sources from './form-components/Sources.jsx'
+import TagSelection from './form-components/TagSelection.jsx'
 import { updateRecipeInDB } from './form-components/form-server-functions.js'
 
 const publicBlobUrl = process.env.NEXT_PUBLIC_BLOB_URL;
@@ -252,6 +253,9 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                             <h3>Sources / Inspiration</h3>
                             <SourceList listItems={recipeDetails.sources} defaultTextAreaValue={recipeDetails.sources} isDirection={false} /> 
                         </>)}
+                </div>
+                <div className='card-section tags'>
+                    <TagSelection setTags={recipeDetails.tags} />
                 </div>
             </section>
         </form>

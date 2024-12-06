@@ -279,6 +279,10 @@
       display: none;
     }
   }
+
+  .tags {
+    display: none;
+  }
 }
 
 .recipe-detailed.editing {
@@ -320,6 +324,21 @@
     textarea {
       font-size: 25px;
     }
+
+    .new-field-button, .delete-field-button {
+        border: none;
+        border-radius: 10px;
+        font-size: 30px;
+        line-height: 28px;
+        width: 30px;
+        height: 30px;
+    } 
+      
+    .new-field-button {
+      margin-left: 20px;
+      padding-left: 9px;
+    }
+
   }
 
   .ingredients-directions {
@@ -362,10 +381,36 @@
       background-color: var(--c-bg);
     }
 
-    .source {
+    .card-section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      h3 {
+        margin-bottom: 0px;
+      }
+    }
+
+    .source-container {
+      display: flex;
+
+      .source {
+        display: flex;
+
+        input {
+          background-color: var(--c-bg);
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .tags {
+    display: block;
+
+    .tag-selection {
       input {
-        background-color: var(--c-bg);
-        margin-right: 10px;
+        margin-right: 5px;
       }
     }
   }
