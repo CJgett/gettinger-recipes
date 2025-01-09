@@ -186,6 +186,11 @@
           padding: 0px 10px 0px 5px;
           max-height: calc(100% - 4.5em);
 
+          &:focus-visible {
+            background-color: var(--c-bg-secondary);
+            outline: none;
+          }
+
           .loading-symbol-bot {
             display: flex;
             justify-content: flex-start;
@@ -369,7 +374,12 @@
                 cursor: pointer;
 
                 &:hover {
-                  background-color: rgba(255, 255, 255, 0.3);
+                  background-color: var(--c-bg-secondary);
+                }
+
+                &:focus {
+                  background-color: var(--c-bg-secondary);
+                  outline: none;
                 }
               }
 
