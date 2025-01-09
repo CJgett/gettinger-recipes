@@ -26,6 +26,7 @@ export function RemixerInner() {
   const [chatTitles, setChatTitles] = useState(["New Recipe Remix!"]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [focusedRecipeIndex, setFocusedRecipeIndex] = useState(0);
 
   /* setup variables from local storage, handle if recipeID is provided */
   const recipeID = useSearchParams().get('recipeId');
@@ -81,6 +82,33 @@ export function RemixerInner() {
     setCurrentChatID(prevChatID => prevChatID + 1);
     setChatTitles(prevTitles => [...prevTitles, "New Recipe Remix!"]);
     textareaRef.current.focus();
+    setFocusedRecipeIndex(allChatsArray.length);
+  }
+
+  function handleSavedRecipeKeyDown(e) {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setFocusedRecipeIndex((prevIndex) => Math.min(prevIndex + 1, allChatsArray.length - 1));
+        const nextElement = e.target.nextElementSibling;
+        if (nextElement) {  
+          nextElement.focus();
+        }
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setFocusedRecipeIndex((prevIndex) => Math.min(prevIndex - 1, 0));
+        const prevElement = e.target.previousElementSibling;
+        if (prevElement) {
+          prevElement.focus();
+        }
+        break;
+      case 'Enter':
+        handleSavedRecipeClick(e);
+        break;
+      default:
+        break;
+    }
   }
 
   /* when user clicks an old chat, load it*/
@@ -88,6 +116,7 @@ export function RemixerInner() {
     const newCurrentChatID = parseInt(e.target.dataset.key);
     const oldCurrentChatID = currentChatID;
     setCurrentChatID(newCurrentChatID);
+    setFocusedRecipeIndex(newCurrentChatID);
     window.localStorage.setItem('lastChatID', newCurrentChatID);
 
     // Remove empty chats when switching
@@ -205,7 +234,14 @@ export function RemixerInner() {
             {allChatsArray.map(
               function(currentChat, index) {
                 return(
-                 <li className={`${currentChatID == index ? "current-recipe" :"" }`} key={index} data-key={index} onClick={handleSavedRecipeClick} tabIndex="0">{chatTitles[index]}</li> 
+                 <li 
+                  className={`${currentChatID == index ? "current-recipe" :"" }`} 
+                  key={index} data-key={index} 
+                  onClick={handleSavedRecipeClick} 
+                  onKeyDown={handleSavedRecipeKeyDown}
+                  tabIndex={index === focusedRecipeIndex ? 0 : -1}>
+                    {chatTitles[index]}
+                  </li> 
                 );
               }
             )}
