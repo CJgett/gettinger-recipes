@@ -25,12 +25,12 @@ export default function SearchBar({isExpandable = false}) {
         <div role="search" className={`search-bar ${(isExpanded || !isExpandable) ? 'expanded' : ''} ${!isExpandable ? 'non-expandable' : ''}`}>
             <input
                 ref={inputRef}
-                type="text"
+                type="search"
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyPress={handleKeyPress}
-                aria-labelledby="search recipes"
+                aria-label="search recipes"
             />
             {isExpandable && 
             <div className="search-icon-container">

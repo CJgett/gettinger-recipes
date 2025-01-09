@@ -6,7 +6,7 @@ import Mouth from './Mouth'
 export default function Smile() {
   return (
     <div className="travelling-smile" tabIndex="0">
-      <Link href="/">
+      <Link href="/" title="to home">
         <Eyes />
         <Mouth />
       </Link>
