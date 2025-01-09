@@ -66,7 +66,7 @@ export default function ThemeToggle() {
 
   return(
     <div className="custom-toggle theme-toggle">
-      <input className="toggle-checkbox" type="checkbox" aria-label="theme-toggle" onClick={toggleThemePreference}></input>
+      <input className="toggle-checkbox" type="checkbox" aria-label="theme toggle" onClick={toggleThemePreference}></input>
       <span className="toggle-button">
         <svg className="toggle-icon toggle-sun" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="12" cy="12" r="4.14113" stroke="#000000" strokeWidth="1.91129"/>
