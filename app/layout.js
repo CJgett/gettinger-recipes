@@ -70,6 +70,19 @@ const NanumGothic = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${Dongle.variable} ${NanumGothic.variable}`}>
+      <head>
+        <script 
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme') ?? 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.classList.add(theme + '-mode');
+              } catch (e) {}
+            `
+          }}
+        />
+      </head>
       <body>
         <AuthProvider>
           <LoadingBar />

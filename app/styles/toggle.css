@@ -10,13 +10,13 @@
   width: 56px;
   height: 31px;
 
-  &> input {
+  input {
     opacity: 0;
     width: 0;
     height: 0;
   }
 
-  &> .toggle-button {
+  .toggle-button {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -39,7 +39,7 @@
       transition: .4s;
     }
 
-    &> .toggle-icon {
+    .toggle-icon {
       position: absolute;
       top: 5px;
       right: 30px;
@@ -49,14 +49,14 @@
       -webkit-transition: .4s;
       transition: .4s;
 
-      &> path, circle {
+      path, circle {
         stroke: var(--c-text);
         fill: var(--c-text);
       }
     }
   }
 
-  &> input:checked {
+  input:checked {
     &+ .toggle-button:before {
       -webkit-transform: translateX(24px);
       -ms-transform: translateX(24px);
@@ -64,18 +64,18 @@
     }
 
     &+ .toggle-button {
-      &> .toggle-icon {
+      .toggle-icon {
         -webkit-transform: translateX(24px);
         -ms-transform: translateX(24px);
         transform: translateX(24px);
       }
 
-      &> .toggle-sun {
+      .toggle-sun {
         visibility:hidden;
         opacity: 0;
       }
 
-      &> .toggle-moon {
+      .toggle-moon {
         opacity: 1;
         -webkit-transition: opacity 1s ease-in;
         -moz-transition: opacity 1s ease-in;
@@ -86,13 +86,13 @@
     }
   }
 
-  &> input:not(:checked) + .toggle-button {
-    &> .toggle-moon {
+  input:not(:checked) + .toggle-button {
+    .toggle-moon {
       visibility:hidden;
       opacity: 0;
     } 
 
-    &> .toggle-sun {
+    .toggle-sun {
       opacity: 1;
       -webkit-transition: opacity 1s ease-in;
       -moz-transition: opacity 1s ease-in;
@@ -101,6 +101,7 @@
       transition: opacity 1s ease-in;    
     }
   }
+
 @media screen and (max-width: 768px) {
       display: none;
     }
