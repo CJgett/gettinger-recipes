@@ -13,6 +13,11 @@ export default function SearchBar({isExpandable = false}) {
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && searchTerm) {
             router.push(`/search-results/${encodeURIComponent(searchTerm)}`);
+            const offCanvasMenu = document.querySelector('.off-canvas-menu');
+            if (!offCanvasMenu.classList.contains('hide')) {
+                offCanvasMenu.classList.add('hide');
+                document.querySelector('.hamburger').classList.add('hide');
+            }
         }
     };
 
