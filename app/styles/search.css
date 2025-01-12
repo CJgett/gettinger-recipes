@@ -28,6 +28,9 @@
             background-color: var(--c-accent-secondary);
         }
 
+        &:focus-visible {
+            background-color: var(--c-accent-secondary);
+        }
         img {
             filter: var(--c-text-filter);
             background-color: transparent;
@@ -39,9 +42,7 @@
             transform: scaleX(1); /* Expand to full width */
             opacity: 1; /* Make visible */
             &:focus-visible {
-                &+img {
                     outline: 3px solid var(--c-accent-primary);
-                }
             }
         }
 

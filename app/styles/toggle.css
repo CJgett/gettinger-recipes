@@ -14,7 +14,12 @@
     opacity: 0;
     width: 0;
     height: 0;
+  &:focus-visible {
+    &+ .toggle-button {
+      outline: 3px solid var(--c-accent-primary);
+    }
   }
+}
 
   .toggle-button {
     position: absolute;

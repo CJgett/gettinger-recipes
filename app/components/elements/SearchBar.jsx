@@ -10,15 +10,17 @@ export default function SearchBar({isExpandable = false}) {
     const inputRef = useRef(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && searchTerm) {
             router.push(`/search-results/${encodeURIComponent(searchTerm)}`);
         }
     };
 
     const handleImageClick = () => {
         setIsExpanded(!isExpanded);
-        inputRef.current.focus();
+        if(!isExpanded) {
+            inputRef.current.focus();
+        }        
     };
 
     return (
@@ -29,17 +31,22 @@ export default function SearchBar({isExpandable = false}) {
                 placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 aria-label="search recipes"
+                tabIndex={isExpanded ? 0 : -1}
             />
             {isExpandable && 
-            <div className="search-icon-container">
+            <div className="search-icon-container"
+                role="button"
+                onClick={handleImageClick}
+                onKeyDown={(e) => e.key === 'Enter' && handleImageClick()}
+                tabIndex={0}
+                aria-label="expand search bar">
                 <Image
                     src={'/icons/search-svgrepo-com.svg'}
-                    alt="Search"
+                    alt="magnifying glass icon"
                     width={25}
                     height={25}
-                    onClick={handleImageClick}
                 />
             </div>}
         </div>
