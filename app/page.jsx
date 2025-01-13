@@ -9,13 +9,16 @@ import RecipeCard from './components/RecipeCard';
 import ImagePlusText from './components/elements/ImagePlusText';
 import { getLatestRecipes } from './components/component-server-functions';
 import Breeze from './components/decorations/Breeze';
+import RecipeCardLoading from './components/RecipeCardLoading';
 
 export default function HomePage() {
   const [latestRecipes, setLatestRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getLatestRecipes(3).then(recipes => {
       setLatestRecipes(recipes);
+      setLoading(false);
     });
   }, []);
 
@@ -45,7 +48,7 @@ export default function HomePage() {
           </div> 
           <h2>Latest Recipes</h2>
           <div className="recipe-cards-wrapper">
-            {latestRecipes.map((recipe) => (
+            {loading ? [1,2,3].map((key) => <RecipeCardLoading key={key}/>) : latestRecipes.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>

@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Tags } from '../constants/Tags'
 import { RecipeTabs } from '../components/RecipeTabs'
 import RecipeCard from '../components/RecipeCard'
+import RecipeCardLoading from '../components/RecipeCardLoading.jsx'
 
 import '../styles/recipe.css'
 import { getRecipes } from '../components/component-server-functions.js'
@@ -11,11 +12,14 @@ export default function AllRecipePage() {
   const [allRecipes, setAllRecipes] = useState([]);
   const [activeTab, setActiveTab] = useState("all recipes");
   const tabCategories = ["all recipes", ...Tags, "family recipes!"];
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchRecipes() {
       const recipes = await getRecipes();
       setAllRecipes(recipes);
+      console.log("set loading false");
+      setLoading(false);
     }
     fetchRecipes();
   }, []);
@@ -43,9 +47,15 @@ export default function AllRecipePage() {
           onTabChange={handleTabChange}
         />
         <div className="recipe-box">
-          {filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
+          {loading ? (
+            // Show loading state
+            [1,2,3,4].map((key) => <RecipeCardLoading key={key} />)
+          ) : (
+            // Show recipes when loaded
+            filteredRecipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))
+          )}
         </div>
       </div>
     </section>
