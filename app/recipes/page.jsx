@@ -18,7 +18,6 @@ export default function AllRecipePage() {
     async function fetchRecipes() {
       const recipes = await getRecipes();
       setAllRecipes(recipes);
-      console.log("set loading false");
       setLoading(false);
     }
     fetchRecipes();
