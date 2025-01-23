@@ -223,7 +223,7 @@ button, input[type="file"]::file-selector-button, .email-button {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 10px;
+  height: 7px;
   background: transparent;
   z-index: 9999;
   background: linear-gradient(90deg, var(--c-accent-primary), var(--c-accent-secondary));

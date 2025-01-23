@@ -6,6 +6,7 @@ import Footer from './components/navigation/Footer'
 import localFont from 'next/font/local'
 import { AuthProvider } from './components/AuthProvider'
 import LoadingBar from './components/LoadingBar'
+import { Suspense } from 'react'
 
 export const metadata = {
   title: 'Gettinger Recipes',
@@ -86,9 +87,11 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
           <LoadingBar />
-          <MainMenu />
-          {children}
-          <Footer /> 
+          <Suspense>
+            <MainMenu />
+            {children}
+            <Footer /> 
+          </Suspense>
         </AuthProvider>
       </body>
     </html>
