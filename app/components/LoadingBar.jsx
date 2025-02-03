@@ -7,7 +7,6 @@ export default function LoadingBar() {
   const [progress, setProgress] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const pathname = usePathname()
-  const searchParams = useSearchParams()
 
   useEffect(() => {
     const startTime = Date.now()
@@ -49,7 +48,7 @@ export default function LoadingBar() {
     return () => {
       clearInterval(interval)
     }
-  }, [pathname, searchParams])
+  }, [pathname])
 
   if (!isLoading) return null
 
