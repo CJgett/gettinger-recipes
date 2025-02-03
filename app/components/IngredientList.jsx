@@ -1,38 +1,114 @@
+
 export default function IngredientList({ingredients, isEditing, unitSystem, ingredientMultiplier}) {
 
   function getMultipliedMeasurement(measurement) {
-    let justANumber =  measurement.replace(/[^0-9\. -]+/g,"");
+    let justANumber =  measurement.replace(/[^0-9\. -\. +]+/g,"");
     if (justANumber === "") {
       return measurement;
     }
-    let unit = measurement.replace(/[0-9\.  -]/g,"");
-    let multipliedMeasurement; 
 
-    // case: ingredient measurement includes a range
-    if (justANumber.includes("-")) {
-      multipliedMeasurement = ingredientMultiplier * justANumber.substring(0, justANumber.indexOf("-")) 
-                            + " - " 
-                            + ingredientMultiplier * justANumber.substring(justANumber.indexOf("-") + 1);
-    } else {
-      multipliedMeasurement = ingredientMultiplier * justANumber;
+    let unit;
+    let multipliedMeasurement; 
+    let splittingCharacter;
+    let measurementToReturn
+
+    function convertToFraction(decimal) {
+      console.log("Input decimal:", decimal);
+      if (decimal === 0) return "0";
+
+      const commonFractions = { 
+        "1/8": (1/8),
+        "1/6": (1/6),
+        "1/4": (1/4),
+        "1/3": (1/3),
+        "3/8": (3/8),
+        "1/2": (1/2),
+        "5/8": (5/8),
+        "2/3": (2/3),
+        "3/4": (3/4),
+        "7/8": (7/8),
+      };
+
+      let closestFractionKey = "1/8";
+      let closestFraction = commonFractions[closestFractionKey];
+      let closestFractionDifference = Math.abs(decimal - closestFraction);
+      Object.keys(commonFractions).forEach(key => {
+        console.log()
+        let difference = Math.abs(decimal - commonFractions[key]);
+        if (difference < closestFractionDifference) {
+          console.log("FOUND CLOSER");
+          console.log(closestFraction);
+          closestFractionKey = key;
+          closestFraction = commonFractions[closestFractionKey];
+          closestFractionDifference = difference;
+        }
+      });
+      console.log("returned this!!!!!!!!!! " + closestFraction );
+      return closestFractionKey;
+      
+    } 
+
+    function measurementAsMixedFraction(measurement) {
+      let wholeNumber = Math.trunc(measurement);
+      let afterDecimal = (measurement % 1).toPrecision(3);
+      console.log("after decimal:", afterDecimal);
+
+      return (wholeNumber === 0 ? "" : (wholeNumber + " ")) + (afterDecimal == 0.00 ? "" : convertToFraction(afterDecimal));
     }
 
+    // case: ingredient measurement includes a range
+    // OR
+    // case: ingredient has more than one measurement (the same ingredient is used in multiple steps)
+    if (justANumber.includes("-") || justANumber.includes("+")) {
+      splittingCharacter = justANumber.includes("-") ? "-" : "+";
+      unit = measurement.substring(measurement.indexOf(splittingCharacter) + 2).replace(/[0-9\.  -\. +]/g, "");
+      const secondaryUnit = measurement.substring(0, measurement.indexOf(splittingCharacter)).replace(/[0-9\.  -\. +]/g, "");
+      let firstMultipliedMeasurement = ingredientMultiplier * justANumber.substring(0, justANumber.indexOf(splittingCharacter));
+      let secondMultipliedMeasurement = ingredientMultiplier * justANumber.substring(justANumber.indexOf(splittingCharacter) + 1);
+      
+      // make fractions prettier for for our imperialist friends :)
+      if (unitSystem === 'imperial') {  
+        firstMultipliedMeasurement = measurementAsMixedFraction(firstMultipliedMeasurement);
+        secondMultipliedMeasurement = measurementAsMixedFraction(secondMultipliedMeasurement);
+      }
+
+      measurementToReturn = firstMultipliedMeasurement + " " 
+                            + (getUnitWithCorrectGrammaticalNumber(firstMultipliedMeasurement, unit)) 
+                            + " "  + splittingCharacter + " "  
+                            + secondMultipliedMeasurement + " " 
+                            + (getUnitWithCorrectGrammaticalNumber(secondMultipliedMeasurement, (secondaryUnit ? secondaryUnit : unit)));
+    } else {
+      // separate the unit from the number part of the measurement
+      unit = measurement.replace(/[0-9\.  -\. +]/g,"");
+      multipliedMeasurement = ingredientMultiplier * justANumber;
+      // again, mixed fractions for imperialists
+      if (unitSystem === 'imperial') {
+        multipliedMeasurement = measurementAsMixedFraction(multipliedMeasurement);
+      }
+      measurementToReturn = multipliedMeasurement + " " + getUnitWithCorrectGrammaticalNumber(multipliedMeasurement, unit);
+    }
+    
+    return measurementToReturn; 
+  }
+
+  function getUnitWithCorrectGrammaticalNumber(multipliedMeasurement, unit) {
+    let unitToReturn = unit;
     if(multipliedMeasurement > 1 && unit.substring(unit.length - 1) !== 's') {
       // case: measurement > 1, but unit doesn't need pluralizing 
       if (unit !== "small" && unit !== "medium" && unit !== "large" && unit !== "whole" && unit !== "") {
         // english smh
         if (unit === "pinch" || unit === "dash") {
-          unit = unit + "e";
+          unitToReturn = unit + "e";
         }
-        unit = unit + 's';
+        unitToReturn = unit + 's';
       }
     } else if (multipliedMeasurement <= 1 && unit.substring(unit.length - 1) === 's') {
-      unit = unit.substring(0, unit.length - 1);
-      if (unit === "pinche" || unit === "dashe") {
-        unit = unit.substring(0, unit.length - 1);
+      unitToReturn = unit.substring(0, unit.length - 1);
+      if (unitToReturn === "pinche" || unitToReturn === "dashe") {
+        unitToReturn = unit.substring(0, unit.length - 1);
       }
     }
-    return multipliedMeasurement + " " + unit;
+    return unitToReturn;
   }
 
   if (isEditing) {
