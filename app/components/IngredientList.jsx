@@ -13,7 +13,6 @@ export default function IngredientList({ingredients, isEditing, unitSystem, ingr
     let measurementToReturn
 
     function convertToFraction(decimal) {
-      console.log("Input decimal:", decimal);
       if (decimal === 0) return "0";
 
       const commonFractions = { 
@@ -33,17 +32,13 @@ export default function IngredientList({ingredients, isEditing, unitSystem, ingr
       let closestFraction = commonFractions[closestFractionKey];
       let closestFractionDifference = Math.abs(decimal - closestFraction);
       Object.keys(commonFractions).forEach(key => {
-        console.log()
         let difference = Math.abs(decimal - commonFractions[key]);
         if (difference < closestFractionDifference) {
-          console.log("FOUND CLOSER");
-          console.log(closestFraction);
           closestFractionKey = key;
           closestFraction = commonFractions[closestFractionKey];
           closestFractionDifference = difference;
         }
       });
-      console.log("returned this!!!!!!!!!! " + closestFraction );
       return closestFractionKey;
       
     } 
@@ -51,7 +46,6 @@ export default function IngredientList({ingredients, isEditing, unitSystem, ingr
     function measurementAsMixedFraction(measurement) {
       let wholeNumber = Math.trunc(measurement);
       let afterDecimal = (measurement % 1).toPrecision(3);
-      console.log("after decimal:", afterDecimal);
 
       return (wholeNumber === 0 ? "" : (wholeNumber + " ")) + (afterDecimal == 0.00 ? "" : convertToFraction(afterDecimal));
     }
