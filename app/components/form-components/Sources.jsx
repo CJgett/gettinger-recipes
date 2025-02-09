@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import FieldType from '../../constants/FieldType.jsx'
 import SourceField from './SourceField.jsx'
