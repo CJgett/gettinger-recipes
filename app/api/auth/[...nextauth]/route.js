@@ -19,7 +19,7 @@ const handler = NextAuth({
         try {
           // Get IP address
           const headersList = headers()
-          const ip = headersList.get('x-forwarded-for') || 'unknown'
+          const ip = await headersList.get('x-forwarded-for') || 'unknown'
 
           // Check rate limit
           const isAllowed = rateLimit.check(ip)
