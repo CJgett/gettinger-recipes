@@ -70,7 +70,7 @@ const NanumGothic = localFont({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${Dongle.variable} ${NanumGothic.variable}`}>
+    <html lang="en" className={`${Dongle.variable} ${NanumGothic.variable}`} suppressHydrationWarning>
       <head>
         <script 
           dangerouslySetInnerHTML={{
