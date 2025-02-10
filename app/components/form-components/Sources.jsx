@@ -21,8 +21,8 @@ export default function Sources({sources}) {
           +
         </button>
       </div>
-      {sourceArray.map((source) => ( 
-        <div className="source-container" key={source.key}>
+      {sourceArray.map((source, index) => ( 
+        <div className="source-container" key={index}>
           <SourceField fieldKey={source.key} defaultSource={source} />
           <button className="delete-field-button" onClick={(e) => {deleteThisField(e, source.key, sourceArray, setSourceArray)}} title="delete this source">
               -
