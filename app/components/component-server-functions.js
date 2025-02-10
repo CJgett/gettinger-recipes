@@ -13,6 +13,32 @@ export async function getRecipes() {
     }
 }
 
+export async function getRecipesLazyLoad(page = 1, limit = 4) {
+    try {
+        const offset = (page - 1) * limit;
+        const recipes = await dbFetch(
+            `SELECT id, name_en, pic, pic_alt, tags, is_family_recipe 
+             FROM all_recipes 
+             ORDER BY id 
+             LIMIT $1 OFFSET $2`,
+            [limit, offset]
+        );
+        
+        // Get total count to determine if there are more recipes
+        const [{ total_count }] = await dbFetch(
+            'SELECT COUNT(*) as total_count FROM all_recipes'
+        );
+        
+        return {
+            data: recipes,
+            hasMore: offset + recipes.length < parseInt(total_count)
+        };
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+        return { data: [], hasMore: false };
+    }
+}
+
 export async function searchDB(searchTerm) {
     const results = await dbFetch(
         `SELECT * FROM all_recipes WHERE name_en ILIKE $1 

@@ -1,27 +1,70 @@
 "use client"
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { Tags } from '../constants/Tags'
 import { RecipeTabs } from '../components/RecipeTabs'
 import RecipeCard from '../components/RecipeCard'
 import RecipeCardLoading from '../components/RecipeCardLoading.jsx'
 
 import '../styles/recipe.css'
-import { getRecipes } from '../components/component-server-functions.js'
+import { getRecipesLazyLoad } from '../components/component-server-functions.js'
+
+const RECIPES_PER_PAGE = 4;
 
 export default function AllRecipePage() {
   const [allRecipes, setAllRecipes] = useState([]);
   const [activeTab, setActiveTab] = useState("all recipes");
-  const tabCategories = ["all recipes", ...Tags, "family recipes!"];
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const tabCategories = ["all recipes", ...Tags, "family recipes!"];
+  const observerTarget = useRef(null);
+
+  const loadMore = useCallback(async () => {
+    if (loading) return;
+    
+    setLoading(true);
+    const nextPage = page + 1;
+    try {
+      const newRecipes = await getRecipesLazyLoad(nextPage, RECIPES_PER_PAGE);
+      setAllRecipes(prev => [...prev, ...newRecipes.data]);
+      setHasMore(newRecipes.hasMore);
+      setPage(nextPage);
+    } catch (error) {
+      console.error('Error loading more recipes:', error);
+    }
+    setLoading(false);
+  }, [loading, page]);
 
   useEffect(() => {
-    async function fetchRecipes() {
-      const recipes = await getRecipes();
-      setAllRecipes(recipes);
+    async function fetchInitialRecipes() {
+      try {
+        const recipes = await getRecipesLazyLoad(1, RECIPES_PER_PAGE);
+        setAllRecipes(recipes.data);
+        setHasMore(recipes.hasMore);
+      } catch (error) {
+        console.error('Error fetching initial recipes:', error);
+      }
       setLoading(false);
     }
-    fetchRecipes();
+    fetchInitialRecipes();
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          loadMore();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasMore, loading, loadMore]);
 
   const filteredRecipes = useMemo(() => {
     if (activeTab === "all recipes") return allRecipes;
@@ -46,15 +89,13 @@ export default function AllRecipePage() {
           onTabChange={handleTabChange}
         />
         <div className="recipe-box">
-          {loading ? (
-            // Show loading state
-            [1,2,3,4].map((key) => <RecipeCardLoading key={key} />)
-          ) : (
-            // Show recipes when loaded
-            filteredRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))
-          )}
+          {filteredRecipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+          {loading && [1, 2, 3, 4].map((index) => (
+            <RecipeCardLoading key={`loading-${page}-${index}`} />
+          ))}
+          {hasMore && <div ref={observerTarget} style={{ height: '20px' }} />}
         </div>
       </div>
     </section>
