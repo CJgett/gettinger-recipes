@@ -321,10 +321,6 @@
       font-size: 16px;
     }
 
-    textarea {
-      font-size: 25px;
-    }
-
     .new-field-button, .delete-field-button {
         border: none;
         border-radius: 10px;
@@ -397,6 +393,10 @@
       .source {
         display: flex;
 
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
+
         input {
           background-color: var(--c-bg);
           margin-right: 10px;
@@ -411,6 +411,62 @@
     .tag-selection {
       input {
         margin-right: 5px;
+      }
+    }
+  }
+
+  .directions, .notes {
+    & div {
+      & div {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 15px;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
+
+        /* Style for the number circles */
+        .direction-number,
+        .note-number {
+          width: 30px;
+          height: 30px;
+          border-radius: 30px;
+          line-height: 33px;
+          text-align: center;
+        }
+
+        .note-number {
+          background-color: var(--c-bg);
+          color: var(--c-text);
+        }
+
+        .direction-number {
+          background-color: var(--c-text);
+          color: var(--c-bg);
+        }
+
+        /* Style for direction/note container */
+        .direction,
+        .note {
+          width: 100%;
+
+          .form-group {
+            width: 90%;
+
+            textarea {
+              width: 100%;
+            }
+          }
+        }
+
+        .direction {
+          .delete-field-button {
+            background-color: var(--c-text);
+            color: var(--c-bg);
+          }
+        }
       }
     }
   }

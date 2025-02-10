@@ -232,13 +232,15 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                         unitSystem={unitSystem}
                         ingredientMultiplier={ingredientMultiplier}
                     />
-                    <h3>Directions</h3>
-                    <CustomList listItems={recipeDetails.directions} isEditing={isEditing} defaultTextAreaValue={recipeDetails.directions} isDirection={true} />
-                    <div className="remixer-button-container">
-                        <p>Need to tweak this recipe? Try remixing it!</p>
-                        <Link href={`/remixer?recipeId=${recipeDetails.id}`}>
-                            <button type="button">To the Remixer!</button>
-                        </Link>
+                    <div className="directions">
+                        <h3>Directions</h3>
+                        <CustomList listItems={recipeDetails.directions} isEditing={isEditing} defaultTextAreaValue={recipeDetails.directions} isDirection={true} />
+                        <div className="remixer-button-container">
+                            <p>Need to tweak this recipe? Try remixing it!</p>
+                            <Link href={`/remixer?recipeId=${recipeDetails.id}`}>
+                                <button type="button">To the Remixer!</button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className={`card-section notes ${recipeDetails.notes[0] !== "" && !isEditing ? "show" : "hide"}`}>

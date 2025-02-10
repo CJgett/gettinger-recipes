@@ -1,14 +1,12 @@
-import NumberedTextField from "./form-components/NumberedTextField";
+import Notes from "./form-components/Notes";
+import Directions from "./form-components/Directions";
 
 export default function CustomList({listItems, isEditing, isDirection}) {
   if (isEditing) {
-    return (
-      <div className="custom-list">
-        {listItems.map ((item, index) => (
-          <NumberedTextField key={index} fieldKey={index} isDirection={isDirection} defaultTextAreaValue={item} />
-        ))}
-      </div>
-    );
+      if (isDirection) {
+         return <Directions directions={listItems} />;
+      }
+      return <Notes notes={listItems} />;
   }
   return (
     <ol className="custom-list">

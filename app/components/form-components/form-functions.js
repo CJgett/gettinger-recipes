@@ -9,10 +9,10 @@ export function addNewField(e, fieldType, idCounter, counterSettingFunction, fie
     objectToBeAdded = { fieldKey: idCounter + 1 }
     fieldName = 'ingredientField'; 
   } else if (fieldType === FieldType.Direction) {
-    objectToBeAdded = { fieldKey: idCounter + 1, isDirection: true }
+    objectToBeAdded = { fieldKey: idCounter + 1, isDirection: true, directionText: '' };
     fieldName = 'directionField';
   } else if (fieldType === FieldType.Note) {
-    objectToBeAdded = { fieldKey: idCounter + 1, isDirection: false };
+    objectToBeAdded = { fieldKey: idCounter + 1, isDirection: false, noteText: '' };
     fieldName = 'noteField';
   } else if (fieldType === FieldType.Source) {
     objectToBeAdded = { fieldKey: idCounter + 1 }
