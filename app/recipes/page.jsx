@@ -8,12 +8,14 @@ import RecipeCardLoading from '../components/RecipeCardLoading.jsx'
 import '../styles/recipe.css'
 import { getRecipesLazyLoad } from '../components/component-server-functions.js'
 
+// recipes to be fetched at a time
 const RECIPES_PER_PAGE = 4;
 
 export default function AllRecipePage() {
   const [allRecipes, setAllRecipes] = useState([]);
   const [activeTab, setActiveTab] = useState("all recipes");
   const [loading, setLoading] = useState(true);
+  // 4 x page = the current number of recipes that have been fetched.
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const tabCategories = ["all recipes", ...Tags, "family recipes!"];
@@ -36,20 +38,32 @@ export default function AllRecipePage() {
   }, [loading, page]);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchInitialRecipes() {
       try {
         const recipes = await getRecipesLazyLoad(1, RECIPES_PER_PAGE);
-        setAllRecipes(recipes.data);
-        setHasMore(recipes.hasMore);
+        if (isMounted) {
+          setAllRecipes(recipes.data);
+          setHasMore(recipes.hasMore);
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching initial recipes:', error);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-      setLoading(false);
     }
     fetchInitialRecipes();
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); // Empty dependency array
 
   useEffect(() => {
+    // this is used to load more recipes when the user scrolls to the bottom of the page
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting && hasMore && !loading) {
@@ -90,7 +104,10 @@ export default function AllRecipePage() {
         />
         <div className="recipe-box">
           {filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <RecipeCard 
+              key={`${recipe.id}-${activeTab}`} 
+              recipe={recipe} 
+            />
           ))}
           {loading && [1, 2, 3, 4].map((index) => (
             <RecipeCardLoading key={`loading-${page}-${index}`} />
