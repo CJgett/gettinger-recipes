@@ -109,6 +109,9 @@ export default function RecipeDropdown({ selectedRecipe }) {
   return (
     <div className="recipe-dropdown" ref={dropdownRef}>
       <div className="recipe-dropdown-input-container">
+        <label htmlFor='recipe-dropdown-selected' className="recipe-dropdown-label visually-hidden">
+          select a recipe to remix
+        </label>
         <input
           type="text"
           id="recipe-dropdown-selected"

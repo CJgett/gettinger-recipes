@@ -86,7 +86,7 @@ export default function RecipeClientChild({recipeDetails: initialRecipeDetails})
                         ) : (
                             <>
                             <h2>{recipeDetails.name_en}</h2>
-                            <h3>{recipeDetails.name_kr}</h3>
+                            {recipeDetails.name_kr ? <h3>{recipeDetails.name_kr}</h3> : null}
                             </>
                         )}
                         </div>

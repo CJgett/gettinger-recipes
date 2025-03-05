@@ -571,7 +571,7 @@
           }
 
           &.remixer-input:has(.recipe-dropdown) {
-            height: 3.5em;
+            height: 5em;
           }
 
           .remixer-first-input-container {

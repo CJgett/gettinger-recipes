@@ -7,6 +7,7 @@ import localFont from 'next/font/local'
 import { AuthProvider } from './components/AuthProvider'
 import LoadingBar from './components/LoadingBar'
 import { Suspense } from 'react'
+import SkipToContent from './components/elements/SkipToContent'
 
 export const metadata = {
   title: 'Gettinger Recipes',
@@ -88,8 +89,11 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <LoadingBar />
           <Suspense>
+            <SkipToContent />
             <MainMenu />
-            {children}
+            <main id="main-content" tabIndex="-1">
+              {children}
+            </main>
             <Footer /> 
           </Suspense>
         </AuthProvider>

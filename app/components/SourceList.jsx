@@ -1,4 +1,7 @@
 export default function SourceList({listItems}) {
+  if(listItems[0].source_link === '') {
+    return null;
+  }
   return (
     <ul>
       {listItems.map((listItem, index) => (
