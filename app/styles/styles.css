@@ -38,6 +38,7 @@
     /* dark gray */
     --c-accent-secondary: #3E3C3C;
     --c-accent-secondary-rgb: 62,60,60;
+    --c-accent-hover: #35605A;
   }
 }
 
@@ -58,6 +59,7 @@
     /* dark teal */
     --c-accent-secondary: #35605A;
     --c-accent-secondary-rgb: 53,96,90;
+    --c-accent-hover: var(--c-accent-secondary);
   }
 }
 
@@ -71,6 +73,7 @@
   --c-accent-primary: #C8D7DE;
   --c-accent-secondary: #3E3C3C;
   --c-accent-secondary-rgb: 62,60,60;
+  --c-accent-hover: #35605A;
 }
 
 :root.light-mode {
@@ -83,6 +86,7 @@
   --c-accent-primary: #3E3C3C;
   --c-accent-secondary: #35605A;
   --c-accent-secondary-rgb: 53,96,90;
+  --c-accent-hover: var(--c-accent-secondary);
 }
 
 /*SITEWIDE STYLES*/
@@ -107,7 +111,7 @@ a:not(:has(button, h1, h2, h3, h4), .email-button) {
   color: var(--c-accent-primary);
 
   &:hover {
-    color: var(--c-accent-secondary);
+    color: var(--c-accent-hover);
     &::before {
       content: "» ";
     }
