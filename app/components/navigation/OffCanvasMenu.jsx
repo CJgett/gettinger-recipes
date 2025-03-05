@@ -4,11 +4,11 @@ import MenuNav from './MenuNav.jsx'
 import ThemeToggle from '../ThemeToggle.jsx'
 import SearchBar from '../elements/SearchBar.jsx'
 import Link from 'next/link'
+import LogoutButton from '../elements/Logout.jsx'
 
 export default function OffCanvasMenu() {
   return(
     <div className="off-canvas-menu hide">
-
       <Link href="/"><h1>Gettinger Recipes</h1></Link>
       <MenuNav />
       <SearchBar isExpandable={false} />
@@ -18,7 +18,10 @@ export default function OffCanvasMenu() {
           <path id="STROKE_80e32955-c817-49c3-8df4-3820808b7346" opacity="1.000" fill="none" strokeWidth="27.692" strokeOpacity="1.000" strokeLinecap="round" strokeLinejoin="round" d="M -1301.228 -1280.708 L -1298.805 -1277.557 Q -1294.057 -1271.602 -1277.631 -1252.692 Q -1261.206 -1233.781 -1240.962 -1215.655 Q -1220.718 -1197.529 -1208.960 -1189.989 Q -1197.202 -1182.449 -1186.889 -1177.949 Q -1176.576 -1173.448 -1163.112 -1170.345 Q -1149.648 -1167.241 -1139.327 -1167.298 Q -1129.007 -1167.354 -1116.835 -1170.275 Q -1104.664 -1173.196 -1095.515 -1177.342 Q -1086.365 -1181.489 -1073.134 -1190.079 Q -1059.903 -1198.669 -1049.750 -1207.459 Q -1039.597 -1216.249 -1030.965 -1225.901 Q -1022.333 -1235.553 -1017.307 -1242.275 Q -1012.282 -1248.997 -1001.000 -1266.023 Q -989.719 -1283.049 -982.285 -1295.311 Q -974.851 -1307.573 -972.039 -1312.214 Q -969.227 -1316.856 -967.708 -1319.354 Q -966.190 -1321.853 -952.191 -1343.645 "></path>
         </g>
       </svg>    
-      <ThemeToggle /> 
+      <div>
+        <ThemeToggle /> 
+        <LogoutButton />
+      </div>
     </div>
   );
 }

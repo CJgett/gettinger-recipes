@@ -14,6 +14,7 @@ import Hamburger from './Hamburger'
 import StickyMenu from './StickyMenu'
 import Mouth from '../decorations/Mouth.jsx'
 import SearchBar from '../elements/SearchBar.jsx'
+import LogoutButton from '../elements/Logout.jsx'
 
 export default function MainMenu() {
 
@@ -45,6 +46,7 @@ export default function MainMenu() {
           <ThemeToggle />
           <Hamburger />
         </div>
+        <LogoutButton />
       </div>
       <OffCanvasMenu />
       <StickyMenu />

@@ -1,0 +1,7 @@
+.logout-button  {
+    display: none;
+
+    &.show {
+        display: block;
+    }
+}

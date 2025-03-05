@@ -69,6 +69,11 @@ header {
     position: absolute;
     top: 50px;
     right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+
     @media (max-width: 576px) {
       right: 15px;
     }
@@ -83,6 +88,11 @@ header {
           font-weight: bold;
           color: white;
         }
+      }
+    }
+    .logout-button {
+      @media screen and (max-width: 768px) {
+        display: none;
       }
     }
   }
@@ -200,6 +210,7 @@ header {
           background-color: rgb(var(--c-bg-rgb), 0.5);
           backdrop-filter: blur(13px);
           mask: var(--mask-scallop-bottom);
+          gap: 20px;
 
           ul {
             padding-top: 0px;

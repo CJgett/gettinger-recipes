@@ -73,8 +73,19 @@ const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
-    maxAge: 2 * 60 * 60, // 2 hours
   },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        maxAge: undefined
+      }
+    }
+  },  
   csrf: {
     checkOrigin: true, // Enables CSRF protection
   },

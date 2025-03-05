@@ -14,6 +14,8 @@
   -webkit-mask: var(--mask-scallop-left);
   mask: var(--mask-scallop-left);
   color: #F2EEE5 !important;
+  display: flex;
+  flex-direction: column;
   @media (min-width: 768px) {
     display: none;
   }
@@ -44,13 +46,22 @@
     }
   }
 
-  .theme-toggle {
-    display: inline-block;
-    top: unset;
-    left: 45%;
+  > div:last-child {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+
+    .theme-toggle {
+      position: relative;
+      display: inline-block;
+      top: unset;
 
     .toggle-button {
       background: var(--c-text);
     }
   }
+}
 }
