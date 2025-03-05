@@ -57,7 +57,7 @@ export default function Footer() {
       </div>
       <InView as="div" className="in-view-smile-trigger" onChange={(inView) => moveSmile(inView)}>
       <div className="footer-container footer-copyright">
-        <p>&#169; 2024 Gettinger Recipes | Website by Carly Gettinger</p>
+        <p>&#169; 2025 Gettinger Recipes | Website by Carly Gettinger</p>
       </div>
     </InView>
     </footer>
