@@ -5,7 +5,11 @@
       position: relative;
       display: flex;
       align-items: baseline;
-      justify-content: space-between;
+      justify-content: space-around;
+
+      &:has(.hidden)  {
+        justify-content: space-between;
+      }
 
       .scroll-arrow {
         top: 60%;
@@ -23,6 +27,11 @@
 
         &:hover {
           background-color: var(--c-bg-secondary);
+        }
+
+        &.hidden {
+          display: none;
+          width: 0;
         }
       }
     }

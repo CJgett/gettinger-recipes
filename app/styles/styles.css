@@ -203,10 +203,13 @@ button, input[type="file"]::file-selector-button, .email-button {
     opacity: .9;
   }
 
-  &:disabled {
-    opacity: .7;
+  &:disabled, .scroll-arrow:disabled {
+    opacity: 0.6;
+    background-color: var(--c-accent-secondary);
     &:hover {
+      opacity: 0.6;
       cursor: not-allowed;
+      background-color: var(--c-accent-secondary);
     }
   }
 }

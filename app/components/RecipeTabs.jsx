@@ -1,16 +1,25 @@
 import { useState, useRef, useEffect } from 'react';
 
 export function RecipeTabs({ categories, activeTab, onTabChange }) {
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const tabsRef = useRef(null);
+
+  const checkScrollable = () => {
+    if (tabsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tabsRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 1);
+    }
+  };
 
   useEffect(() => {
     const checkOverflow = () => {
       if (tabsRef.current) {
-        const { scrollWidth, clientWidth, scrollLeft } = tabsRef.current;
-        setShowLeftArrow(scrollLeft > 0);
-        setShowRightArrow(scrollLeft + clientWidth < scrollWidth);
+        const { scrollWidth, clientWidth } = tabsRef.current;
+        setHasOverflow(scrollWidth > clientWidth);
+        checkScrollable();
       }
     };
 
@@ -28,16 +37,19 @@ export function RecipeTabs({ categories, activeTab, onTabChange }) {
 
   return (
     <div className="recipe-tabs-container">
-      {showLeftArrow && (
-        <button className="scroll-arrow left" onClick={() => scroll('left')}>
-          &lt;
-        </button>
-      )}
-      <div className="recipe-box-tabs" role="tablist" ref={tabsRef} onScroll={() => {
-        const { scrollWidth, clientWidth, scrollLeft } = tabsRef.current;
-        setShowLeftArrow(scrollLeft > 0);
-        setShowRightArrow(scrollLeft + clientWidth < scrollWidth);
-      }}>
+      <button 
+        className={`scroll-arrow left ${!hasOverflow ? 'hidden' : ''}`} 
+        onClick={() => scroll('left')}
+        disabled={!canScrollLeft}
+      >
+        &lt;
+      </button>
+      <div 
+        className="recipe-box-tabs" 
+        role="tablist" 
+        ref={tabsRef}
+        onScroll={checkScrollable}
+      >
         {categories.map((tab, index) => (
           <button 
             role="tab" 
@@ -49,11 +61,13 @@ export function RecipeTabs({ categories, activeTab, onTabChange }) {
           </button>
         ))}
       </div>
-      {showRightArrow && (
-        <button className="scroll-arrow right" onClick={() => scroll('right')}>
-          &gt;
-        </button>
-      )}
+      <button 
+        className={`scroll-arrow right ${!hasOverflow ? 'hidden' : ''}`} 
+        onClick={() => scroll('right')}
+        disabled={!canScrollRight}
+      >
+        &gt;
+      </button>
     </div>
   );
 }
