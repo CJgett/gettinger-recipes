@@ -89,6 +89,24 @@
   --c-accent-hover: var(--c-accent-secondary);
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-accent-secondary);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-accent-primary);
+}
+
+
 /*SITEWIDE STYLES*/
 
 *:focus-visible {
