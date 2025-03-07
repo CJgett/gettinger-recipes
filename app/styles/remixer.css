@@ -445,6 +445,9 @@
           float: right;
           border: none;
           padding-top: 5px;
+          @media (max-width: 768px) {
+            padding-bottom: 5px;
+          }
         }
       }
 

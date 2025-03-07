@@ -47,7 +47,7 @@ export function RemixerInner() {
         startNewRemix();
       }
     }
-      },[]);
+  },[]);
 
   function updateAllChatsArray(newMessage) {
     setAllChatsArray(prevChats => {
@@ -185,6 +185,10 @@ export function RemixerInner() {
     } finally {
         setIsLoading(false);
         setTextareaValue("");
+        // clear selected recipe if it's the first message
+        if (allChatsArray[currentChatID].length <= 2) {
+            document.getElementById('recipe-dropdown-selected').value = "";
+        }
     }
   }
   
@@ -259,7 +263,7 @@ export function RemixerInner() {
             <div className="remixer-controls">
               <button title={`${isSidebarCollapsed ? "expand" : "collapse"} sidebar`} className={`toggle-sidebar ${isSidebarCollapsed ? "collapsed" : ""}`} onClick={toggleSidebar} >&lt;</button>
               <h3>{chatTitles[currentChatID]}</h3>
-              <button title="start new remix!" className="new-remix-button"  onClick={startNewRemix} disabled={allChatsArray[currentChatID].length === 1 ? true : false}>&#43;</button>
+              <button title="start new remix!" className="new-remix-button"  onClick={startNewRemix} disabled={(allChatsArray[currentChatID].length === 1 || isLoading) ? true : false}>&#43;</button>
             </div>
             <div className="remixer-messages">
               {allChatsArray[currentChatID].map(
