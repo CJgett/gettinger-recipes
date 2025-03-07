@@ -3,11 +3,12 @@ import '../styles/privacy.css';
 export default function PrivacyPage() {
  
   return (
-    <section className="normal-lists">
+    <section className="normal-lists privacy-policy">
+      <div className="centered-heading">
+        <h2>Privacy Policy</h2>
 
-      <h2>Privacy Policy</h2>
-
-      Last Updated: March 5, 2025
+        Last Updated: March 5, 2025
+      </div>
 
       <ol className="li-gap">
         <li>

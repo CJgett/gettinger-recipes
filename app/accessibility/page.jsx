@@ -4,10 +4,11 @@ export default function AccessibilityPage() {
  
   return (
     <section className="accessibility-content normal-lists">
-      <h2>Accessibility Statement</h2>
+      <div className="centered-heading">
+        <h2>Accessibility Statement</h2>
 
-      Last Updated: March 5, 2025
-
+        Last Updated: March 5, 2025
+      </div>
       <ol className="li-gap">
 
         <li>

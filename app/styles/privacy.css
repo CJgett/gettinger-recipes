@@ -1,11 +1,16 @@
-ol {
-    margin-top: 20px;
-
-    &> li {
-        &::marker {
-            font-size: 50px;
-            font-family: var(--font-dongle);
-        }
+.privacy-policy {
+    .centered-heading {
+            text-align: center;
     }
 
+    ol {
+        margin-top: 20px;
+
+        &> li {
+            &::marker {
+                font-size: 50px;
+                font-family: var(--font-dongle);
+            }
+        }
+    }
 }
