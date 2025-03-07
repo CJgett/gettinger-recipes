@@ -23,7 +23,6 @@
         align-items: center;
         justify-content: center;
         cursor: pointer; 
-        filter: blur(0.05px);
 
         &:hover {
           background-color: var(--c-bg-secondary);
