@@ -20,6 +20,10 @@
     display: none;
   }
 
+  nav > ul> .menu-item > a {
+    color: var(--c-footer-text);
+  }
+
   a {
     color: #F2EEE5;
 

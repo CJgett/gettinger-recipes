@@ -75,7 +75,7 @@ header {
 
   .nav-top-right-fixed {
     position: absolute;
-    top: 50px;
+    top: 30px;
     right: 30px;
     display: flex;
     flex-direction: column;
