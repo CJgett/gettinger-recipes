@@ -1,5 +1,5 @@
 export default function SourceList({listItems}) {
-  if(listItems[0].source_link === '') {
+  if(listItems[0] == null || listItems[0].source_link === '') {
     return null;
   }
   return (
