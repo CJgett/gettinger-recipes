@@ -23,7 +23,6 @@
       gap: 50px;
       flex-wrap: wrap;
       justify-content: center;
-      width: 90%;
     }
 
     .view-all-recipes-button {
@@ -36,7 +35,6 @@
       position: relative;
       display: flex;
       justify-content: center;
-      width: 99vw;
       height: 200px;
       overflow: hidden;
 
