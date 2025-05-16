@@ -1,7 +1,6 @@
 "use server"
 import { dbFetch } from '../../utils/postgres.js'
 import Anthropic from '@anthropic-ai/sdk';
-import DOMPurify from 'isomorphic-dompurify';
 
 export async function getRecipes() {
     try {
