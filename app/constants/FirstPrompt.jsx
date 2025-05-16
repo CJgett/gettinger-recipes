@@ -1,5 +1,5 @@
 export function firstPrompt(recipe, userPreferences) {
-    return `You will be customizing a given recipe based on user preferences.Follow these steps carefully:
+    return `You will be customizing a given recipe based on user preferences.Important: Please provide your response in a way that can be streamed chunk by chunk while maintaining proper HTML formatting. Follow these steps carefully:
 
 1. First, you will be presented with an original recipe:
         Recipe = ${recipe}
@@ -17,7 +17,12 @@ export function firstPrompt(recipe, userPreferences) {
    e) Add any additional ingredients or steps that align with the user preferences.
    f) use <li> tags for each ingredient, instruction, and note.
 
-4. Present the customized recipe in the following format:
+4. If you think that the user preferences are too silly, you are allowed to refuse to make the changes. 
+In this case, you should explain why the changes cannot be made. 
+Silly changes are those that would alter a dish in a way that makes the dish not work or in a way that the average grandmother would turn up her nose at. 
+Call the user out on their sillyness, and do it in bit of a mean way.
+
+5. Present the customized recipe in the following format:
         <customized_recipe>
             <name><h3>Modified name of the dish</h3></name>
             <ingredients>
@@ -39,14 +44,14 @@ export function firstPrompt(recipe, userPreferences) {
             </notes>
         </customized_recipe>
 
-5. After the customized recipe, provide a brief explanation of the changes made:
+6. After the customized recipe, provide a brief explanation of the changes made:
         <explanation>
             Explain the major modifications and why they were made based on the user preferences in a concise paragraph. 
         </explanation>
 
 Remember to maintain the essence of the original dish while accommodating the user's preferences as much as possible. If a preference cannot be accommodated without significantly altering the nature of the dish, mention this in the explanation.
 
-Please use the customized recipe format in your response, but do not mention it otherwise.`
+Please use the customized recipe format in your response, but do not mention it otherwise. Please try to be as concise and clear as possible.`
 }
 
 export default firstPrompt;

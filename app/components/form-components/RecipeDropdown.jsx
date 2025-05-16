@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { getRecipes } from '../component-server-functions'
+import { getRecipes, getRecipeDetails } from '../component-server-functions'
 
 export default function RecipeDropdown({ selectedRecipe }) {
   const [filteredRecipes, setFilteredRecipes] = useState([])
@@ -103,10 +103,15 @@ export default function RecipeDropdown({ selectedRecipe }) {
     }
   };
 
-  const handleItemClick = (index) => {
-    setQuery(filteredRecipes[index].name_en);
-    setSelectedRecipeData(filteredRecipes[index]);
+  const handleItemClick = async (index) => {
+
     setIsOpen(false);
+    const selectedRecipe = filteredRecipes[index];
+    setQuery(selectedRecipe.name_en);
+    
+    // Fetch complete recipe details only when selected
+    const recipeDetails = await getRecipeDetails(selectedRecipe.id);
+    setSelectedRecipeData(recipeDetails);
   };
 
   return (

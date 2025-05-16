@@ -5,11 +5,25 @@ import DOMPurify from 'isomorphic-dompurify';
 
 export async function getRecipes() {
     try {
-        const recipes = await dbFetch("SELECT id, name_en, pic, pic_alt, tags, is_family_recipe, prep_time,	cook_time,	servings,	ingredients	,directions,	notes,	sources FROM all_recipes");
+        const recipes = await dbFetch("SELECT id, name_en FROM all_recipes");
         return recipes;
     } catch (error) {
         console.error("Error fetching recipes:", error);
         return [];
+    }
+}
+
+// Add a new function to fetch complete recipe details
+export async function getRecipeDetails(recipeId) {
+    try {
+        const recipe = await dbFetch(
+            "SELECT * FROM all_recipes WHERE id = $1",
+            [recipeId]
+        );
+        return recipe[0];
+    } catch (error) {
+        console.error("Error fetching recipe details:", error);
+        return null;
     }
 }
 
@@ -61,17 +75,20 @@ export async function getAdminByUsername(username) {
 }
 
 export async function queryAI(message, conversationHistory = []) {
+    console.log("queryAI called");
+    console.log("message: " + message);
+    console.log("conversationHistory: " + conversationHistory);
     const anthropic = new Anthropic({
         apiKey: process.env.CLAUDE_API_KEY,
     });
     try {
-        let msg = await anthropic.messages.create({
+        const stream = await anthropic.messages.create({
             model: "claude-3-7-sonnet-20250219",
             max_tokens: 1024,
             messages: [...conversationHistory, { role: "user", content: message }],
+            stream: true,
         });
-        msg = DOMPurify.sanitize(msg.content[0].text);
-        return msg;
+        return stream;
     } catch (error) {
         console.error('Error:', error);
         return "Sorry, I encountered an error processing your request.";

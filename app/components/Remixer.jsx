@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { InView } from 'react-intersection-observer'
+import DOMPurify from 'isomorphic-dompurify'
 
 import RecipeDropdown from './form-components/RecipeDropdown'
 import { firstPrompt } from '../constants/FirstPrompt'
@@ -166,11 +167,43 @@ export function RemixerInner() {
         // Add user message
         updateAllChatsArray({"botOrUser":"user", "messageText": currentMessage});
         setIsLoading(true);
-        // Get the bot's response
-        const botResponse = await queryAI(messageToAI, conversationHistory);
+
+        let botResponse = "";
+
+        // Add initial empty bot message
+        updateAllChatsArray({
+            "botOrUser": "bot",
+            "botAnimText": "",
+            "messageText": ""
+        });
+
+        // Get and process the stream
+        const stream = await queryAI(messageToAI, conversationHistory);
         
-        // Update the existing chat title if it's the first bot response
-        if(currentChatLength <= 1) {
+        // Process the stream
+        for await (const chunk of stream) {
+            if (chunk.type === 'content_block_delta') {
+                const text = chunk.delta.text;
+                botResponse += text;
+                
+                // Update the bot's message with accumulated response
+                setAllChatsArray(prevChats => {
+                    const newChats = [...prevChats];
+                    const currentChat = [...newChats[currentChatID]];
+                    currentChat[currentChat.length - 1] = {
+                        "botOrUser": "bot",
+                        "botAnimText": "",  // Use botAnimText for streaming
+                        "messageText": botResponse  // Keep messageText empty
+                    };
+                    newChats[currentChatID] = currentChat;
+                    window.localStorage.setItem('chatsFromLocalStorage', JSON.stringify(newChats));
+                    return newChats;
+                });
+            }
+        }
+        
+        // Update the existing chat title if it's still "New Recipe Remix!" 
+        if(chatTitles[currentChatID] === "New Recipe Remix!") {
             setChatTitles(prevTitles => {
                 const newTitles = [...prevTitles];
                 newTitles[currentChatID] = findChatTitle(botResponse);
@@ -178,10 +211,15 @@ export function RemixerInner() {
                 return newTitles;
             });
         }
-        // Add bot message
-        updateAllChatsArray({"botOrUser":"bot", "botAnimText": botResponse, "messageText": ""});
+
+        
     } catch (error) {
         console.error('Error:', error);
+        updateAllChatsArray({
+            "botOrUser": "bot",
+            "botAnimText": "Sorry, I encountered an error processing your request.",
+            "messageText": ""
+        });
     } finally {
         setIsLoading(false);
         setTextareaValue("");
@@ -270,7 +308,7 @@ export function RemixerInner() {
                       (<InView as="div" triggerOnce="true">{({ inView, ref }) => 
                         (<div ref={ref} className={inView ? "in-view" : ""}> 
                           <p className="slide-in" dangerouslySetInnerHTML={{ __html: message.botAnimText }}></p> 
-                          <p className="slide-over">{message.messageText}</p>
+                          <p  dangerouslySetInnerHTML={{ __html: message.messageText}}></p>
                         </div>)}</InView>) : 
                       <span>{message.messageText}</span>}
                     </div>
