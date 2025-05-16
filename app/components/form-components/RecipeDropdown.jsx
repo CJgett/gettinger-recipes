@@ -8,6 +8,7 @@ export default function RecipeDropdown({ selectedRecipe }) {
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
+  const [selectedRecipeData, setSelectedRecipeData] = useState(null);
   const dropdownRef = useRef(null)
   const dropdownInputRef = useRef(null)
   const firstDropdownElement = useRef(null)
@@ -82,6 +83,7 @@ export default function RecipeDropdown({ selectedRecipe }) {
         event.preventDefault();
         if (focusedIndex >= 0) {
           setQuery(filteredRecipes[focusedIndex].name_en);
+          setSelectedRecipeData(filteredRecipes[focusedIndex]);
           setIsOpen(false);
           setFocusedIndex(-1);
         }
@@ -103,6 +105,7 @@ export default function RecipeDropdown({ selectedRecipe }) {
 
   const handleItemClick = (index) => {
     setQuery(filteredRecipes[index].name_en);
+    setSelectedRecipeData(filteredRecipes[index]);
     setIsOpen(false);
   };
 
@@ -126,6 +129,7 @@ export default function RecipeDropdown({ selectedRecipe }) {
           aria-expanded={isOpen}
           aria-controls="recipe-listbox"
           ref={dropdownInputRef}
+          data-recipe-details={JSON.stringify(selectedRecipeData)}
         />
         <button
           type="button"

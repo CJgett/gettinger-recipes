@@ -156,9 +156,9 @@ export function RemixerInner() {
 
         // Save the current textarea value and clear it
         if (currentChatLength <= 1) {
-            const recipe = document.getElementById('recipe-dropdown-selected').value;
-            currentMessage = `The recipe I'd like to remix is: ${recipe}.\n${currentMessage}`;
-            messageToAI = firstPrompt(recipe, currentMessage);
+            const selectedRecipe = document.getElementById('recipe-dropdown-selected');
+            currentMessage = `The recipe I'd like to remix is: ${selectedRecipe.value}.\n${currentMessage}`;
+            messageToAI = firstPrompt(selectedRecipe.dataset.recipeDetails, currentMessage);
         } else {
             messageToAI = nextPrompt(currentMessage);
         }
@@ -185,10 +185,6 @@ export function RemixerInner() {
     } finally {
         setIsLoading(false);
         setTextareaValue("");
-        // clear selected recipe if it's the first message
-        if (allChatsArray[currentChatID].length <= 2) {
-            document.getElementById('recipe-dropdown-selected').value = "";
-        }
     }
   }
   
