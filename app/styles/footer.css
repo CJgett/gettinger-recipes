@@ -82,7 +82,7 @@ footer {
       text-align: center;
     }
     a {
-      color: #f2eee5;
+      color: #f2eee5 !important;
     }
   }
 }
