@@ -22,7 +22,8 @@ export default function RecipeDropdown({ selectedRecipe }) {
         for (let i = 0; i < recipes.length; i++) {
           if (recipes[i].id == selectedRecipe) {
             setQuery(recipes[i].name_en);
-            setSelectedRecipeData(recipes[i]);
+            const recipeDetails = await getRecipeDetails(recipes[i].id);
+            setSelectedRecipeData(recipeDetails);
             break;
           }
         }
