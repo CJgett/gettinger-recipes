@@ -1,4 +1,7 @@
-import { Pool } from "pg";
+import { Pool, neonConfig } from "@neondatabase/serverless";
+import ws from 'ws';
+
+neonConfig.webSocketConstructor = ws;
 
 export const pool = new Pool({
   host: process.env.POSTGRES_HOST,
@@ -10,7 +13,6 @@ export const pool = new Pool({
 });
 
 export async function dbFetch(customQueryText, values) {
-
   try {
     const client = await pool.connect();
     const result = await client.query(customQueryText, values);
@@ -20,7 +22,4 @@ export async function dbFetch(customQueryText, values) {
     console.error("Error fetching data: ", err);
     throw err;
   }
-  
 }
-
-
