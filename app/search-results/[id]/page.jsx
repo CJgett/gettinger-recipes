@@ -5,7 +5,8 @@ import '../../styles/recipe.css'
 import '../../styles/search.css'
 
 export default async function SearchResults({ params }) {
-    const searchTerm = decodeURIComponent(params.id);
+  const { id } = await params;
+    const searchTerm = decodeURIComponent(id);
     const results = await searchDB(searchTerm);
     
     return (
